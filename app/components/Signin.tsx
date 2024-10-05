@@ -1,8 +1,23 @@
+"use client"
+
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import Image from 'next/image';
 import React from 'react';
+import { account } from '../appwrite/config';
 
 const SignIn: React.FC = () =>{
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleLogin = async () => {
+    try{
+      await account.createEmailPasswordSession('email', 'password');
+    } catch (error){
+      console.error(error);
+    }
+  }
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
@@ -24,6 +39,8 @@ const SignIn: React.FC = () =>{
                 id="email"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
@@ -39,11 +56,13 @@ const SignIn: React.FC = () =>{
                 id="password"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
 
-          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none">
+          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none" onClick={handleLogin}>
             Sign In
           </button>
         </form>

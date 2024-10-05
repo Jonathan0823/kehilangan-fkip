@@ -1,10 +1,24 @@
+"use client"
 import { FaEnvelope, FaLock, FaRegUser  } from 'react-icons/fa';
 import Image from 'next/image';
 import React from 'react';
-
-
+import { ID } from 'appwrite';
+import { account } from '../appwrite/config';
 
 const SignUp : React.FC = ()=> {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleSignUp = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      await account.create(ID.unique(), email, password, name);
+      await account.createEmailPasswordSession(email, password);
+    } catch (error) {
+      console.error('Error during sign up:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -15,18 +29,21 @@ const SignUp : React.FC = ()=> {
             <Image src="/Do_Not_Attempt_profile.jpg" width={200} height={200} alt='img'/>
         </div>
 
-        <form>
-        <div className="mb-4">
+        <form onSubmit={handleSignUp}>
+          <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-700" htmlFor="name">
               Nama
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
               <FaRegUser  className="text-gray-400 mr-3" /> 
               <input
-                type="name"
+                type="text"
                 id="name"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -41,6 +58,9 @@ const SignUp : React.FC = ()=> {
                 id="email"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -56,11 +76,14 @@ const SignUp : React.FC = ()=> {
                 id="password"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
           </div>
 
-          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none">
+          <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none">
             Sign Up
           </button>
         </form>
