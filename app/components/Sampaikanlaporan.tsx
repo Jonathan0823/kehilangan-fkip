@@ -126,10 +126,12 @@ export default function ReportForm() {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded"
+          className="w-1/2 bg-blue-500 text-white py-2 rounded"
         >
           Upload Laporan
         </button>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
       </form>
     </div>
   );
