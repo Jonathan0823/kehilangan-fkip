@@ -20,7 +20,7 @@ const SignIn: React.FC = () => {
       setPassword('');
       setTimeout(() => {
         window.location.href = "/";
-      }, 5000);
+      }, 2000);
     } catch (error) {
       setError("Login Failed");
       throw error;

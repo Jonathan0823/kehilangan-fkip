@@ -14,7 +14,7 @@ const SignUp: React.FC = () => {
     event.preventDefault();
     try {
       const formData = new FormData(event.currentTarget as HTMLFormElement);
-      const response = await fetch("/api/auth/register", {
+     await fetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({
           username: formData.get("name"),
