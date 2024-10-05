@@ -1,7 +1,8 @@
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import Image from 'next/image';
+import React from 'react';
 
-export default function SignIn() {
+const SignIn: React.FC = () =>{
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
@@ -53,7 +54,7 @@ export default function SignIn() {
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">
-            Don't have an account?
+            Dont have an account?
             <a href="#" className="text-blue-500 hover:underline">
               Sign up
             </a>
@@ -63,3 +64,5 @@ export default function SignIn() {
     </div>
   );
 }
+
+export default SignIn;

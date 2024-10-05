@@ -1,6 +1,6 @@
-import SignIn from "./components/test";
+
 export default function Home() {
   return (
-    <SignIn/>
+    <div>Sistem Pengaduan Kehilangan Barang dan Kerusakan Fasilitas FKIP Unsika</div>
   );
 }
