@@ -1,4 +1,4 @@
-import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaRegUser  } from 'react-icons/fa';
 import Image from 'next/image';
 import React from 'react';
 
@@ -18,10 +18,10 @@ const SignUp : React.FC = ()=> {
         <form>
         <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-700" htmlFor="name">
-              Email
+              Nama
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaEnvelope className="text-gray-400 mr-3" /> 
+              <FaRegUser  className="text-gray-400 mr-3" /> 
               <input
                 type="name"
                 id="name"
@@ -65,7 +65,6 @@ const SignUp : React.FC = ()=> {
           </button>
         </form>
 
-        {/* Additional Links */}
         <div className="text-center mt-4">
           <a href="#" className="text-sm text-blue-500 hover:underline">
             Forgot Password?
