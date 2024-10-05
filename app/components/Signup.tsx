@@ -1,6 +1,5 @@
 "use client"
-import { FaEnvelope, FaLock, FaRegUser  } from 'react-icons/fa';
-import Image from 'next/image';
+import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle  } from 'react-icons/fa';
 import React from 'react';
 import { ID } from 'appwrite';
 import { account } from '../appwrite/config';
@@ -24,12 +23,12 @@ const SignUp : React.FC = ()=> {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 className="text-3xl font-bold mb-6 text-center">Sign Up</h2>
+    <div className="min-h-dvh flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg max-w-sm w-full">
+        <h2 className="text-3xl font-bold text-sky-600 mb-6 text-center">Sign Up</h2>
         
         <div className="flex justify-center mb-6">
-            <Image src="/Do_Not_Attempt_profile.jpg" width={200} height={200} alt='img'/>
+          <FaRegUserCircle className="text-gray-400 mr-3"  size={100}/>
         </div>
 
         <form onSubmit={handleSignUp}>
@@ -38,7 +37,7 @@ const SignUp : React.FC = ()=> {
               Nama
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaRegUser  className="text-gray-400 mr-3" /> 
+              <FaRegUser  className="text-sky-400 mr-3" /> 
               <input
                 type="text"
                 id="name"
@@ -55,7 +54,7 @@ const SignUp : React.FC = ()=> {
               Email
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaEnvelope className="text-gray-400 mr-3" /> 
+              <FaEnvelope className="text-sky-400 mr-3" /> 
               <input
                 type="email"
                 id="email"
@@ -73,7 +72,7 @@ const SignUp : React.FC = ()=> {
               Password
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaLock className="text-gray-400 mr-3" /> 
+              <FaLock className="text-sky-400 mr-3" /> 
               <input
                 type="password"
                 id="password"
@@ -86,8 +85,8 @@ const SignUp : React.FC = ()=> {
             </div>
           </div>
 
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none">
-            Sign Up
+          <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
+            Sign In
           </button>
         </form>
 
