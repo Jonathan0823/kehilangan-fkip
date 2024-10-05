@@ -9,7 +9,8 @@ const SignIn: React.FC = () =>{
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
     try{
       await account.createEmailPasswordSession('email', 'password');
       setEmail('');
@@ -29,7 +30,7 @@ const SignIn: React.FC = () =>{
             <Image src="/Do_Not_Attempt_profile.jpg" width={200} height={200} alt='img'/>
         </div>
 
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-700" htmlFor="email">
               Email
@@ -64,7 +65,7 @@ const SignIn: React.FC = () =>{
             </div>
           </div>
 
-          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none" onClick={handleLogin}>
+          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none">
             Sign In
           </button>
         </form>
