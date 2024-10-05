@@ -1,57 +1,62 @@
 "use client";
 
-import { FaEnvelope, FaRegUserCircle, FaLock } from 'react-icons/fa';
-import React from 'react';
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { FaEnvelope, FaRegUserCircle, FaLock } from "react-icons/fa";
+import React from "react";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const SignIn: React.FC = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [error, setError] = useState<string>(" ");
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    try{
+    try {
       const formData = new FormData(event.currentTarget as HTMLFormElement);
-      await signIn('credentials', {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
+      const res = await signIn("credentials", {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
         redirect: false,
+      });
+      if (res?.error) {
+        setError("Login Failed");
+        return;
       }
-    )
-    setSuccessMessage("Login Success");
-      setEmail('');
-      setPassword('');
+      setSuccessMessage("Login Success");
+      setEmail("");
+      setPassword("");
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);
-
-    } catch(error){
+    } catch (error) {
       setError("Login Failed");
       throw error;
     }
   };
 
-  
-
   return (
-    <div className="min-h-dvh flex items-center justify-center"> 
+    <div className="min-h-dvh flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg  max-w-sm w-full">
-        <h2 className="text-3xl font-bold mb-6 text-center text-sky-600">Sign In</h2> 
-        
+        <h2 className="text-3xl font-bold mb-6 text-center text-sky-600">
+          Sign In
+        </h2>
+
         <div className="flex justify-center mb-6">
-          <FaRegUserCircle className="text-gray-400 mr-3"  size={100}/>
+          <FaRegUserCircle className="text-gray-400 mr-3" size={100} />
         </div>
 
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-700" htmlFor="email">
+            <label
+              className="block text-sm font-semibold text-gray-700"
+              htmlFor="email"
+            >
               Email
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2 border-sky-400">
-              <FaEnvelope className="text-sky-400 mr-3" /> 
+              <FaEnvelope className="text-sky-400 mr-3" />
               <input
                 type="email"
                 id="email"
@@ -64,10 +69,13 @@ const SignIn: React.FC = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700" htmlFor="password">
+            <label
+              className="block text-sm font-semibold text-gray-700"
+              htmlFor="password"
+            >
               Password
             </label>
-            <div className="flex items-center border rounded-lg px-3 py-2 mt-2 border-sky-400"> 
+            <div className="flex items-center border rounded-lg px-3 py-2 mt-2 border-sky-400">
               <FaLock className="text-sky-400 mr-3" />
               <input
                 type="password"
@@ -84,7 +92,9 @@ const SignIn: React.FC = () => {
             Sign In
           </button>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-          {successMessage && <p className="mt-2 text-sm text-green-500">{successMessage}</p>}
+          {successMessage && (
+            <p className="mt-2 text-sm text-green-500">{successMessage}</p>
+          )}
         </form>
         <div className="text-center mt-4">
           <a href="#" className="text-sm text-sky-500 hover:underline">
