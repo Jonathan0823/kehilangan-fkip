@@ -1,6 +1,6 @@
 "use client";
 
-import { FaEnvelope,FaRegUserCircle, FaLock, FaUser } from 'react-icons/fa';
+import { FaEnvelope,FaRegUserCircle, FaLock,  } from 'react-icons/fa';
 import React from 'react';
 import { account } from '../appwrite/config';
 import { useState } from 'react';
@@ -23,13 +23,14 @@ const SignIn: React.FC = () => {
       }, 5000);
     } catch (error) {
       setError("Login Failed");
+      throw error;
       // console.error(error);
     }
   };
 
   return (
     <div className="min-h-dvh flex items-center justify-center"> 
-      <div className="bg-white p-8 rounded-lg  w-dvw">
+      <div className="bg-white p-8 rounded-lg  max-w-sm w-full">
         <h2 className="text-3xl font-bold mb-6 text-center text-sky-600">Sign In</h2> 
         
         <div className="flex justify-center mb-6">

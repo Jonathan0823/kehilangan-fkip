@@ -28,9 +28,10 @@ const SignUp : React.FC = ()=> {
           'Content-Type': 'application/json',
         },
       });
-
+      setSuccessMessage("Sign Up Success");
       console.log({response})
     } catch(error){
+      throw error;
       setError("Sign Up Failed");
     }
 
