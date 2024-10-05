@@ -1,7 +1,11 @@
-import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaRegUser  } from 'react-icons/fa';
 import Image from 'next/image';
+import React from 'react';
 
-export default function SignIn() {
+
+
+const SignUp : React.FC = ()=> {
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
@@ -12,6 +16,20 @@ export default function SignIn() {
         </div>
 
         <form>
+        <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700" htmlFor="name">
+              Nama
+            </label>
+            <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
+              <FaRegUser  className="text-gray-400 mr-3" /> 
+              <input
+                type="name"
+                id="name"
+                className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
+                placeholder="Enter your name"
+              />
+            </div>
+          </div>
           <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-700" htmlFor="email">
               Email
@@ -47,14 +65,13 @@ export default function SignIn() {
           </button>
         </form>
 
-        {/* Additional Links */}
         <div className="text-center mt-4">
           <a href="#" className="text-sm text-blue-500 hover:underline">
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">
-            Don't have an account?
-            <a href="#" className="text-blue-500 hover:underline">
+          Already have an account?
+            <a href="/SignIn" className="text-blue-500 hover:underline">
               Sign up
             </a>
           </p>
@@ -63,3 +80,5 @@ export default function SignIn() {
     </div>
   );
 }
+
+export default SignUp;
