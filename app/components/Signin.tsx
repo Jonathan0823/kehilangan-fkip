@@ -1,6 +1,6 @@
 "use client";
 
-import { FaEnvelope,FaRegUserCircle, FaLock,  } from 'react-icons/fa';
+import { FaEnvelope, FaRegUserCircle, FaLock } from 'react-icons/fa';
 import React from 'react';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
@@ -33,6 +33,8 @@ const SignIn: React.FC = () => {
       throw error;
     }
   };
+
+  
 
   return (
     <div className="min-h-dvh flex items-center justify-center"> 
