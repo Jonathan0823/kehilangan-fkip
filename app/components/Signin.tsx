@@ -2,8 +2,8 @@
 
 import { FaEnvelope,FaRegUserCircle, FaLock,  } from 'react-icons/fa';
 import React from 'react';
-import { account } from '../appwrite/config';
 import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = React.useState('');
@@ -13,18 +13,25 @@ const SignIn: React.FC = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      await account.createEmailPasswordSession(email, password);
-      setSuccessMessage("Login Success");
+    try{
+      const formData = new FormData(event.currentTarget as HTMLFormElement);
+      const res = await signIn('credentials', {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+        redirect: false,
+      }
+    )
+    console.log(res);
+    setSuccessMessage("Login Success");
       setEmail('');
       setPassword('');
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);
-    } catch (error) {
+
+    } catch(error){
       setError("Login Failed");
       throw error;
-      // console.error(error);
     }
   };
 
