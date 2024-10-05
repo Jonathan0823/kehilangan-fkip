@@ -1,61 +1,62 @@
-"use client"
-import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle  } from 'react-icons/fa';
-import React from 'react';
-import { useState } from 'react';
+"use client";
+import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle } from "react-icons/fa";
+import React from "react";
+import { useState } from "react";
 
-const SignUp : React.FC = ()=> {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+const SignUp: React.FC = () => {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [error, setError] = useState<string>(" ");
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleSignUp = async (event: React.FormEvent) => {
-
-
     event.preventDefault();
-    try{
+    try {
       const formData = new FormData(event.currentTarget as HTMLFormElement);
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         body: JSON.stringify({
-          username: formData.get('name'),
-          email: formData.get('email'),
-          password: formData.get('password'),
-        }
-        ),
+          username: formData.get("name"),
+          email: formData.get("email"),
+          password: formData.get("password"),
+        }),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       setSuccessMessage("Sign Up Success");
-      console.log({response})
-    } catch(error){
-      throw error;
+      console.log({ response });
+    } catch (error) {
       setError("Sign Up Failed");
+      throw error;
     }
-
   };
 
   return (
     <div className="min-h-dvh flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg max-w-sm w-full">
-        <h2 className="text-3xl font-bold text-sky-600 mb-6 text-center">Sign Up</h2>
-        
+        <h2 className="text-3xl font-bold text-sky-600 mb-6 text-center">
+          Sign Up
+        </h2>
+
         <div className="flex justify-center mb-6">
-          <FaRegUserCircle className="text-gray-400 mr-3"  size={100}/>
+          <FaRegUserCircle className="text-gray-400 mr-3" size={100} />
         </div>
 
         <form onSubmit={handleSignUp}>
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-700" htmlFor="name">
+            <label
+              className="block text-sm font-semibold text-gray-700"
+              htmlFor="name"
+            >
               Nama
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaRegUser  className="text-sky-400 mr-3" /> 
+              <FaRegUser className="text-sky-400 mr-3" />
               <input
                 type="text"
-                name='name'
+                name="name"
                 id="name"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your name"
@@ -66,14 +67,17 @@ const SignUp : React.FC = ()=> {
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-700" htmlFor="email">
+            <label
+              className="block text-sm font-semibold text-gray-700"
+              htmlFor="email"
+            >
               Email
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaEnvelope className="text-sky-400 mr-3" /> 
+              <FaEnvelope className="text-sky-400 mr-3" />
               <input
                 type="email"
-                name='email'
+                name="email"
                 id="email"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your email"
@@ -85,14 +89,17 @@ const SignUp : React.FC = ()=> {
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700" htmlFor="password">
+            <label
+              className="block text-sm font-semibold text-gray-700"
+              htmlFor="password"
+            >
               Password
             </label>
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2">
-              <FaLock className="text-sky-400 mr-3" /> 
+              <FaLock className="text-sky-400 mr-3" />
               <input
                 type="password"
-                name='password'
+                name="password"
                 id="password"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your password"
@@ -107,7 +114,9 @@ const SignUp : React.FC = ()=> {
             Sign In
           </button>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-          {successMessage && <p className="mt-2 text-sm text-green-500">{successMessage}</p>}
+          {successMessage && (
+            <p className="mt-2 text-sm text-green-500">{successMessage}</p>
+          )}
         </form>
 
         <div className="text-center mt-4">
@@ -115,7 +124,7 @@ const SignUp : React.FC = ()=> {
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">
-          Already have an account?
+            Already have an account?
             <a href="/signin" className="text-blue-500 hover:underline">
               Sign In
             </a>
@@ -124,6 +133,6 @@ const SignUp : React.FC = ()=> {
       </div>
     </div>
   );
-}
+};
 
 export default SignUp;
