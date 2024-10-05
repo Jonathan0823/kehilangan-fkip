@@ -3,20 +3,27 @@
 import { FaEnvelope,FaRegUserCircle, FaLock, FaUser } from 'react-icons/fa';
 import React from 'react';
 import { account } from '../appwrite/config';
+import { useState } from 'react';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [error, setError] = useState<string>(" ");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-
     try {
       await account.createEmailPasswordSession(email, password);
+      setSuccessMessage("Login Success");
       setEmail('');
       setPassword('');
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 5000);
     } catch (error) {
-      console.error(error);
+      setError("Login Failed");
+      // console.error(error);
     }
   };
 
@@ -67,6 +74,8 @@ const SignIn: React.FC = () => {
           <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
             Sign In
           </button>
+          {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+          {successMessage && <p className="mt-2 text-sm text-green-500">{successMessage}</p>}
         </form>
         <div className="text-center mt-4">
           <a href="#" className="text-sm text-sky-500 hover:underline">

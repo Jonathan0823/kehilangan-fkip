@@ -3,22 +3,30 @@ import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle  } from 'react-icons/fa'
 import React from 'react';
 import { ID } from 'appwrite';
 import { account } from '../appwrite/config';
+import { useState } from 'react';
 
 const SignUp : React.FC = ()=> {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [error, setError] = useState<string>(" ");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await account.create(ID.unique(), email, password, name);
       await account.createEmailPasswordSession(email, password);
+      setSuccessMessage("Sign Up Success");
       setName('');
       setEmail('');
       setPassword('');
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 5000);
     } catch (error) {
-      console.error('Error during sign up:', error);
+      setError("Sign Up Failed");
+      // console.error('Error during sign up:', error);
     }
   };
 
@@ -88,6 +96,8 @@ const SignUp : React.FC = ()=> {
           <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
             Sign In
           </button>
+          {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+          {successMessage && <p className="mt-2 text-sm text-green-500">{successMessage}</p>}
         </form>
 
         <div className="text-center mt-4">
