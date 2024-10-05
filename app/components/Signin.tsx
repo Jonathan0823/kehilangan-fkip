@@ -11,6 +11,8 @@ const SignIn: React.FC = () =>{
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+
+   
     try{
       await account.createEmailPasswordSession('email', 'password');
       setEmail('');
