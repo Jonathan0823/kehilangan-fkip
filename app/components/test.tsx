@@ -1,4 +1,5 @@
 import { FaEnvelope, FaLock } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function SignIn() {
   return (
@@ -7,11 +8,7 @@ export default function SignIn() {
         <h2 className="text-3xl font-bold mb-6 text-center">Sign in</h2>
         
         <div className="flex justify-center mb-6">
-          <img
-            src="/den.png" 
-            alt="img"
-            className="w-40 h-40"
-          />
+            <Image src="/Do_Not_Attempt_profile.jpg" width={200} height={200} alt='img'/>
         </div>
 
         <form>
