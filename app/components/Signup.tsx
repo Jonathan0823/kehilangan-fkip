@@ -1,8 +1,6 @@
 "use client"
 import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle  } from 'react-icons/fa';
 import React from 'react';
-import { ID } from 'appwrite';
-import { account } from '../appwrite/config';
 import { useState } from 'react';
 
 const SignUp : React.FC = ()=> {
@@ -13,21 +11,29 @@ const SignUp : React.FC = ()=> {
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleSignUp = async (event: React.FormEvent) => {
+
+
     event.preventDefault();
-    try {
-      await account.create(ID.unique(), email, password, name);
-      await account.createEmailPasswordSession(email, password);
-      setSuccessMessage("Sign Up Success");
-      setName('');
-      setEmail('');
-      setPassword('');
-      setTimeout(() => {
-        window.location.href = "/signin";
-      }, 5000);
-    } catch (error) {
+    try{
+      const formData = new FormData(event.currentTarget as HTMLFormElement);
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: formData.get('name'),
+          email: formData.get('email'),
+          password: formData.get('password'),
+        }
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log({response})
+    } catch(error){
       setError("Sign Up Failed");
-      // console.error('Error during sign up:', error);
     }
+
   };
 
   return (
@@ -48,6 +54,7 @@ const SignUp : React.FC = ()=> {
               <FaRegUser  className="text-sky-400 mr-3" /> 
               <input
                 type="text"
+                name='name'
                 id="name"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your name"
@@ -65,6 +72,7 @@ const SignUp : React.FC = ()=> {
               <FaEnvelope className="text-sky-400 mr-3" /> 
               <input
                 type="email"
+                name='email'
                 id="email"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your email"
@@ -83,6 +91,7 @@ const SignUp : React.FC = ()=> {
               <FaLock className="text-sky-400 mr-3" /> 
               <input
                 type="password"
+                name='password'
                 id="password"
                 className="w-full focus:ring focus:ring-indigo-200 focus:outline-none"
                 placeholder="Enter your password"
