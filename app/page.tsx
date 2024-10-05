@@ -1,11 +1,12 @@
 import Footer from "./components/Footer";
+import Laporan from "./components/Laporan";
 import Navbar from "./components/navbar";
 
 export default function Home() {
   return (
-    <div>
+    <div className="m">
     <Navbar/>
-    <div>Sistem Pengaduan Kehilangan Barang dan Kerusakan Fasilitas FKIP Unsika</div>
+    <Laporan/>
     <Footer/>
     </div>
   );
