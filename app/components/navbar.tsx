@@ -5,7 +5,7 @@ import { FaBell, FaSearch } from "react-icons/fa";
 
 export default function Navbar() {
   return (
-    <div className="w-full bg-white shadow-sm py-6 px-4 flex items-center justify-between">
+    <div className="w-full fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
         <Image
           src="/111233.png"
