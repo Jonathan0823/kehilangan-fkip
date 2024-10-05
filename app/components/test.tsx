@@ -53,7 +53,7 @@ export default function SignIn() {
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">
-            Don't have an account?{" "}
+            Don't have an account?
             <a href="#" className="text-blue-500 hover:underline">
               Sign up
             </a>
