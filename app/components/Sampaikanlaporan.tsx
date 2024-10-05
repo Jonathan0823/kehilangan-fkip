@@ -123,15 +123,19 @@ export default function ReportForm() {
             />
           </div>
         )}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="w-1/2 bg-blue-500 hover:bg-blue-700 text-white py-2 rounded"
+          >
+            Upload Laporan
+          </button>
+        </div>
 
-        <button
-          type="submit"
-          className="w-1/2 bg-blue-500 text-white py-2 rounded"
-        >
-          Upload Laporan
-        </button>
         {error && <p className="text-red-500 mt-2">{error}</p>}
-        {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
+        {successMessage && (
+          <p className="text-green-500 mt-2">{successMessage}</p>
+        )}
       </form>
     </div>
   );
