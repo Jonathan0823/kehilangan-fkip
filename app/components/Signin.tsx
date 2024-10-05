@@ -47,8 +47,6 @@ const SignIn: React.FC = () =>{
             Sign In
           </button>
         </form>
-
-        {/* Additional Links */}
         <div className="text-center mt-4">
           <a href="#" className="text-sm text-blue-500 hover:underline">
             Forgot Password?
