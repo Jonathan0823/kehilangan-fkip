@@ -1,12 +1,10 @@
 import Footer from "./components/Footer";
-import Laporan from "./components/Laporan";
-import Navbar from "./components/navbar";
+import Landing from "./components/Landing";
 
 export default function Home() {
   return (
-    <div className="m">
-    <Navbar/>
-    <Laporan/>
+    <div className="min-h-dvh">
+    <Landing/>
     <Footer/>
     </div>
   );
