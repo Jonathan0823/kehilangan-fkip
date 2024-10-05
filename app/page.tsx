@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import Navbar from "./components/navbar";
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <div>
     <Navbar/>
     <div>Sistem Pengaduan Kehilangan Barang dan Kerusakan Fasilitas FKIP Unsika</div>
+    <Footer/>
     </div>
   );
 }
