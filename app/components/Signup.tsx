@@ -71,8 +71,8 @@ const SignUp : React.FC = ()=> {
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">
-            Dont have an account?
-            <a href="#" className="text-blue-500 hover:underline">
+          Already have an account?
+            <a href="/Signin" className="text-blue-500 hover:underline">
               Sign up
             </a>
           </p>
