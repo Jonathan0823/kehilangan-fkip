@@ -9,7 +9,7 @@ const SignUp : React.FC = ()=> {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 className="text-3xl font-bold mb-6 text-center">Sign in</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center">Sign Up</h2>
         
         <div className="flex justify-center mb-6">
             <Image src="/Do_Not_Attempt_profile.jpg" width={200} height={200} alt='img'/>
@@ -61,7 +61,7 @@ const SignUp : React.FC = ()=> {
           </div>
 
           <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-200 focus:outline-none">
-            Sign In
+            Sign Up
           </button>
         </form>
 
@@ -72,7 +72,7 @@ const SignUp : React.FC = ()=> {
           <p className="mt-2 text-sm">
           Already have an account?
             <a href="/signin" className="text-blue-500 hover:underline">
-              Sign up
+              Sign In
             </a>
           </p>
         </div>
