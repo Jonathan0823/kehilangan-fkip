@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Loading from "./Loading";
 
 interface Post {
   userId: string;
@@ -18,7 +19,7 @@ interface Post {
 export default function Post() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filter, setFilter] = useState<string>("All");
-
+  const [loading, setLoading] = useState<boolean>(true);
   const dummyPosts: Post[] = [
     {
       userId: "1",
@@ -33,7 +34,7 @@ export default function Post() {
     {
       userId: "2",
       userName: "dean Smith",
-      userImage: "/profile.png",
+      userImage: "/",
       timeAgo: "1 day ago",
       title: "nemu nasi ayam",
       description: "nasi ayam dean",
@@ -42,10 +43,21 @@ export default function Post() {
     },
   ];
 
+
   useEffect(() => {
-    setPosts(dummyPosts);
+    try {
+      setLoading(true);
+      setPosts(dummyPosts);
+    } catch (err) {
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
   const filteredPosts = posts.filter(
     (post) => filter === "All" || post.type === filter
   );
