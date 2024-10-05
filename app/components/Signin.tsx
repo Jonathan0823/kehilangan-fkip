@@ -12,6 +12,8 @@ const SignIn: React.FC = () =>{
   const handleLogin = async () => {
     try{
       await account.createEmailPasswordSession('email', 'password');
+      setEmail('');
+      setPassword('');
     } catch (error){
       console.error(error);
     }

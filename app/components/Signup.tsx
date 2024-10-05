@@ -15,6 +15,9 @@ const SignUp : React.FC = ()=> {
     try {
       await account.create(ID.unique(), email, password, name);
       await account.createEmailPasswordSession(email, password);
+      setName('');
+      setEmail('');
+      setPassword('');
     } catch (error) {
       console.error('Error during sign up:', error);
     }
