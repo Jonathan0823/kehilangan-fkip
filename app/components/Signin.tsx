@@ -15,13 +15,12 @@ const SignIn: React.FC = () => {
     event.preventDefault();
     try{
       const formData = new FormData(event.currentTarget as HTMLFormElement);
-      const res = await signIn('credentials', {
+      await signIn('credentials', {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
         redirect: false,
       }
     )
-    console.log(res);
     setSuccessMessage("Login Success");
       setEmail('');
       setPassword('');
