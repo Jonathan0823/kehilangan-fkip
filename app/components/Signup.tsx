@@ -26,7 +26,10 @@ const SignUp: React.FC = () => {
         },
       });
       setSuccessMessage("Sign Up Success");
-      console.log({ response });
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 5000);
+      
     } catch (error) {
       setError("Sign Up Failed");
       throw error;
