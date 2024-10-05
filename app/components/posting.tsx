@@ -43,7 +43,6 @@ export default function Post() {
     },
   ];
 
-
   useEffect(() => {
     try {
       setLoading(true);
@@ -58,14 +57,15 @@ export default function Post() {
   if (loading) {
     return <Loading />;
   }
+
   const filteredPosts = posts.filter(
     (post) => filter === "All" || post.type === filter
   );
 
   return (
-    <div className="flex justify-center items-center pt-16 min-h-screen bg-gray-100">
+    <div className=" min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-4">
-        <div className="flex justify-around mt-4">
+        <div className="flex justify-around mt-20 z-10">
           <button
             className={`px-4 py-2 rounded-full ${
               filter === "All"
@@ -128,11 +128,9 @@ export default function Post() {
               )}
 
               <div className="flex justify-between mt-4">
-                <Link href="/post/[id]" as={`/post/${index}`}>
-                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
-                    Beri Reaksi
-                  </button>
-                </Link>
+                <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
+                  Beri Reaksi
+                </button>
 
                 <Link href="/post/[id]" as={`/post/${index}`}>
                   <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
@@ -142,6 +140,10 @@ export default function Post() {
               </div>
             </div>
           ))}
+
+          {filteredPosts.length === 1 && (
+            <div className="bg-white p-4 rounded-lg shadow invisible"></div>
+          )}
         </div>
       </div>
     </div>
