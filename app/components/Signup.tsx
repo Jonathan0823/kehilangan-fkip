@@ -113,7 +113,7 @@ const SignUp: React.FC = () => {
           </div>
 
           <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
-            Sign In
+            Sign Up
           </button>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
           {successMessage && (
