@@ -109,13 +109,13 @@ export default function ReportForm() {
         </div>
 
         <div className="mb-4">
-          <label className="block font-semibold mb-2">Tanggal Kejadian</label>
+          <label className="block font-semibold mb-2">Tanggal Kejadian
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
-          />
+          /></label>
         </div>
 
         <div className="mb-4">

@@ -24,6 +24,7 @@
     "lucide-react": "^0.447.0",
     "next": "14.2.14",
     "next-auth": "^4.24.8",
+    "nodemailer": "^6.9.15",
     "prisma": "^5.20.0",
     "react": "^18",
     "react-css-spinners": "^4.0.2",
