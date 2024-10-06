@@ -15,7 +15,7 @@ const SignIn: React.FC = () => {
     event.preventDefault();
     try {
       console.log(email, password);
-      const res = await signIn("Credentials", {
+      const res = await signIn("credentials", {
         email: email,
         password: password,
         redirect: false,

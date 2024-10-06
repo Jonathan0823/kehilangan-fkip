@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> a140a6c5ff4c117367ce382ab4b068bb7be436ee
 "use client";
 import { FiPaperclip } from "react-icons/fi";
 import { useState, useEffect } from "react";
