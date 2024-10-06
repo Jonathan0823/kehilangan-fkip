@@ -1,7 +1,8 @@
 "use client";
 
-import axios from "axios";
+import { FaEnvelope } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const SendToken = () => {
   const [email, setEmail] = useState("");
@@ -27,14 +28,14 @@ const SendToken = () => {
     setTimer(35);
 
     try {
-        setSuccessMessage("");
-        setErrorMessage("")
+      setSuccessMessage("");
+      setErrorMessage("");
       const result = await axios.post("/api/send-token", { email });
       setSuccessMessage("Email berhasil dikirim!");
       setErrorMessage("");
       console.log(result);
     } catch {
-      setErrorMessage("Failed to send email."); 
+      setErrorMessage("Failed to send email.");
       setTimer(0);
       setSuccessMessage("");
     } finally {
@@ -43,46 +44,51 @@ const SendToken = () => {
   };
 
   return (
-    <div>
-      <div className="relative min-h-screen bg-gray-300 flex items-center justify-center">
-        <div className="border-2 border-zinc-500 bg-gray-400 relative w-full h-full max-w-md p-8 m-4 shadow-lg rounded-lg z-10">
-          <h2 className="text-2xl font-semibold text-gray-100 text-center mb-8">
-            Forgot Password
-          </h2>
-          {successMessage && (
-            <p className="text-green-600 text-center mb-4">{successMessage}</p>
-          )}
-          {errorMessage && (
-            <p className="text-red-600 text-center mb-4">{errorMessage}</p>
-          )}
-          <form onSubmit={handleSubmit}>
-            <fieldset>
-              <div className="relative mb-8">
-                <input
-                  type="email"
-                  name="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  aria-label="Email"
-                  className="w-full py-2 px-0 text-gray-100 border-b-2 border-gray-600 bg-transparent focus:border-blue-600 outline-none"
-                  disabled={isSending}
-                />
-                <label className="absolute top-0 left-0 text-gray-100 text-sm transition-transform duration-300 transform -translate-y-1 scale-75 origin-top-left pointer-events-none">
-                  Email
-                </label>
-              </div>
-              <button
-                type="submit"
-                className={`w-full py-2 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg transition-transform duration-300 hover:from-purple-600 hover:to-blue-600 ${
-                  isSending ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+    <div className="min-h-dvh flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg max-w-sm w-full">
+        <h2 className="text-3xl font-bold mb-6 text-center text-sky-600">
+          Forgot Password
+        </h2>
+
+        {successMessage && (
+          <p className="text-green-500 text-center mb-4">{successMessage}</p>
+        )}
+        {errorMessage && (
+          <p className="text-red-500 text-center mb-4">{errorMessage}</p>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-semibold text-gray-700"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <div className="flex items-center border rounded-lg px-3 py-2 mt-2 border-sky-400">
+              <FaEnvelope className="text-sky-400 mr-3" />
+              <input
+                type="email"
+                id="email"
+                className="w-full focus:ring focus:ring-sky-200 focus:outline-none"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 disabled={isSending}
-              >
-                {isSending ? `Please wait ${timer}s` : "Reset Password"}
-              </button>
-            </fieldset>
-          </form>
-        </div>
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className={`w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none ${
+              isSending ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={isSending}
+          >
+            {isSending ? `Please wait ${timer}s` : "Send Reset Token"}
+          </button>
+        </form>
       </div>
     </div>
   );
