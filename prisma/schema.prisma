@@ -22,7 +22,7 @@ model User {
   updatedAt DateTime @updatedAt
   posts     Post[]
   prodi     String?
-  angkatab  String?
+  angkatan  String?
   coments   coment[]
 }
 
