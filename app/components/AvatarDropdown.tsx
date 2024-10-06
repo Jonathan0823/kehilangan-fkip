@@ -1,9 +1,6 @@
 import {
-    Cloud,
     CreditCard,
-    Github,
     Keyboard,
-    LifeBuoy,
     LogOut,
     Mail,
     MessageSquare,
@@ -23,7 +20,6 @@ import {
     DropdownMenuLabel,
     DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
