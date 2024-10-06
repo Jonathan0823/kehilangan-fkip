@@ -1,6 +1,12 @@
+import Footer from "./components/Footer";
+import Landing from "./components/Landing";
 
 export default function Home() {
   return (
-    <div>Sistem Pengaduan Kehilangan Barang dan Kerusakan Fasilitas FKIP Unsika</div>
+    <div className="min-h-dvh">
+      
+    <Landing/>
+    <Footer/>
+    </div>
   );
 }
