@@ -1,14 +1,15 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "./Loading";
+import axios from "axios";
 
 interface Post {
+  id: string;
   userId: string;
   userName: string;
-  userImage: string;
+  userImage: string | null;
   timeAgo: string;
   title: string;
   description: string;
@@ -16,51 +17,53 @@ interface Post {
   type?: string;
 }
 
+const ReactButton = () => {
+  const [react, setReact] = useState<number>(0);
+
+  const handleReact = () => {
+    setReact(react + 1);
+  };
+
+  return (
+    <button
+      onClick={handleReact}
+      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full"
+    >
+      Beri Reaksi {react}
+    </button>
+  );
+};
+
 export default function Post() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filter, setFilter] = useState<string>("All");
   const [loading, setLoading] = useState<boolean>(true);
-  const [react, setReact] = useState<number>(0);
-
-  const dummyPosts: Post[] = [
-    {
-      userId: "1",
-      userName: "wignn",
-      userImage: "/111233.png",
-      timeAgo: "2 hours ago",
-      title: "nemu monyet hijau",
-      description: "dompet hitam",
-      image: "/Sample.jpg",
-      type: "Lost & Found",
-    },
-    {
-      userId: "2",
-      userName: "dean Smith",
-      userImage: "/111233.png",
-      timeAgo: "1 day ago",
-      title: "nemu nasi ayam",
-      description: "nasi ayam dean",
-      image: "/Sample2.jpg",
-      type: "Facilities",
-    },
-  ];
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      setLoading(true);
-      setPosts(dummyPosts);
-    } catch (err) {
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("/api/postList");
+        setPosts(response.data);
+        console.log("Fetched Posts:", response.data);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError("Failed to load posts. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, [filter]);
 
   if (loading) {
     return <Loading />;
   }
-  const hendleReact = () => {
-    setReact(react + 1);
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
   }
 
   const filteredPosts = posts.filter(
@@ -68,11 +71,11 @@ export default function Post() {
   );
 
   return (
-    <div className=" min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <div className="w-full md:max-w-full max-w-md p-4">
         <div className="flex justify-around mt-20 z-10">
           <button
-            className={`px-4 py-2 rounded-full ${
+            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
@@ -81,36 +84,38 @@ export default function Post() {
           >
             All
           </button>
+
           <button
-            className={`px-4 py-2 rounded-full ${
-              filter === "Lost & Found"
+            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
+              filter === "Kehilangan Barang"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
             }`}
-            onClick={() => setFilter("Lost & Found")}
+            onClick={() => setFilter("Kehilangan Barang")}
           >
-            Lost & Found
+            Kehilangan Barang
           </button>
+
           <button
-            className={`px-4 py-2 rounded-full ${
-              filter === "Facilities"
+            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
+              filter === "Penemuan Barang"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
             }`}
-            onClick={() => setFilter("Facilities")}
+            onClick={() => setFilter("Penemuan Barang")}
           >
-            Facilities
+            Penemuan Barang
           </button>
         </div>
 
         <div className="mt-6 space-y-4">
-          {filteredPosts.map((post, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow">
+          {filteredPosts.map((post) => (
+            <div key={post.id} className="bg-white p-4 rounded-lg shadow">
               <div className="flex items-center mb-2">
                 <Image
                   width={32}
                   height={32}
-                  src={post.userImage}
+                  src={post.userImage || "/default-image.png"}
                   alt="User Profile"
                   className="h-8 w-8 rounded-full"
                 />
@@ -135,13 +140,8 @@ export default function Post() {
               </div>
 
               <div className="flex justify-between mt-4">
-                <button onClick={hendleReact} className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
-                  Beri Reaksi
-                  {react}
-                </button>
-                
-
-                <Link href="/post/[id]" as={`/post/${index}`}>
+                <ReactButton />
+                <Link href={`/post/${post.id}`}>
                   <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
                     Komentar
                   </button>
@@ -149,10 +149,6 @@ export default function Post() {
               </div>
             </div>
           ))}
-
-          {filteredPosts.length === 1 && (
-            <div className="bg-white p-4 rounded-lg shadow invisible"></div>
-          )}
         </div>
       </div>
     </div>
