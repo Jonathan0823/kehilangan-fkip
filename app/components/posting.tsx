@@ -75,8 +75,8 @@ export default function Post() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full flex flex-col items-center md:max-w-full max-w-md p-4">
-        <div className="flex justify-around md:gap-10 md:max-w-2xl mt-20 ">
+      <div className="w-full  items-center md:max-w-full max-w-md p-4">
+        <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
