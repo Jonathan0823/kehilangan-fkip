@@ -25,6 +25,8 @@ model User {
   prodi     String?
   angkatan  String?
   coments   coment[]
+  veriftToken String?
+  kadaluarsa DateTime?
 }
 
 model Post {
