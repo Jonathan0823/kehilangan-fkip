@@ -6,7 +6,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const [user, setUser] = useState<any>(null);
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+  }
+
+  const [user, setUser] = useState<User | null>(null);
   const { data: session } = useSession();
   const fetchData = async () => {
     if (session?.user?.id) {
@@ -14,15 +21,21 @@ export default function Navbar() {
       setUser(result.data);
     }
   };
+
   useEffect(() => {
     fetchData();
+    console.log(user);
   }, [session]);
+ 
 
+  const profilepic = user?.image ? user.image : "";
+
+  
   return (
     <div className="w-full fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
         {session && <p className="text-xs text-black">Halo, {session.user?.name}</p>}
-        <AvatarDropdown image={user?.image} />
+        <AvatarDropdown image={profilepic} />
       </div>
 
       <div className="flex-grow text-center">

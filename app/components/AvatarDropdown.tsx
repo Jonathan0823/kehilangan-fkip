@@ -27,14 +27,19 @@ import {
   } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Logout from "./Logout"
+import Placeholder from "@/public/person.png"
    
-  export function AvatarDropdown({ image }: { image:any }) {
-    console.log(image)
+  export function AvatarDropdown({ image }: { image:string }) {
+
+
+    
+    const profilepic = image ? image : Placeholder
+
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
          <Image
-          src={image}
+          src={profilepic}
           alt="Profile"
           width={30}
           height={30}
