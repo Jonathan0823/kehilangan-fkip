@@ -20,7 +20,6 @@ const Profile: React.FC<ProfileProps> = ({ id, nama, prodi, image, angkatan, ema
     const [program, setProgram] = useState(prodi);
     const [angk, setAngk] = useState(angkatan);
     const [mail, setMail] = useState(email);
-    const [lapor, setLapor] = useState(laporan);
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -70,7 +69,7 @@ const Profile: React.FC<ProfileProps> = ({ id, nama, prodi, image, angkatan, ema
                 </div>
 
                 <div className="text-center text-gray-600 text-sm mb-4">
-                    <p>{lapor} Laporan Terkirim</p>
+                    <p>{laporan} Laporan Terkirim</p>
                 </div>
 
                 {error && <p className="text-red-500 text-center">{error}</p>}
