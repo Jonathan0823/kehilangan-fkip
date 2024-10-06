@@ -75,8 +75,8 @@ export default function Post() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full md:max-w-full max-w-md p-4">
-        <div className="flex justify-around mt-20 z-10">
+      <div className="w-full flex flex-col items-center md:max-w-full max-w-md p-4">
+        <div className="flex justify-around md:gap-10 md:max-w-2xl mt-20 ">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
@@ -108,47 +108,47 @@ export default function Post() {
             onClick={() => setFilter("Penemuan Barang")}
           >
             Penemuan Barang
-          </button>
+          </button> 
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 space-y-4 flex flex-col items-center">
           {filteredPosts.map((post) => (
-            <div key={post.id} className="bg-white p-4 rounded-lg shadow">
+            <div key={post.id} className="bg-white p-4 items-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full">
               <div className="flex items-center mb-2">
-                <Image
-                  width={32}
-                  height={32}
-                  src={post.userImage || "/default-image.png"}
-                  alt="User Profile"
-                  className="h-8 w-8 rounded-full"
-                />
-                <div className="ml-2">
-                  <h2 className="text-sm font-bold">{post.userName}</h2>
-                  <p className="text-xs text-gray-500">{post.timeAgo}</p>
-                </div>
+          <Image
+            width={32}
+            height={32}
+            src={post.userImage || "/default-image.png"}
+            alt="User Profile"
+            className="h-8 w-8 rounded-full"
+          />
+          <div className="ml-2">
+            <h2 className="text-sm font-bold">{post.userName}</h2>
+            <p className="text-xs text-gray-500">{post.timeAgo}</p>
+          </div>
               </div>
 
               <h3 className="text-lg font-semibold">{post.title}</h3>
               <p className="text-sm text-gray-700">{post.description}</p>
               <div className="flex justify-center mt-4">
-                {post.image && (
-                  <Image
-                    width={200}
-                    height={200}
-                    src={post.image}
-                    alt="Post Image"
-                    className="mt-2 justify-center flex rounded-lg"
-                  />
-                )}
+          {post.image && (
+            <Image
+              width={200}
+              height={200}
+              src={post.image}
+              alt="Post Image"
+              className="mt-2 justify-center flex rounded-lg"
+            />
+          )}
               </div>
 
               <div className="flex justify-between mt-4">
-                <ReactButton />
-                <Link href={`/post/${post.id}`}>
-                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
-                    Komentar
-                  </button>
-                </Link>
+          <ReactButton />
+          <Link href={`/post/${post.id}`}>
+            <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
+              Komentar
+            </button>
+          </Link>
               </div>
             </div>
           ))}
