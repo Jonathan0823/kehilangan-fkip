@@ -31,6 +31,6 @@ export const createPost = async (formData: Post) => {
     });
     return post; 
   } catch (err) {
-    throw new Error("err"); 
+    throw new Error("error creating post"); 
   }
 };
