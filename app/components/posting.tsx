@@ -74,9 +74,9 @@ export default function Post() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="w-full flex flex-col items-center md:max-w-full max-w-md p-4">
-        <div className="flex justify-around md:gap-10 md:max-w-2xl mt-20 ">
+    <div className="min-h-screen w-full items-center bg-gray-100">
+      <div className="w-full items-center md:max-w-full p-4 mx-auto">
+        <div className="flex justify-around md:gap-10 md:max-w-2xl mt-24 mx-auto ">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
@@ -113,7 +113,7 @@ export default function Post() {
 
         <div className="mt-6 space-y-4 flex flex-col items-center">
           {filteredPosts.map((post) => (
-            <div key={post.id} className="bg-white p-4 items-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full">
+            <div key={post.id} className="bg-white p-6 items-center justify-center rounded-lg shadow md:max-w-3xl max-w-full w-full">
               <div className="flex items-center mb-2">
           <Image
             width={32}
