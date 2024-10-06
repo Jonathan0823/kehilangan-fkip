@@ -25,10 +25,16 @@ model User {
 
 model Post {
   id          String   @id @default(cuid())
+  userId      String
+  userName    String
+  userImage   String
+  timeAgo     String
   title       String
   description String
+  image       String?
+  type        String?
+  date        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  author      User     @relation(fields: [authorId], references: [id])
-  authorId    String
+  author      User     @relation(fields: [userId], references: [id]) // Menghubungkan dengan model User menggunakan userId
 }

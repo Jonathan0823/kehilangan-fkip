@@ -3,8 +3,11 @@
 import { FiPaperclip } from "react-icons/fi";
 import { useState } from "react";
 import Image from "next/image";
+import { createPost } from "@/app/lib/action"; 
+import { useSession } from "next-auth/react";
 
 export default function ReportForm() {
+  const { data: session } = useSession();
   const [reportType, setReportType] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -13,15 +16,33 @@ export default function ReportForm() {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setSuccessMessage(null); 
+
+    const formData = {
+      title: reportType,
+      description,
+      image: attachment ? await uploadAttachment(attachment) : null, 
+      date,
+      userImage: session?.user?.image, 
+      userName: session?.user?.name, 
+      userId: session?.user?.id, 
+      type: reportType,
+    };
+
     try {
-      //di sini tembat upload data ke data base atau api
-      console.log({ attachment, date, description, reportType });
+      await createPost(formData);
       setSuccessMessage("Laporan berhasil diupload");
+      setReportType("");
+      setDescription("");
+      setDate("");
+      setAttachment(null);
+      setPreviewImage(null);
     } catch (err) {
       setError("Laporan gagal diupload");
-      throw err;
+      console.error(err); 
     }
   };
 
@@ -33,17 +54,21 @@ export default function ReportForm() {
     }
   };
 
+  const uploadAttachment = async (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve("URL_LAMPIRAN"), 1000);
+    });
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+        className="bg-white p-6 mt-20 rounded-lg shadow-md w-full max-w-md"
       >
         <h2 className="text-2xl font-bold mb-4">Sampaikan laporan Anda</h2>
         <div className="mb-4">
-          <label className="block font-semibold mb-2">
-            Pilih Jenis Laporan
-          </label>
+          <label className="block font-semibold mb-2">Pilih Jenis Laporan</label>
           <div className="flex flex-col space-y-2">
             <button
               type="button"
