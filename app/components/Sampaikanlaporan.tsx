@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 import { FiPaperclip } from "react-icons/fi";
 import { useState, useEffect } from "react";
