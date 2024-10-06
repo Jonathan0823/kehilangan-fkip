@@ -15,14 +15,14 @@ export default function Navbar() {
 
   const [user, setUser] = useState<User | null>(null);
   const { data: session } = useSession();
-  const fetchData = async () => {
-    if (session?.user?.id) {
-      const result = await axios.post(`/api/userData/`, { id: session.user.id });
-      setUser(result.data);
-    }
-  };
-
+  
   useEffect(() => {
+    const fetchData = async () => {
+      if (session?.user?.id) {
+        const result = await axios.post(`/api/userData/`, { id: session.user.id });
+        setUser(result.data);
+      }
+    };
     fetchData();
   }, [session]);
 
