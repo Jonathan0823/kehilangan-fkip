@@ -33,7 +33,7 @@ const SendToken = () => {
       setSuccessMessage("Email berhasil dikirim!");
       setErrorMessage("");
       console.log(result);
-    } catch {
+    } catch (error) {
       setErrorMessage("Failed to send email."); 
       setTimer(0);
       setSuccessMessage("");
