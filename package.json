@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.20.0",
     "@vercel/postgres": "^0.10.0",
     "appwrite": "^16.0.2",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "next": "14.2.14",
     "next-auth": "^4.24.8",
+    "prisma": "^5.20.0",
     "react": "^18",
     "react-css-spinners": "^4.0.2",
     "react-dom": "^18",
