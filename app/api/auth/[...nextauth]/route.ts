@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 const handler = NextAuth({
+  
   session: {
     strategy: "jwt",
   },
@@ -19,23 +20,31 @@ const handler = NextAuth({
       },
 
       async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-
-          where: {
-            email: credentials?.email,
-          },
-        });
-
-
-        if (user) {
-          const passwordCorrect = await compare(credentials?.password || "", user.password);
-
-          if (passwordCorrect) {
-            return { id: user.id, email: user.email, name: user.name }; 
+        try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials?.email,
+            },
+          });
+          
+          if (!user) {
+            console.log("User not found");
+            return null;
           }
+      
+          const passwordCorrect = await compare(credentials?.password || "", user.password);
+      
+          if (!passwordCorrect) {
+            console.log("Password is incorrect");
+            return null;
+          }
+      
+          return { id: user.id, email: user.email, name: user.name }; 
+        } catch (error) {
+          console.error("Authorization error:", error);
+          return null;
         }
-        return null;
-      },
+      }      
     }),
   ],
   callbacks: {

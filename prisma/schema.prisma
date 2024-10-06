@@ -27,7 +27,7 @@ model Post {
   id          String   @id @default(cuid())
   userId      String
   userName    String
-  userImage   String
+  userImage   String?
   timeAgo     String
   title       String
   description String
@@ -36,5 +36,5 @@ model Post {
   date        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  author      User     @relation(fields: [userId], references: [id]) // Menghubungkan dengan model User menggunakan userId
+  author      User     @relation(fields: [userId], references: [id]) 
 }
