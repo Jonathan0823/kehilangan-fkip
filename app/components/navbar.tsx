@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { useSession } from "next-auth/react";
+import { AvatarDropdown } from "./AvatarDropdown";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -9,13 +9,7 @@ export default function Navbar() {
     <div className="w-full fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
       {session && <p className="text-xs text-black">Halo, {session.user?.name}</p>}
-        <Image
-          src="/111233.png"
-          alt="Profile"
-          width={30}
-          height={30}
-          className="w-10 h-10 rounded-full object-cover"
-        />
+        <AvatarDropdown />
       </div>
 
       <div className="flex-grow text-center">
