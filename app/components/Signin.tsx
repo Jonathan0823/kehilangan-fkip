@@ -14,10 +14,9 @@ const SignIn: React.FC = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const formData = new FormData(event.currentTarget as HTMLFormElement);
       const res = await signIn("credentials", {
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
+        email: email,
+        password: password,
         redirect: false,
       });
       if (res?.error) {
