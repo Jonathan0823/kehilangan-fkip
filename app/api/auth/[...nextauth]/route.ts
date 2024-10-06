@@ -26,7 +26,7 @@ const handler = NextAuth({
 
 
         if (user) {
-          const passwordCorrect = await compare(credentials.password, user.password);
+          const passwordCorrect = await compare(credentials?.password || "", user.password);
 
           if (passwordCorrect) {
             return { id: user.id, email: user.email, name: user.name }; 
