@@ -9,6 +9,7 @@ interface ProfileProps {
     image: string;
   angkatan: string;
   email: string;
+    laporan: number;
 }
 
 const Profile: React.FC<ProfileProps> = ({ nama, prodi,image, angkatan, email ,laporan}) => {
