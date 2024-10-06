@@ -32,7 +32,7 @@ const Profile: React.FC<ProfileProps> = ({ id, nama, prodi, image, angkatan, ema
         try {
             const result = await axios.post("/api/editeUser", {
                 id,
-                nama: name,
+                name: name,
                 prodi: program,
                 angkatan: angk,
             });
