@@ -43,6 +43,7 @@ export default function Reset({ params }: { params: string }) {
         setErrorMessage("Failed to update password.");
       }
     } catch (error) {
+        throw error;
       setErrorMessage("An error occurred. Please try again.");
     }
   };
