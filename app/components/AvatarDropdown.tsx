@@ -26,6 +26,7 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
+import Logout from "./Logout"
    
   export function AvatarDropdown() {
     return (
@@ -97,7 +98,7 @@ import Image from "next/image"
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <Logout />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
