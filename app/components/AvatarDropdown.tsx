@@ -30,7 +30,11 @@ import Logout from "./Logout"
 import Placeholder from "@/public/person.png"
    
   export function AvatarDropdown({ image }: { image:string }) {
+
+
+    
     const profilepic = image ? image : Placeholder
+
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
