@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import axios from "axios";
 
 interface Post {
+  createdAt: string | number | Date;
   id: string;
   userId: string;
   userName: string;
@@ -66,7 +67,9 @@ export default function Post() {
     return <div className="text-red-500">{error}</div>;
   }
 
-  const filteredPosts = posts.filter(
+  const sortedPosts = posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const filteredPosts = sortedPosts.filter(
     (post) => filter === "All" || post.type === filter
   );
 
