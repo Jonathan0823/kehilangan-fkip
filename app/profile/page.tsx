@@ -49,7 +49,7 @@ export default function ProfilePage() {
           image={user.image}
           angkatan={user.angkatan}
           email={user.email}
-          laporan={laporan}
+          laporan={laporan.toString()}
         />
       ) : (
         <Loading />

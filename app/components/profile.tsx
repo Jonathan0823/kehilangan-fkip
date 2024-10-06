@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IoPencilOutline, IoSaveOutline } from 'react-icons/io5';
 import { useState } from "react";
 import axios from "axios";
+import BackButton from "./profilebuttons/back";
 
 interface ProfileProps {
     id: string;
@@ -50,13 +51,7 @@ const Profile: React.FC<ProfileProps> = ({ id, nama, prodi, image, angkatan, ema
         <div className="flex justify-center items-center h-screen bg-gray-100">
             <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
                 <div className="flex justify-start mb-6">
-                    <Link href={'/'}>
-                        <button className="text-blue-500 hover:text-blue-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-                    </Link>
+                    <BackButton />
                 </div>
 
                 <div className="flex justify-center">
