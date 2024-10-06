@@ -26,7 +26,8 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
-import Logout from "./Logout"
+import Logout from "./dropdownbuttons/Logout"
+import ProfileButton from "./dropdownbuttons/Profile"
    
   export function AvatarDropdown({ image }: { image:string }) {
 
@@ -53,7 +54,7 @@ import Logout from "./Logout"
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <ProfileButton />
             </DropdownMenuItem>
             <DropdownMenuItem>
               <CreditCard className="mr-2 h-4 w-4" />

@@ -20,24 +20,24 @@ export default function ProfilePage() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
 
-  const fetchData = async () => {
-    try {
-      if (session?.user?.id) {
-        const result = await axios.post(`/api/userData`, {
-          id: session.user.id,
-        });
-        console.log(result.data);
-        setUser(result.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const laporan = user?.posts.length
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (session?.user?.id) {
+          const result = await axios.post(`/api/userData`, {
+            id: session.user.id,
+          });
+          console.log(result.data);
+          setUser(result.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchData();
   }, [session]);
+
+  const laporan = user?.posts.length ?? 0;
 
   return (
     <div className="min-h-dvh">
@@ -49,7 +49,7 @@ export default function ProfilePage() {
           image={user.image}
           angkatan={user.angkatan}
           email={user.email}
-            laporan={laporan}
+          laporan={laporan}
         />
       ) : (
         <Loading />
