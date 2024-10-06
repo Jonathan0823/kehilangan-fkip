@@ -11,7 +11,7 @@ export async function POST(request: Request) {
         email: email,
       },
     });
-
+    const url = process.env.MAIL_URL;
     if (user) {
       const token = nanoid(32);
       const transporter = nodemailer.createTransport({
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
         <h2 style="color: #333;">Password Reset Request</h2>
         <p>We received a request to reset your password. Click the button below to reset it.</p>
-        <a href="http://localhost:3000/reset/reset-password/${token}" style="display: inline-block; padding: 10px 20px; margin: 20px 0; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Your Password</a>
+        <a href="${url}/reset/reset-password/${token}" style="display: inline-block; padding: 10px 20px; margin: 20px 0; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Your Password</a>
         <p>If you did not request a password reset, please ignore this email.</p>
         <p style="color: #888;">Thank you,<br/>Othinus</p>
       </div>
