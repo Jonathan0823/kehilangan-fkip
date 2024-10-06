@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IoPencilOutline, IoSaveOutline } from 'react-icons/io5';
+import { useState } from "react";
+
 
 interface ProfileProps {
   nama: string;
@@ -9,11 +11,12 @@ interface ProfileProps {
     image: string;
   angkatan: string;
   email: string;
-    laporan: number;
+    laporan: string;
 }
 
 const Profile: React.FC<ProfileProps> = ({ nama, prodi,image, angkatan, email ,laporan}) => {
     console.log(nama, prodi, angkatan, email);
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
