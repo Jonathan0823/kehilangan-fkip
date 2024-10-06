@@ -43,6 +43,7 @@ export default function ProfilePage() {
     <div className="min-h-dvh">
       {user ? (
         <Profile
+        id={user.id}
           nama={user.name}
           prodi={user.prodi}
           image={user.image}
