@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "./Loading";
+import axios from "axios";
 
 interface Post {
   userId: string;
@@ -21,61 +22,52 @@ export default function Post() {
   const [filter, setFilter] = useState<string>("All");
   const [loading, setLoading] = useState<boolean>(true);
   const [react, setReact] = useState<number>(0);
-
-  const dummyPosts: Post[] = [
-    {
-      userId: "1",
-      userName: "wignn",
-      userImage: "/111233.png",
-      timeAgo: "2 hours ago",
-      title: "nemu monyet hijau",
-      description: "dompet hitam",
-      image: "/Sample.jpg",
-      type: "Lost & Found",
-    },
-    {
-      userId: "2",
-      userName: "dean Smith",
-      userImage: "/111233.png",
-      timeAgo: "1 day ago",
-      title: "nemu nasi ayam",
-      description: "nasi ayam dean",
-      image: "/Sample2.jpg",
-      type: "Facilities",
-    },
-  ];
+  const [error, setError] = useState<string | null>(null); 
 
   useEffect(() => {
-    try {
-      setLoading(true);
-      setPosts(dummyPosts);
-    } catch (err) {
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const types = filter === "All" ? ["Lost & Found", "Facilities"] : [filter];
+        const response = await axios.get(`http://localhost:5555/post/${types}`);
+
+        setPosts(response.data);
+        console.log("Fetched Posts:"); 
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError("Failed to load posts. Please try again."); 
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+
+    fetchPosts();
+  }, [filter]);
 
   if (loading) {
     return <Loading />;
   }
-  const hendleReact = () => {
-    setReact(react + 1);
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>; 
   }
+
+  const handleReact = () => {
+    setReact(react + 1);
+  };
 
   const filteredPosts = posts.filter(
     (post) => filter === "All" || post.type === filter
   );
 
   return (
-    <div className=" min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <div className="w-full md:max-w-full max-w-md p-4">
         <div className="flex justify-around mt-20 z-10">
           <button
             className={`px-4 py-2 rounded-full ${
-              filter === "All"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+              filter === "All" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
             }`}
             onClick={() => setFilter("All")}
           >
@@ -83,9 +75,7 @@ export default function Post() {
           </button>
           <button
             className={`px-4 py-2 rounded-full ${
-              filter === "Lost & Found"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+              filter === "Lost & Found" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
             }`}
             onClick={() => setFilter("Lost & Found")}
           >
@@ -93,9 +83,7 @@ export default function Post() {
           </button>
           <button
             className={`px-4 py-2 rounded-full ${
-              filter === "Facilities"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+              filter === "Facilities" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
             }`}
             onClick={() => setFilter("Facilities")}
           >
@@ -135,13 +123,10 @@ export default function Post() {
               </div>
 
               <div className="flex justify-between mt-4">
-                <button onClick={hendleReact} className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
-                  Beri Reaksi
-                  {react}
+                <button onClick={handleReact} className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
+                  Beri Reaksi {react}
                 </button>
-                
-
-                <Link href="/post/[id]" as={`/post/${index}`}>
+                <Link href={`/post/${index}`}>
                   <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
                     Komentar
                   </button>
@@ -149,10 +134,6 @@ export default function Post() {
               </div>
             </div>
           ))}
-
-          {filteredPosts.length === 1 && (
-            <div className="bg-white p-4 rounded-lg shadow invisible"></div>
-          )}
         </div>
       </div>
     </div>
