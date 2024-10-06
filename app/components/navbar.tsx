@@ -24,9 +24,9 @@ export default function Navbar() {
 
   useEffect(() => {
     fetchData();
-    console.log(user);
   }, [session]);
- 
+
+
 
   const profilepic = user?.image ? user.image : "";
 
