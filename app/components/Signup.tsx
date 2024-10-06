@@ -13,13 +13,12 @@ const SignUp: React.FC = () => {
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const formData = new FormData(event.currentTarget as HTMLFormElement);
-      const response = await fetch("/api/auth/register", {
+      await fetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({
-          username: formData.get("name"),
-          email: formData.get("email"),
-          password: formData.get("password"),
+          username: name,
+          email: email,
+          password: password,
         }),
         headers: {
           "Content-Type": "application/json",
