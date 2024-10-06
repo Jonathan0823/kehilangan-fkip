@@ -28,12 +28,13 @@ import {
 import Image from "next/image"
 import Logout from "./Logout"
    
-  export function AvatarDropdown() {
+  export function AvatarDropdown({ image }: { image:any }) {
+    console.log(image)
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
          <Image
-          src="/111233.png"
+          src={image}
           alt="Profile"
           width={30}
           height={30}
