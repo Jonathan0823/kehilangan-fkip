@@ -111,7 +111,7 @@ export default function Post() {
           </button> 
         </div>
 
-        <div className="mt-6 space-y-4 flex flex-col md:max-w-full items-center">
+        <div className="mt-6 space-y-4 flex flex-col items-center">
           {filteredPosts.map((post) => (
             <div key={post.id} className="bg-white p-4 items-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full">
               <div className="flex items-center mb-2">
