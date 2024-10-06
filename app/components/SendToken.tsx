@@ -35,7 +35,7 @@ const SendToken = () => {
       setErrorMessage("");
       console.log(result);
     } catch {
-      setErrorMessage("Failed to send email.");
+      setErrorMessage("Failed to send email."); 
       setTimer(0);
       setSuccessMessage("");
     } finally {
