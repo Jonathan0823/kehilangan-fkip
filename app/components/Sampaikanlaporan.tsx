@@ -45,13 +45,15 @@ export default function ReportForm() {
         file,
         onProgressChange: (uploadProgress) => setProgress(uploadProgress),
       });
-
+      const result = await axios.post("/api/userData",{id:session?.user?.id});
+      console.log(result);
+      const user = result.data;
       const formData = {
         title: reportType,
         description,
         image: fileUploadResponse.url,
         date,
-        userImage: session?.user?.image,
+        userImage: user?.image,
         userName: session?.user?.name,
         userId: session?.user?.id,
         type: reportType,
