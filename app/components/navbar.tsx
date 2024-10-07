@@ -1,43 +1,27 @@
 "use client";
 import { FaBell, FaSearch } from "react-icons/fa";
-import { useSession } from "next-auth/react";
 import { AvatarDropdown } from "./AvatarDropdown";
-import axios from "axios";
-import { useEffect, useState } from "react";
-
-export default function Navbar() {
-
-  const [loading , setLoading] = useState(true);
-  interface User {
-    id: string;
-    name: string;
-    email: string;
-    image: string;
-  }
-
-  const [user, setUser] = useState<User | null>(null);
-  const { data: session } = useSession();
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      if (session?.user?.id) {
-        const result = await axios.post(`/api/userData/`, { id: session.user.id });
-        setUser(result.data);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [session]);
+import React from "react";
 
 
+interface User {
+  image: string; 
+  name: string;  
+}
 
-  const profilepic = loading ? "" : user?.image || "";
+interface NavbarProps {
+  user: User | null; 
+}
 
-  
+const Navbar: React.FC<NavbarProps> = ({ user }) => {
+  const profilepic = user?.image || "";
+
+  console.log(user); 
+
   return (
     <div className="w-full h-20 fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
-        <AvatarDropdown image={profilepic} name={user?.name || ""}/>
+        <AvatarDropdown image={profilepic} name={user?.name || ""} />
       </div>
 
       <div className="flex-grow text-center">
@@ -50,3 +34,5 @@ export default function Navbar() {
     </div>
   );
 }
+
+export default Navbar;

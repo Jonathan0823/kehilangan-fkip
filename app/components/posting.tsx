@@ -1,9 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Loading from "./Loading";
-import axios from "axios";
+
+interface PostProps {
+  posts: Post[]; 
+}
 
 interface Post {
   createdAt: string | number | Date;
@@ -35,37 +37,8 @@ const ReactButton = () => {
   );
 };
 
-export default function Post() {
-  const [posts, setPosts] = useState<Post[]>([]);
+export default function PostComponent({ posts }: PostProps) {
   const [filter, setFilter] = useState<string>("All");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("/api/postList");
-        setPosts(response.data);
-        console.log("Fetched Posts:", response.data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError("Failed to load posts. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, [filter]);
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
 
   const sortedPosts = posts.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -78,7 +51,7 @@ export default function Post() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-4 mx-auto">
-      <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
+        <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
