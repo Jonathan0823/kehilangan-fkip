@@ -40,7 +40,7 @@ export default function Post() {
   const [filter, setFilter] = useState<string>("All");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [sending, setSending] = useState<boolean>(false);
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
