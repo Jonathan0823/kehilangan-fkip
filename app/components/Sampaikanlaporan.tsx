@@ -74,13 +74,13 @@ export default function ReportForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 mt-20 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Sampaikan laporan Anda</h2>
+    <div className="flex justify-center items-center md:min-h-screen md:bg-gray-100">
+      <form onSubmit={handleSubmit} className="bg-white p-6  rounded-lg mb:shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-10">Sampaikan laporan Anda</h2>
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">Pilih Jenis Laporan</label>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 mb-10">
             {["Kerusakan Fasilitas", "Kehilangan Barang", "Penemuan Barang"].map((type) => (
               <button
                 key={type}
@@ -98,7 +98,7 @@ export default function ReportForm() {
           </div>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-10">
           <label className="block font-semibold mb-2">Deskripsikan Laporan Anda</label>
           <textarea
             value={description}
@@ -118,7 +118,7 @@ export default function ReportForm() {
           /></label>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-10">
           <label className="flex items-center border border-gray-300 p-2 cursor-pointer">
             <FiPaperclip /> Upload Lampiran
             <input

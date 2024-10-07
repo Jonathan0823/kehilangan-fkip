@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { useEdgeStore } from "@/app/lib/edgeStore";
 import axios from "axios";
@@ -7,7 +5,10 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "../lib/cropImage";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { FaCamera } from "react-icons/fa";
+import { FaCamera, FaUpload } from "react-icons/fa";
+import { MdCheckCircle } from "react-icons/md"; 
+import { CircularProgress } from "@mui/material"; 
+
 interface UploadProfileImageProps {
   onClick: (url: string) => void;
   onUpload: () => void;
@@ -43,7 +44,6 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
 
         const uploadedUrl = res?.url;
         setImageUrl(uploadedUrl);
-
         console.log("Uploaded Image URL:", uploadedUrl);
         await saveImageToDatabase(uploadedUrl);
       } catch (error) {
@@ -61,11 +61,9 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
         });
         setSuccessMessage("Image uploaded successfully");
         onClick(url);
-
         setTimeout(() => {
           onUpload();
         }, 2000);
-
         console.log("Response from server:", result.data);
       } catch (error) {
         console.error("Error saving image URL to database:", error);
@@ -88,21 +86,33 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
   };
 
   return (
-    <div className="min-h-dvh flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg max-w-sm w-full">
-        <label className="text-2xl grid-cols-1 items-center mb-6 text-center flex justify-center text-sky-600">
-          <p> Upload image</p>
-          <FaCamera  size={30}/>
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            className=""
-            onChange={handleFileChange}
-          />
-        </label>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-sky-100">
+      <div className="bg-white p-10 rounded-xl max-w-lg w-full shadow-xl transition-shadow duration-300 hover:shadow-2xl border border-sky-300">
+        <div className="text-center">
+          <label className="text-3xl font-semibold flex items-center justify-center text-sky-600">
+            <span>Select Profile Picture</span>
+            <FaCamera size={28} className="ml-2" />
+          </label>
+          <p className="text-gray-500 mt-2">Upload a clear, high-quality image</p>
+        </div>
+
+        {/* Input file yang lebih modern */}
+        <div className="mt-6 mb-4">
+          <label className="block w-full border-2 border-dashed border-sky-400 rounded-lg p-6 text-center cursor-pointer hover:bg-sky-50 hover:border-sky-600 transition duration-200 ease-in-out">
+            <FaUpload className="text-sky-600 mx-auto mb-2" size={24} />
+            <span className="text-sky-600 font-medium">Choose Image</span>
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={handleFileChange}
+            />
+          </label>
+        </div>
+
+        {/* Preview Gambar dan Cropper */}
         {preview && (
-          <div className="relative w-full h-64 mt-4 mb-4">
+          <div className="relative w-full h-64 mt-6 mb-4 bg-gray-100 rounded-lg overflow-hidden shadow-md border border-gray-300">
             <Cropper
               image={preview}
               crop={crop}
@@ -115,10 +125,11 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
           </div>
         )}
 
+        {/* Progress bar untuk upload */}
         {progress > 0 && (
-          <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-4">
+          <div className="w-full bg-gray-200 rounded-full h-4 mt-4">
             <div
-              className="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-in-out"
+              className="bg-sky-500 h-4 rounded-full transition-all duration-500 ease-in-out"
               style={{ width: `${progress}%` }}
             >
               <span className="text-xs text-white font-bold p-1">
@@ -127,27 +138,39 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
             </div>
           </div>
         )}
+
+        {/* Tombol Upload muncul hanya setelah file dipilih */}
+        {preview && (
+          <button
+            disabled={send}
+            className={`w-full py-3 px-4 mt-6 rounded-lg text-lg font-semibold focus:ring focus:ring-sky-300 focus:outline-none transition-all duration-200 ${
+              send ? "bg-gray-400 cursor-not-allowed" : "bg-sky-600 hover:bg-sky-700 text-white"
+            }`}
+            onClick={handleUpload}
+          >
+            {send ? <CircularProgress size={24} color="inherit" /> : "Upload"}
+          </button>
+        )}
+
+        {/* Link untuk melihat gambar yang diupload dan icon sukses */}
         {imageUrl && (
           <div className="flex flex-col items-center mt-6">
             <a
               href={imageUrl}
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-sky-600 hover:underline font-medium"
             >
-              View Uploaded Avatar
+              View Uploaded Image
             </a>
+            <MdCheckCircle className="text-green-500 text-5xl mt-4" />
           </div>
         )}
-        {successMessage && (
-          <p className="text-green-500 text-center mt-4">{successMessage}</p>
-        )}
 
-        <button
-          disabled={send}
-          className="w-full bg-sky-600 text-white py-2 px-4 mt-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none"
-          onClick={handleUpload}
-        >
-          Upload
-        </button>
+        {/* Pesan sukses */}
+        {successMessage && (
+          <p className="text-green-500 text-center mt-4 font-semibold">
+            {successMessage}
+          </p>
+        )}
       </div>
     </div>
   );

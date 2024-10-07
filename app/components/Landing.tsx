@@ -25,9 +25,9 @@ export default function Landing() {
           Halo, sobat FKIP! Sampaikan laporan Anda secara Real-time
         </p>
 
-        <div className="space-y-4 ">
+        <div className="space-y-4 m-5">
           <Link href="/post">
-            <button className="w-full bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600">
+            <button className="w-full my-2 bg-blue-500 text-white py-2 rounded-lg shadow hover:bg-blue-600">
               Lihat Beranda
             </button>
           </Link>

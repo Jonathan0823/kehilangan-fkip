@@ -64,8 +64,8 @@ const Profile: React.FC<ProfileProps> = ({
     }
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+    <div className="flex justify-center items-center  md:h-screen bg-gray-100">
+      <div className="bg-white md:shadow-md rounded-lg p-6 w-full max-w-md">
         <div className="flex justify-start mb-6">
           <BackButton />
         </div>
