@@ -28,7 +28,7 @@ const ReactButton = () => {
   return (
     <button
       onClick={handleReact}
-      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full"
+      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-100"
     >
       Beri Reaksi {react}
     </button>
@@ -81,7 +81,7 @@ export default function Post() {
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
             }`}
             onClick={() => setFilter("All")}
           >
@@ -92,7 +92,7 @@ export default function Post() {
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "Kehilangan Barang"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
             }`}
             onClick={() => setFilter("Kehilangan Barang")}
           >
@@ -103,7 +103,7 @@ export default function Post() {
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "Penemuan Barang"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
             }`}
             onClick={() => setFilter("Penemuan Barang")}
           >
@@ -145,7 +145,7 @@ export default function Post() {
               <div className="flex justify-between mt-4">
           <ReactButton />
           <Link href={`/post/${post.id}`}>
-            <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
+            <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-100">
               Komentar
             </button>
           </Link>
