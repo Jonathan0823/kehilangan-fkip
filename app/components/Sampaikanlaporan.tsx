@@ -43,7 +43,7 @@ export default function ReportForm() {
   }, [file]);
 
   const handleInputChange = () => {
-    setSend(false); 
+    setSend(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,7 +51,7 @@ export default function ReportForm() {
     setError(null);
     setSuccessMessage(null);
     setSending(true);
-    
+
     try {
       reportSchema.parse({
         reportType,
@@ -72,7 +72,9 @@ export default function ReportForm() {
         file,
         onProgressChange: (uploadProgress) => setProgress(uploadProgress),
       });
-      const result = await axios.post("/api/userData", { id: session?.user?.id });
+      const result = await axios.post("/api/userData", {
+        id: session?.user?.id,
+      });
       const user = result.data;
       const formData = {
         title: reportType,
@@ -90,7 +92,6 @@ export default function ReportForm() {
       if (response.status === 200) {
         window.location.href = "/post";
       }
-      
 
       setReportType("");
       setDescription("");
@@ -126,7 +127,7 @@ export default function ReportForm() {
                 type="button"
                 onClick={() => {
                   setReportType(type);
-                  handleInputChange(); 
+                  handleInputChange();
                 }}
                 className={`py-2 px-4 rounded ${
                   reportType === type
@@ -139,20 +140,18 @@ export default function ReportForm() {
             ))}
           </div>
         </div>
-
         <div className="mb-10">
           <label className="block mb-2">Deskripsikan Laporan Anda</label>
           <textarea
             value={description}
             onChange={(e) => {
               setDescription(e.target.value);
-              handleInputChange(); 
+              handleInputChange();
             }}
             className="w-full p-2 border bg-sky-100 border-gray-300 rounded"
             placeholder="Deskripsikan laporan Anda"
           />
         </div>
-
         <div className="mb-4">
           <label className="block mb-2">Tanggal Kejadian</label>
           <input
@@ -160,12 +159,11 @@ export default function ReportForm() {
             value={date}
             onChange={(e) => {
               setDate(e.target.value);
-              handleInputChange(); 
+              handleInputChange();
             }}
             className="w-full p-2 border bg-sky-100 border-gray-300 rounded"
           />
         </div>
-
         <div className="mb-10">
           <label className="flex items-center border border-gray-300 p-2 cursor-pointer">
             <FiPaperclip /> Upload Lampiran
@@ -174,13 +172,12 @@ export default function ReportForm() {
               accept="image/*"
               onChange={(e) => {
                 setFile(e.target.files?.[0] || null);
-                handleInputChange(); 
+                handleInputChange();
               }}
               className="hidden"
             />
           </label>
         </div>
-
         {previewImage && (
           <div className="mb-4">
             <label className="block font-semibold mb-2">Preview Lampiran</label>
@@ -193,14 +190,12 @@ export default function ReportForm() {
             />
           </div>
         )}
-
         {progress > 0 && (
           <div className="mb-4">
             <progress value={progress} max={100} className="w-full"></progress>
             <p>{progress}%</p>
           </div>
         )}
-
         <div className="flex justify-center">
           <button
             disabled={send || sending}
@@ -213,8 +208,7 @@ export default function ReportForm() {
           >
             Upload Laporan
           </button>
-        </div>
-
+        </div>{" "}
         {error && <p className="text-red-500 mt-2">{error}</p>}
         {successMessage && (
           <p className="text-green-500 mt-2">{successMessage}</p>

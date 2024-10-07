@@ -31,7 +31,6 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
   const [preview, setPreview] = useState<string>("");
   const { data: session } = useSession();
   const [successMessage, setSuccessMessage] = useState<string | null>();
-  const [send, setSend] = useState<boolean>(false);
   const [sending, setSending] = useState<boolean>(false);
   const [uploadCount, setUploadCount] = useState<number>(0);
   const [lastUploadTime, setLastUploadTime] = useState<number>(0);
@@ -160,9 +159,9 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
 
         {preview && (
           <button
-            disabled={send || sending}
+            disabled={sending}
             className={`w-full py-3 px-4 mt-6 rounded-lg text-lg font-semibold focus:ring focus:ring-sky-300 focus:outline-none transition-all duration-200 ${
-              send || sending ? "bg-gray-400 cursor-not-allowed" : "bg-sky-600 hover:bg-sky-700 text-white"
+             sending ? "bg-gray-400 cursor-not-allowed" : "bg-sky-600 hover:bg-sky-700 text-white"
             }`}
             onClick={handleUpload}
           >
