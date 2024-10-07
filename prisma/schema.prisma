@@ -16,6 +16,7 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
+  image   String?
   name      String?
   password  String
   createdAt DateTime @default(now())
@@ -24,6 +25,8 @@ model User {
   prodi     String?
   angkatan  String?
   coments   coment[]
+  veriftToken String?
+  kadaluarsa DateTime?
 }
 
 model Post {

@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import axios from "axios";
 
 interface Post {
+  createdAt: string | number | Date;
   id: string;
   userId: string;
   userName: string;
@@ -27,7 +28,7 @@ const ReactButton = () => {
   return (
     <button
       onClick={handleReact}
-      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full"
+      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200"
     >
       Beri Reaksi {react}
     </button>
@@ -66,19 +67,23 @@ export default function Post() {
     return <div className="text-red-500">{error}</div>;
   }
 
-  const filteredPosts = posts.filter(
+  const sortedPosts = posts.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
+  const filteredPosts = sortedPosts.filter(
     (post) => filter === "All" || post.type === filter
   );
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full md:max-w-full max-w-md p-4">
-        <div className="flex justify-around mt-20 z-10">
+      <div className="w-full max-w-md p-4 mx-auto">
+      <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
             }`}
             onClick={() => setFilter("All")}
           >
@@ -89,7 +94,7 @@ export default function Post() {
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "Kehilangan Barang"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
             }`}
             onClick={() => setFilter("Kehilangan Barang")}
           >
@@ -100,7 +105,7 @@ export default function Post() {
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "Penemuan Barang"
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
             }`}
             onClick={() => setFilter("Penemuan Barang")}
           >
@@ -108,9 +113,12 @@ export default function Post() {
           </button>
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 space-y-4 flex flex-col items-center">
           {filteredPosts.map((post) => (
-            <div key={post.id} className="bg-white p-4 rounded-lg shadow">
+            <div
+              key={post.id}
+              className="bg-white p-4 items-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full"
+            >
               <div className="flex items-center mb-2">
                 <Image
                   width={32}
@@ -130,11 +138,11 @@ export default function Post() {
               <div className="flex justify-center mt-4">
                 {post.image && (
                   <Image
-                    width={200}
+                    width={300}
                     height={200}
                     src={post.image}
                     alt="Post Image"
-                    className="mt-2 justify-center flex rounded-lg"
+                    className="mt-2 rounded-lg object-cover w-full max-h-full"
                   />
                 )}
               </div>
@@ -142,7 +150,7 @@ export default function Post() {
               <div className="flex justify-between mt-4">
                 <ReactButton />
                 <Link href={`/post/${post.id}`}>
-                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full">
+                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
                     Komentar
                   </button>
                 </Link>

@@ -22,6 +22,7 @@ export async function POST(request: Request) {
         name: username,
         email: email,
         password: hashedPassword,
+        image:"https://files.edgestore.dev/kuv2nfpuzfcwru31/publicFiles/_public/794938e8-65bb-429a-a32d-57576af84a40.png"
       },
     });
 

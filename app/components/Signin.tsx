@@ -97,7 +97,7 @@ const SignIn: React.FC = () => {
           )}
         </form>
         <div className="text-center mt-4">
-          <a href="#" className="text-sm text-sky-500 hover:underline">
+          <a href="/reset" className="text-sm text-sky-500 hover:underline">
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">

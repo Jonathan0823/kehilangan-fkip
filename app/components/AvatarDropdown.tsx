@@ -26,27 +26,36 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
-import Logout from "./Logout"
+import Logout from "./dropdownbuttons/Logout"
+import ProfileButton from "./dropdownbuttons/Profile"
    
-  export function AvatarDropdown() {
+  export function AvatarDropdown({ image, name }: { image:string, name:string }) {
+
+  
+ 
+
+    
+    
+
     return (
+      <div className="ml-5">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
          <Image
-          src="/111233.png"
+          src={image}
           alt="Profile"
           width={30}
           height={30}
           className="w-10 h-10 rounded-full object-cover"
         />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuContent className="w-56 md:ml-5 md:mt-0 md:scale-100 ml-10 mt-14 scale-125">
+          <DropdownMenuLabel>Hello, {name} 👋</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <ProfileButton />
             </DropdownMenuItem>
             <DropdownMenuItem>
               <CreditCard className="mr-2 h-4 w-4" />
@@ -102,5 +111,6 @@ import Logout from "./Logout"
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      </div>
     )
   }

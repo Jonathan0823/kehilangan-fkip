@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       data: {
         userId,
         userName,
-        userImage,
+        userImage: userImage,
         title,
         description,
         image,
