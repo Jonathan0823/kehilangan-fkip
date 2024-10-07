@@ -6,10 +6,12 @@ import Navbar from "@/app/components/navbar";
 import BackButton from "@/app/components/profilebuttons/back";
 import axios from "axios";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const Postingan = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState(null);
   interface Post {
     id: string;
     userImage?: string;
@@ -19,8 +21,22 @@ const Postingan = ({ params }: { params: { id: string } }) => {
     description: string;
     image?: string;
   }
-
   const [post, setPost] = useState<Post | null>(null);
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!session?.user?.id) return;
+      setLoading(true);
+      try {
+        const userResult = await axios.get(`/api/getUser/${session.user.id}`);
+        setUser(userResult.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUserData();
+  }, [session]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -32,12 +48,13 @@ const Postingan = ({ params }: { params: { id: string } }) => {
       } catch (err) {
         console.error("Fetch error:", err);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       }
     };
     fetchPost();
   }, [params.id]);
-
 
   return (
     <div>
@@ -45,7 +62,7 @@ const Postingan = ({ params }: { params: { id: string } }) => {
         <Loading />
       ) : (
         <>
-          <Navbar />
+          <Navbar user={user} />
           <div className="flex flex-col w-full justify-center items-center">
             <div
               key={post?.id}
@@ -83,7 +100,7 @@ const Postingan = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
-            <CommentBox postId={params.id}/>
+            <CommentBox postId={params.id} />
             {post && <CommentsInput post={post} />}
           </div>
         </>
