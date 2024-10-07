@@ -53,11 +53,17 @@ export default function ReportForm() {
     setSending(true);
 
     try {
+      if (!file) {
+        setError("File tidak boleh kosong");
+        setSending(false);
+        return;
+      }
+
       reportSchema.parse({
         reportType,
         description,
         date,
-        file,
+        file: file as File,
       });
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -69,7 +75,7 @@ export default function ReportForm() {
 
     try {
       const fileUploadResponse = await edgestore.publicFiles.upload({
-        file,
+        file: file as File,
         onProgressChange: (uploadProgress) => setProgress(uploadProgress),
       });
       const result = await axios.post("/api/userData", {

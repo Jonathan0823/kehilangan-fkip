@@ -6,6 +6,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
+
+  const [loading , setLoading] = useState(true);
   interface User {
     id: string;
     name: string;
@@ -21,6 +23,7 @@ export default function Navbar() {
       if (session?.user?.id) {
         const result = await axios.post(`/api/userData/`, { id: session.user.id });
         setUser(result.data);
+        setLoading(false);
       }
     };
     fetchData();
@@ -28,7 +31,7 @@ export default function Navbar() {
 
 
 
-  const profilepic = user?.image ? user.image : "";
+  const profilepic = loading ? "" : user?.image || "";
 
   
   return (
