@@ -24,7 +24,7 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
   const [progress, setProgress] = useState<number>(0);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [preview, setPreview] = useState<string>("");
   const { data: session } = useSession();
   const [successMessage, setSuccessMessage] = useState<string | null>();
@@ -32,7 +32,7 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
 
   const handleUpload = async () => {
     if (file && croppedAreaPixels) {
-      const croppedImage = await getCroppedImg(preview, croppedAreaPixels);
+      const croppedImage = await getCroppedImg(preview, croppedAreaPixels) as File;
       try {
         const res = await edgestore.publicFiles.upload({
           file: croppedImage,
@@ -81,7 +81,7 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
     }
   };
 
-  const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
+  const onCropComplete = (croppedArea: { x: number; y: number; width: number; height: number }, croppedAreaPixels: { x: number; y: number; width: number; height: number }) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
