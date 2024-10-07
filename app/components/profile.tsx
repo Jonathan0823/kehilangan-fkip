@@ -41,26 +41,26 @@ const Profile: React.FC<ProfileProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const updateProfile = async () => {
-    setError(null);
-    setSuccessMessage(null);
-    setLoading(true);
-    try {
-      const result = await axios.post("/api/editeUser", {
-        id,
-        name: name,
-        prodi: program,
-        angkatan: angk,
-      });
-      console.log(result);
-      setSuccessMessage("Profile Updated");
-    } catch (err) {
-      console.log(err);
-      setError("Failed to update profile");
-    } finally {
-      setLoading(false);
+    const updateProfile = async () => {
+        setError(null);
+        setSuccessMessage(null);
+        setLoading(true);
+        try {
+            const result = await axios.post("/api/editeUser", {
+                id,
+                nama: name,
+                prodi: program,
+                angkatan: angk,
+            });
+            console.log(result);
+            setSuccessMessage("Profile Updated");
+        } catch (err) {
+            console.log(err);
+            setError("Failed to update profile");
+        } finally {
+            setLoading(false);
+        }
     }
-  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

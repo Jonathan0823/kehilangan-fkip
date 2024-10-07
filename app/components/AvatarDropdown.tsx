@@ -29,7 +29,7 @@ import Image from "next/image"
 import Logout from "./dropdownbuttons/Logout"
 import ProfileButton from "./dropdownbuttons/Profile"
    
-  export function AvatarDropdown({ image }: { image:string }) {
+  export function AvatarDropdown({ image, name }: { image:string, name:string }) {
 
   
  
@@ -38,6 +38,7 @@ import ProfileButton from "./dropdownbuttons/Profile"
     
 
     return (
+      <div className="ml-5">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
          <Image
@@ -48,8 +49,8 @@ import ProfileButton from "./dropdownbuttons/Profile"
           className="w-10 h-10 rounded-full object-cover"
         />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuContent className="w-56 md:ml-5 md:mt-0 md:scale-100 ml-10 mt-14 scale-125">
+          <DropdownMenuLabel>Hello, {name} 👋</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
@@ -110,5 +111,6 @@ import ProfileButton from "./dropdownbuttons/Profile"
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      </div>
     )
   }

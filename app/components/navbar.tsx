@@ -34,8 +34,7 @@ export default function Navbar() {
   return (
     <div className="w-full fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
-        {session && <p className="text-xs text-black">Halo, {session.user?.name}</p>}
-        <AvatarDropdown image={profilepic} />
+        <AvatarDropdown image={profilepic} name={user?.name || ""}/>
       </div>
 
       <div className="flex-grow text-center">
