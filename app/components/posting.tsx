@@ -28,7 +28,7 @@ const ReactButton = () => {
   return (
     <button
       onClick={handleReact}
-      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-100"
+      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200"
     >
       Beri Reaksi {react}
     </button>
@@ -77,8 +77,8 @@ export default function Post() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full  items-center md:max-w-full max-w-md p-4">
-        <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
+      <div className="w-full max-w-md p-4 mx-auto">
+      <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
@@ -138,11 +138,11 @@ export default function Post() {
               <div className="flex justify-center mt-4">
                 {post.image && (
                   <Image
-                    width={200}
+                    width={300}
                     height={200}
                     src={post.image}
                     alt="Post Image"
-                    className="mt-2 justify-center flex rounded-lg"
+                    className="mt-2 rounded-lg object-cover w-full max-h-full"
                   />
                 )}
               </div>
@@ -150,7 +150,7 @@ export default function Post() {
               <div className="flex justify-between mt-4">
                 <ReactButton />
                 <Link href={`/post/${post.id}`}>
-                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-100">
+                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
                     Komentar
                   </button>
                 </Link>
