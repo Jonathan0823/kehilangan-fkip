@@ -46,7 +46,6 @@ export default function ReportForm() {
         onProgressChange: (uploadProgress) => setProgress(uploadProgress),
       });
       const result = await axios.post("/api/userData",{id:session?.user?.id});
-      console.log(result);
       const user = result.data;
       const formData = {
         title: reportType,
@@ -59,8 +58,11 @@ export default function ReportForm() {
         type: reportType,
       };
 
-      await axios.post("/api/post", formData);
+     const response = await axios.post("/api/post", formData);
       setSuccessMessage("Laporan berhasil diupload");
+      if(response.status === 200){
+        window.location.href = "/post";
+      }
       setReportType("");
       setDescription("");
       setDate("");
@@ -74,10 +76,9 @@ export default function ReportForm() {
   };
 
   return (
-    <div className="flex justify-center items-center md:min-h-screen md:bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6  rounded-lg mb:shadow-md w-full max-w-md">
+<div className="flex justify-center items-center min-h-dvh md:min-h-screen bg-gradient-to-b from-sky-100 to-sky-200 relative overflow-hidden">
+      <form onSubmit={handleSubmit} className="  p-6  w-full max-w-md">
         <h2 className="text-2xl font-bold mb-10">Sampaikan laporan Anda</h2>
-
         <div className="mb-4">
           <label className="block font-semibold mb-2">Pilih Jenis Laporan</label>
           <div className="flex flex-col space-y-2 mb-10">
@@ -89,7 +90,7 @@ export default function ReportForm() {
                 className={`py-2 px-4 rounded ${
                   reportType === type
                     ? "bg-blue-500 border-2 text-white font-bold"
-                    : "border-blue-300 border-2 font-bold text-sky-300"
+                    : "border-blue-300 border-2 font-bold text-gray-600"
                 }`}
               >
                 {type}
@@ -99,22 +100,22 @@ export default function ReportForm() {
         </div>
 
         <div className="mb-10">
-          <label className="block font-semibold mb-2">Deskripsikan Laporan Anda</label>
+          <label className="block  mb-2">Deskripsikan Laporan Anda</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border bg-sky-100 border-gray-300 rounded"
             placeholder="Deskripsikan laporan Anda"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block font-semibold mb-2">Tanggal Kejadian
+          <label className="block mb-2">Tanggal Kejadian
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border bg-sky-100 border-gray-300 rounded"
           /></label>
         </div>
 
