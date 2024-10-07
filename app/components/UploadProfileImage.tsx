@@ -7,7 +7,7 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "../lib/cropImage";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { FaCamera } from "react-icons/fa";
 interface UploadProfileImageProps {
   onClick: (url: string) => void;
   onUpload: () => void;
@@ -69,7 +69,7 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
         console.log("Response from server:", result.data);
       } catch (error) {
         console.error("Error saving image URL to database:", error);
-      }finally{
+      } finally {
         setSend(false);
       }
     }
@@ -83,23 +83,24 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
     }
   };
 
-  const onCropComplete = (croppedArea: any, croppedAreaPixels:any) => {
+  const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
   return (
     <div className="min-h-dvh flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg max-w-sm w-full">
-        <h2 className="text-3xl font-bold mb-6 text-center text-sky-600">
-          Upload Profile Image
-        </h2>
-        <input
-          type="file"
-          accept="image/*"
-          className="block w-full text-sm text-gray-900 border border-sky-400 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-sky-200"
-          onChange={handleFileChange}
-        />
-
+        <label className="text-2xl grid-cols-1 items-center mb-6 text-center flex justify-center text-sky-600">
+          <p> Upload image</p>
+          <FaCamera  size={30}/>
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            className=""
+            onChange={handleFileChange}
+          />
+        </label>
         {preview && (
           <div className="relative w-full h-64 mt-4 mb-4">
             <Cropper
@@ -117,14 +118,23 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
         {progress > 0 && (
           <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-4">
             <div
-              className="bg-blue-600 h-6 rounded-full transition-all duration-500 ease-in-out"
+              className="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-in-out"
               style={{ width: `${progress}%` }}
             >
               <span className="text-xs text-white font-bold p-1">
                 {progress}%
               </span>
-              <Link href={imageUrl}>View</Link>
             </div>
+          </div>
+        )}
+        {imageUrl && (
+          <div className="flex flex-col items-center mt-6">
+            <a
+              href={imageUrl}
+              className="text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              View Uploaded Avatar
+            </a>
           </div>
         )}
         {successMessage && (
