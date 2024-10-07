@@ -12,7 +12,6 @@ export default function Navbar() {
     email: string;
     image: string;
   }
-
   const [user, setUser] = useState<User | null>(null);
   const { data: session } = useSession();
   
