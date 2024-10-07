@@ -33,7 +33,6 @@ const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
     if (file && croppedAreaPixels) {
       const croppedImage = await getCroppedImg(preview, croppedAreaPixels);
       try {
-        setSend(true);
         const res = await edgestore.publicFiles.upload({
           file: croppedImage,
           onProgressChange: (progress) => {
