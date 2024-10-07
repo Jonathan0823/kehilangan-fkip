@@ -1,10 +1,9 @@
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
-import getCroppedImg from '@/lib/cropImage'; 
 
 interface ImageCropperProps {
   imageSrc: string; 
-  onCropComplete: (croppedAreaPixels: any) => void;
+  onCropComplete: (croppedAreaPixels: { width: number; height: number; x: number; y: number }) => void;
   aspect?: number;
 }
 
@@ -13,7 +12,7 @@ export const ImageCropper: React.FC<ImageCropperProps> = ({ imageSrc, onCropComp
   const [zoom, setZoom] = useState(1);
 
   const handleCropComplete = useCallback(
-    (croppedArea: any, croppedAreaPixels: any) => {
+    (croppedArea: { x: number; y: number; width: number; height: number }, croppedAreaPixels: { x: number; y: number; width: number; height: number }) => {
       onCropComplete(croppedAreaPixels);
     },
     [onCropComplete]
