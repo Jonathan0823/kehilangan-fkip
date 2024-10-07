@@ -23,23 +23,25 @@ const UploadProfileImage: React.FC = (onClick) => {
 
   const handleUpload = async () => {
     if (file && croppedAreaPixels) {
-      const croppedImage = await getCroppedImg(preview, croppedAreaPixels);
-      try {
-        const res = await edgestore.publicFiles.upload({
-          file: croppedImage,
-          onProgressChange: (progress) => {
-            console.log(progress);
-            setProgress(progress);
-          },
-        });
-
-        const uploadedUrl = res?.url;
-        setImageUrl(uploadedUrl);
-
-        console.log("Uploaded Image URL:", uploadedUrl);
-        await saveImageToDatabase(uploadedUrl);
-      } catch (error) {
-        console.error("Error uploading file:", error);
+      if (preview) {
+        const croppedImage = await getCroppedImg(preview, croppedAreaPixels);
+        try {
+          const res = await edgestore.publicFiles.upload({
+            file: croppedImage,
+            onProgressChange: (progress) => {
+              console.log(progress);
+              setProgress(progress);
+            },
+          });
+  
+          const uploadedUrl = res?.url;
+          setImageUrl(uploadedUrl);
+  
+          console.log("Uploaded Image URL:", uploadedUrl);
+          await saveImageToDatabase(uploadedUrl);
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
       }
     }
   };
