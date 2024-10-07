@@ -5,26 +5,35 @@ import { useEdgeStore } from "@/app/lib/edgeStore";
 import axios from "axios";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../lib/cropImage";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+interface UploadProfileImageProps {
+  onClick: (url: string) => void;
+  onUpload: () => void;
+}
 
-const UploadProfileImage: React.FC = (onClick) => {
-  const [file, setFile] = React.useState<File | null>(null);
-  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
+const UploadProfileImage: React.FC<UploadProfileImageProps> = ({
+  onClick,
+  onUpload,
+}) => {
+  const [file, setFile] = useState<File>();
+  const [imageUrl, setImageUrl] = useState<string>("");
   const { edgestore } = useEdgeStore();
-  const [progress, setProgress] = React.useState<number>(0);
-  const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = React.useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = React.useState<any>(null);
-  const [preview, setPreview] = React.useState<string | null>(null);
+  const [progress, setProgress] = useState<number>(0);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [preview, setPreview] = useState<string>("");
   const { data: session } = useSession();
-  const [successMessage, setSuccessMessage] = React.useState<string | null>(
-    null
-  );
+  const [successMessage, setSuccessMessage] = useState<string | null>();
+  const [send, setSend] = useState<boolean>(false);
 
   const handleUpload = async () => {
     if (file && croppedAreaPixels) {
       const croppedImage = await getCroppedImg(preview, croppedAreaPixels);
       try {
+        setSend(true);
         const res = await edgestore.publicFiles.upload({
           file: croppedImage,
           onProgressChange: (progress) => {
@@ -51,9 +60,18 @@ const UploadProfileImage: React.FC = (onClick) => {
           id: session?.user.id,
           image: url,
         });
+        setSuccessMessage("Image uploaded successfully");
+        onClick(url);
+
+        setTimeout(() => {
+          onUpload();
+        }, 2000);
+
         console.log("Response from server:", result.data);
       } catch (error) {
         console.error("Error saving image URL to database:", error);
+      }finally{
+        setSend(false);
       }
     }
   };
@@ -66,7 +84,7 @@ const UploadProfileImage: React.FC = (onClick) => {
     }
   };
 
-  const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
+  const onCropComplete = (croppedArea: any, croppedAreaPixels:any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
@@ -100,12 +118,13 @@ const UploadProfileImage: React.FC = (onClick) => {
         {progress > 0 && (
           <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-4">
             <div
-              className="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-in-out"
+              className="bg-blue-600 h-6 rounded-full transition-all duration-500 ease-in-out"
               style={{ width: `${progress}%` }}
             >
               <span className="text-xs text-white font-bold p-1">
                 {progress}%
               </span>
+              <Link href={imageUrl}>View</Link>
             </div>
           </div>
         )}
@@ -114,6 +133,7 @@ const UploadProfileImage: React.FC = (onClick) => {
         )}
 
         <button
+          disabled={send}
           className="w-full bg-sky-600 text-white py-2 px-4 mt-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none"
           onClick={handleUpload}
         >

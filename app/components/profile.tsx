@@ -36,6 +36,7 @@ const Profile: React.FC<ProfileProps> = ({
   const [program, setProgram] = useState(prodi);
   const [angk, setAngk] = useState(angkatan);
   const [mail, setMail] = useState(email);
+  const [imageUrl, setImage] = useState(image);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,7 +49,7 @@ const Profile: React.FC<ProfileProps> = ({
         try {
             const result = await axios.post("/api/editeUser", {
                 id,
-                nama: name,
+                name: name,
                 prodi: program,
                 angkatan: angk,
             });
@@ -72,7 +73,7 @@ const Profile: React.FC<ProfileProps> = ({
           <Image
             width={96}
             height={96}
-            src={image}
+            src={imageUrl}
             alt="Profile Picture"
             className="rounded-full w-24 h-24 object-cover mb-4"
           />{" "}
@@ -84,7 +85,7 @@ const Profile: React.FC<ProfileProps> = ({
               >
                 <IoClose size={30} />
               </button>
-              <UploadProfileImage onClick={()=>{setIsModalOpen(false)}} id={id} />
+              <UploadProfileImage onUpload={()=>{setIsModalOpen(false)}} onClick={(url:string) => setImage(url)} />
             </div>
           </Modal>
         </div>
