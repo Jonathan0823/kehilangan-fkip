@@ -16,6 +16,7 @@ const CommentBox = (postid: CommentBoxProps) => {
     userName: string;
     timeAgo: string;
     content: string;
+    createdAt: string;
   }
 
   const [comments, setComments] = React.useState<Comment[]>([]);
@@ -32,11 +33,15 @@ const CommentBox = (postid: CommentBoxProps) => {
         };
         fetchComments();
         }, [postid]);
+
+        const sortedComments = comments.sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
           
   return (
     <div className="bg-white pb-28 p-4 mt-5 items-center text-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full">
       Komentar
-      {comments.map((comment) => (
+      {sortedComments.map((comment) => (
         <div key={comment.id} className="flex flex-col my-6 w-full ">
           <div className="flex items-center">
             <Image
