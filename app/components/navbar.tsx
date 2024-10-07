@@ -12,6 +12,7 @@ export default function Navbar() {
     email: string;
     image: string;
   }
+
   const [user, setUser] = useState<User | null>(null);
   const { data: session } = useSession();
   
@@ -31,7 +32,7 @@ export default function Navbar() {
 
   
   return (
-    <div className="w-full fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
+    <div className="w-full h-20 fixed bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
         <AvatarDropdown image={profilepic} name={user?.name || ""}/>
       </div>
