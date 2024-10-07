@@ -1,4 +1,5 @@
 "use client";
+import CommentBox from "@/app/components/CommentBox";
 import CommentsInput from "@/app/components/CommentsInput";
 import Loading from "@/app/components/Loading";
 import Navbar from "@/app/components/navbar";
@@ -82,9 +83,7 @@ const Postingan = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
-            <div className="bg-white pb-28 p-4 mt-5 items-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full">
-              Comments
-            </div>
+            <CommentBox postId={params.id}/>
             {post && <CommentsInput post={post} />}
           </div>
         </>
