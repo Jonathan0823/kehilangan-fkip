@@ -49,6 +49,9 @@ model Post {
 model coment {
   id        String   @id @default(cuid())
   userId    String
+  userName  String
+  userimage String?
+  timeAgo   String
   postId    String
   content   String
   createdAt DateTime @default(now())
