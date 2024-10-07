@@ -37,10 +37,12 @@ const SignIn: React.FC = () => {
       
     } catch (error) {
       setError("Login Failed");
-      setSending(false);
       throw error;
-    }
-  };
+    }finally{
+      if (error) {
+        setSending(false);
+      }
+  }};
 
   return (
     <div className="min-h-dvh flex items-center justify-center">
