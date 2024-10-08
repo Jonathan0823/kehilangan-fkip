@@ -81,7 +81,7 @@ const Postingan = ({ params }: { params: { id: string } }) => {
                     <p className="text-xs text-gray-500">{post?.timeAgo}</p>
                   </div>
                 </div>
-                <BackButton />
+                <BackButton type="post"/>
               </div>
 
               <h3 className="text-lg font-semibold">{post?.title}</h3>
