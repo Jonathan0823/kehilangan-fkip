@@ -1,6 +1,7 @@
 "use client"
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Post {
@@ -21,6 +22,8 @@ const CommentsInput = ({post}: {post:Post}) => {
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [sending, setSending] = useState<boolean>(false);
+
+    const router = useRouter();
     
     useEffect(() => {
       const fetchUserData = async () => {
@@ -51,6 +54,7 @@ const CommentsInput = ({post}: {post:Post}) => {
         if (response.status === 201) {
           setComment("");
           setSuccessMessage("Comment posted successfully");
+          router.refresh();
         }
       } catch {
         setError("Failed to post comment");
