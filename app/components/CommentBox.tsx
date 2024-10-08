@@ -1,14 +1,23 @@
 "use client";
-import axios from "axios";
 import Image from "next/image";
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import CommentsInput from "./CommentsInput";
 
+interface Comment {
+  id: string;
+  userimage: string;
+  userName: string;
+  timeAgo: string;
+  content: string;
+  createdAt: string;
+}
+
 interface CommentBoxProps {
+  comments: Comment[],
   postId: string;
 }
 
-const CommentBox = (postid: CommentBoxProps) => {
+const CommentBox = ({comments, postId}: CommentBoxProps) => {
   interface Comment {
     id: string;
     userimage: string;
@@ -18,21 +27,9 @@ const CommentBox = (postid: CommentBoxProps) => {
     createdAt: string;
   }
 
-  const [comments, setComments] = React.useState<Comment[]>([]);
-  const id = postid.postId;
-  
-  const fetchComments = async () => {
-    try {
-      const response = await axios.get(`/api/comments/${id}`);
-      setComments(response.data);
-    } catch (err) {
-      console.error("Fetch error:", err);
-    }
-  };
+ 
 
-  useEffect(() => {
-    fetchComments();
-  }, []);
+
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
@@ -47,7 +44,7 @@ const CommentBox = (postid: CommentBoxProps) => {
   return (
     <div className="bg-white pb-28 p-4 mt-5 items-center text-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full">
       Komentar
-      {sortedComments.map((comment) => (
+      {sortedComments.map((comment:Comment) => (
         <div key={comment.id} className="flex flex-col my-6 w-full ">
           <div className="flex items-center">
             <Image
@@ -69,7 +66,7 @@ const CommentBox = (postid: CommentBoxProps) => {
           <div className="mt-4 text-left">{comment.content}</div>
         </div>
       ))}
-      <CommentsInput postId={String(id)} refreshComments={refreshComments}/>
+      <CommentsInput postId={String(postId)} refreshComments={refreshComments}/>
     </div>
   );
 };

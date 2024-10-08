@@ -8,6 +8,7 @@ import BackButton from '@/app/components/profilebuttons/back';
 import CommentBox from '@/app/components/CommentBox';
 import { useSession } from 'next-auth/react';
 
+
 interface Post {
   id: string;
   userImage?: string;
@@ -24,6 +25,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [post, setPost] = useState<Post | null>(null);
   const isMounted = useRef(true);
   const { data: session } = useSession();
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -32,13 +34,15 @@ const Page = ({ params }: { params: { id: string } }) => {
     const fetchData = async () => {
       if (!session?.user?.id || !params?.id) return;
       try {
-        const [userResult, postResult] = await Promise.all([
+        const [userResult, postResult, commentsResult] = await Promise.all([
           axios.get(`/api/getUser/${session.user.id}`),
-          axios.get(`/api/postDetail/${params.id}`)
+          axios.get(`/api/postDetail/${params.id}`),
+          axios.get(`/api/comments/${params.id}`)
         ]);
         if (isMounted.current) {
           setUser(userResult.data);
           setPost(postResult.data);
+          setComments(commentsResult.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -97,7 +101,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             )}
           </div>
         </div>
-        <CommentBox postId={params.id} />
+        <CommentBox comments={comments} postId={String(params.id)} />
       </div>
     </div>
   );
