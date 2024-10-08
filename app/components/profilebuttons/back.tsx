@@ -1,10 +1,20 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-const BackButton = () => {
+interface BackButtonProps {
+
+  type: string;
+
+}
+
+const BackButton = ({type}: BackButtonProps) => {
     const router = useRouter();
     const handleBack = () => {
-        router.back();
+        if(type === "post") {
+            router.push("/post");
+        } else {
+            router.back();
+        }
     }
   return (
     <button className="text-blue-500 hover:text-blue-700" onClick={handleBack}>

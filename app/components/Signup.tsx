@@ -2,6 +2,8 @@
 import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle } from "react-icons/fa";
 import React from "react";
 import { useState } from "react";
+import { CircularProgress } from "@mui/material"; 
+
 
 const SignUp: React.FC = () => {
   const [name, setName] = React.useState("");
@@ -9,10 +11,12 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = React.useState("");
   const [error, setError] = useState<string>(" ");
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [sending, setSending] = useState<boolean>(false);
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+      setSending(true);
       await fetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify({
@@ -25,13 +29,15 @@ const SignUp: React.FC = () => {
         },
       });
       setSuccessMessage("Sign Up Success");
-      setTimeout(() => {
+      
         window.location.href = "/signin";
-      }, 2000);
+
       
     } catch (error) {
       setError("Sign Up Failed");
       throw error;
+    } finally {
+      setSending(false);
     }
   };
 
@@ -112,8 +118,8 @@ const SignUp: React.FC = () => {
             </div>
           </div>
 
-          <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
-            Sign Up
+          <button disabled={sending} className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
+          {sending ? <CircularProgress size={24} color="inherit" /> : "Sign Up"}
           </button>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
           {successMessage && (

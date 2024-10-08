@@ -1,30 +1,34 @@
 "use client";
-import CommentBox from "@/app/components/CommentBox";
-import CommentsInput from "@/app/components/CommentsInput";
-import Loading from "@/app/components/Loading";
-import Navbar from "@/app/components/navbar";
-import BackButton from "@/app/components/profilebuttons/back";
-import axios from "axios";
-import Image from "next/image";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import Image from 'next/image';
+import Loading from '@/app/components/Loading';
+import Navbar from '@/app/components/navbar';
+import BackButton from '@/app/components/profilebuttons/back';
+import CommentBox from '@/app/components/CommentBox';
+import { useSession } from 'next-auth/react';
 
-const Postingan = ({ params }: { params: { id: string } }) => {
+interface Post {
+  id: string;
+  userImage?: string;
+  userName?: string;
+  timeAgo?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const Page = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState(null);
-  interface Post {
-    id: string;
-    userImage?: string;
-    userName: string;
-    timeAgo: string;
-    title: string;
-    description: string;
-    image?: string;
-  }
   const [post, setPost] = useState<Post | null>(null);
+  const isMounted = useRef(true);
   const { data: session } = useSession();
 
   useEffect(() => {
+    isMounted.current = true;
+    console.log("Component mounted");
+
     const fetchUserData = async () => {
       if (!session?.user?.id) return;
       setLoading(true);
@@ -36,25 +40,32 @@ const Postingan = ({ params }: { params: { id: string } }) => {
       }
     };
     fetchUserData();
-  }, [session]);
 
-  useEffect(() => {
     const fetchPost = async () => {
       try {
         setLoading(true);
+        console.log("Fetching post data...");
         const response = await axios.get(`/api/postDetail/${params.id}`);
         console.log("Fetched Post:", response.data);
-        setPost(response.data);
+        if (isMounted.current) {
+          setPost(response.data);
+        }
       } catch (err) {
         console.error("Fetch error:", err);
       } finally {
-        setTimeout(() => {
+        if (isMounted.current) {
           setLoading(false);
-        }, 500);
+        }
       }
     };
+
     fetchPost();
-  }, [params.id]);
+
+    return () => {
+      isMounted.current = false;
+      console.log("Component unmounted");
+    };
+  }, [params.id, session]);
 
   return (
     <div>
@@ -82,9 +93,8 @@ const Postingan = ({ params }: { params: { id: string } }) => {
                     <p className="text-xs text-gray-500">{post?.timeAgo}</p>
                   </div>
                 </div>
-                <BackButton />
+                <BackButton type="post" />
               </div>
-
               <h3 className="text-lg font-semibold">{post?.title}</h3>
               <p className="text-sm text-gray-700">{post?.description}</p>
               <div className="flex justify-center mt-4">
@@ -99,9 +109,7 @@ const Postingan = ({ params }: { params: { id: string } }) => {
                 )}
               </div>
             </div>
-
             <CommentBox postId={params.id} />
-            {post && <CommentsInput post={post} />}
           </div>
         </>
       )}
@@ -109,4 +117,4 @@ const Postingan = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default Postingan;
+export default Page;

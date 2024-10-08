@@ -31,9 +31,8 @@ const SignIn: React.FC = () => {
       setSuccessMessage("Login Success");
       setEmail("");
       setPassword("");
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+      window.location.href = "/";
+    
       
     } catch (error) {
       setError("Login Failed");
