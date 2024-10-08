@@ -1,6 +1,5 @@
 "use client";
 import CommentBox from "@/app/components/CommentBox";
-import CommentsInput from "@/app/components/CommentsInput";
 import Loading from "@/app/components/Loading";
 import Navbar from "@/app/components/navbar";
 import BackButton from "@/app/components/profilebuttons/back";
