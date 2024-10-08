@@ -73,16 +73,19 @@ const Dropdown = ({ onDelete, onDownload }: { onDelete: () => void; onDownload: 
 export default function PostComponent({
   posts,
   user,
+  fetch,
 }: {
   posts: Post[];
   user: User;
+  fetch: () => void;
 }) {
   const [filter, setFilter] = useState<string>("All");
 
   const handleDelete = async (postId: string) => {
     try {
       console.log("Deleting post...", postId);
-      await axios.post(`/api/post/delete`, { userId: user.id, postId });
+      await axios.post(`/api/delete`, { userId: user.id, postId });
+      fetch();
     } catch (error) {
       console.error("Error deleting post:", error);
     }
