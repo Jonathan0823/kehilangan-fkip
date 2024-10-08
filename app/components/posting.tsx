@@ -48,6 +48,7 @@ export default function PostComponent({ posts, user }: { posts: Post[], user: Us
 
   const hedleDelete = async () => {
     try {
+      console.log("Deleting post...");
       await axios.post(`/api/post/delete`, { userId: user.id });
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -136,8 +137,9 @@ export default function PostComponent({ posts, user }: { posts: Post[], user: Us
 
               <div className="flex justify-between mt-4">
                 <ReactButton />
-                {user.name === post.userName &&}
-                <DeleteButton onDelete={hedleDelete} />
+                {user.name === post.userName || user.name === "Admin" && (
+                  <DeleteButton onDelete={hedleDelete} />
+                )}
                 <Link href={`/post/${post.id}`}>
                   <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
                     Komentar
