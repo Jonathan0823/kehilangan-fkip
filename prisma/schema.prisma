@@ -27,6 +27,8 @@ model User {
   coments   coment[]
   veriftToken String?
   kadaluarsa DateTime?
+  Status    String?
+  
 }
 
 model Post {
