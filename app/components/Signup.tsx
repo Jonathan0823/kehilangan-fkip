@@ -3,7 +3,6 @@ import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle } from "react-icons/fa";
 import React from "react";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material"; 
-import { send } from "process";
 
 
 const SignUp: React.FC = () => {
