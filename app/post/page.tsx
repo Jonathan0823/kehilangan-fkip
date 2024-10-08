@@ -12,34 +12,27 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
 
-  const fetchUserData = async () => {
+  const fetchData = async () => {
     if (!session?.user?.id) return;
     setLoading(true);
     try {
-      const userResult = await axios.get(`/api/getUser/${session.user.id}`);
+      const [userResult, postResult] = await Promise.all([
+        axios.get(`/api/getUser/${session.user.id}`),
+        axios.get("/api/postList")
+      ]);
       setUser(userResult.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
-  const fetchPostsData = async () => {
-    try {
-      const postResult = await axios.get("/api/postList");
       setPosts(postResult.data);
     } catch (error) {
-      console.error("Error fetching posts data:", error);
+      console.error("Error fetching data:", error);
     } finally {
       setTimeout(() => {
-        setLoading(false); 
+        setLoading(false);
       }, 500);
-   
     }
   };
 
   useEffect(() => {
-    fetchUserData();
-    fetchPostsData();
+    fetchData();
   }, [session]);
 
   if (loading) {
