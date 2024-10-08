@@ -3,7 +3,7 @@ import "./globals.css";
 import ClientWrapper from "./ClientWrapper";
 
 export const metadata: Metadata = {
-  title: "Sistem Pengaduan Kehilangan Barang dan Kerusakan Fasilitas FKIP Unsika",
+  title: "Sistem Pengaduan Barang Hilang & Fasilitas Rusak FKIP Unsika",
   description: "Sistem Pengaduan Kehilangan Barang dan Kerusakan Fasilitas FKIP Unsika",
 };
 
