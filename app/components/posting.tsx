@@ -2,10 +2,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-interface PostProps {
-  posts: Post[]; 
-}
+import DeleteButton from "./deleteButton";
+import axios from "axios";
 
 interface Post {
   createdAt: string | number | Date;
@@ -18,6 +16,11 @@ interface Post {
   description: string;
   image?: string;
   type?: string;
+}
+
+interface User {
+  id: string;
+  name: string;
 }
 
 const ReactButton = () => {
@@ -37,8 +40,19 @@ const ReactButton = () => {
   );
 };
 
-export default function PostComponent({ posts }: PostProps) {
+
+
+
+export default function PostComponent({ posts, user }: { posts: Post[], user: User }) {
   const [filter, setFilter] = useState<string>("All");
+
+  const hedleDelete = async () => {
+    try {
+      await axios.post(`/api/post/delete`, { userId: user.id });
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  }
 
   const sortedPosts = posts.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -122,6 +136,8 @@ export default function PostComponent({ posts }: PostProps) {
 
               <div className="flex justify-between mt-4">
                 <ReactButton />
+                {user.name === post.userName &&}
+                <DeleteButton onDelete={hedleDelete} />
                 <Link href={`/post/${post.id}`}>
                   <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
                     Komentar

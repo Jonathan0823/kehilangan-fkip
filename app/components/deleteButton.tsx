@@ -3,12 +3,12 @@ import { FaTrash } from "react-icons/fa"
 
 
 interface DeleteButtonProps {
-    onClick: () => void;
-}
+    onDelete: () => Promise<void>;
 
+}
 const deleteButton: React.FC<DeleteButtonProps> = (props) => {
     return (
-        <button onClick={props.onClick} title="Delete"><FaTrash size={20}/></button>
+        <button onClick={props.onDelete} title="Delete"><FaTrash size={25}/></button>
     )
 }
 

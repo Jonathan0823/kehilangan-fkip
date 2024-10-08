@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div>
       <Navbar user={user} />
-      <PostComponent posts={posts} /> 
+      <PostComponent user={user} posts={posts} /> 
     </div>
   );
 }
