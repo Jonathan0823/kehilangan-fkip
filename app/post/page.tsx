@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
-export default function Home() {
+export default function Post() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -30,7 +30,6 @@ export default function Home() {
       }, 500);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [session]);
@@ -42,7 +41,7 @@ export default function Home() {
   return (
     <div>
       <Navbar user={user} />
-      <PostComponent user={user} posts={posts} /> 
+      {user && <PostComponent posts={posts} user={user} />} 
     </div>
   );
 }
