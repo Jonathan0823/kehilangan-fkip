@@ -72,7 +72,7 @@ const CommentsInput = ({post}: {post:Post}) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <button className="bg-blue-500 text-white p-2 rounded-lg" onClick={handleSubmit} disabled={sending}>Post</button>
+        <button className="bg-blue-500 text-white p-2 rounded-lg" onClick={handleSubmit} disabled={sending}>{sending? "Sending..." : "Send" }</button>
       </div>
     </div>
   );
