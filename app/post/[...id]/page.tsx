@@ -47,9 +47,7 @@ const Postingan = ({ params }: { params: { id: string } }) => {
       } catch (err) {
         console.error("Fetch error:", err);
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
+        setLoading(false);
       }
     };
     fetchPost();

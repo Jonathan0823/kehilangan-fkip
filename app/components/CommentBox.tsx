@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import CommentsInput from "./CommentsInput";
 
 interface CommentBoxProps {
@@ -34,8 +34,10 @@ const CommentBox = (postid: CommentBoxProps) => {
     fetchComments();
   }, []);
 
-  const refreshComments = async () => {
-    await fetchComments();
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  const refreshComments = () => {
+    forceUpdate();
   }
 
   const sortedComments = comments.sort(
