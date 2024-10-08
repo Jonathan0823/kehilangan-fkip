@@ -1,21 +1,19 @@
 "use client"
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-interface Post {
-  id: string;
-  userImage?: string;
-  userName: string;
-  timeAgo: string;
-  title: string;
-  description: string;
-  image?: string;
+interface CommentsInputProps {
+
+  postId: string;
+
+  refreshComments: () => void;
+
 }
 
 
-const CommentsInput = ({post}: {post:Post}) => {
+
+const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments }) => {
     const [comment, setComment] = useState("");
     const [user, setUser] = useState<{ id: string; name: string; image: string } | null>(null);
     const userdata = useSession().data?.user;
@@ -23,7 +21,6 @@ const CommentsInput = ({post}: {post:Post}) => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [sending, setSending] = useState<boolean>(false);
 
-    const router = useRouter();
     
     useEffect(() => {
       const fetchUserData = async () => {
@@ -39,14 +36,12 @@ const CommentsInput = ({post}: {post:Post}) => {
       setSending(true);
       try {
         if (!comment) return;
-        console.log("User:",user);
-        console.log("Comment:", post.id, comment);
 
         const formData = {
             userId: user?.id,
             userName: user?.name,
             userImage: user?.image,
-            postId: post.id,
+            postId: postId,
             comment,
             date: new Date().toISOString(),
         };
@@ -54,8 +49,7 @@ const CommentsInput = ({post}: {post:Post}) => {
         if (response.status === 201) {
           setComment("");
           setSuccessMessage("Comment posted successfully");
-          router.refresh();
-        }
+          refreshComments();}
       } catch {
         setError("Failed to post comment");
       } finally

@@ -101,7 +101,6 @@ const Postingan = ({ params }: { params: { id: string } }) => {
             </div>
 
             <CommentBox postId={params.id} />
-            {post && <CommentsInput post={post} />}
           </div>
         </>
       )}

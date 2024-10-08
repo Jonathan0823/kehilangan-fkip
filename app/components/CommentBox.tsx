@@ -2,6 +2,7 @@
 import axios from "axios";
 import Image from "next/image";
 import React, { useEffect } from "react";
+import CommentsInput from "./CommentsInput";
 
 interface CommentBoxProps {
   postId: string;
@@ -18,19 +19,24 @@ const CommentBox = (postid: CommentBoxProps) => {
   }
 
   const [comments, setComments] = React.useState<Comment[]>([]);
+  const id = postid.postId;
+  
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`/api/comments/${id}`);
+      setComments(response.data);
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+
   useEffect(() => {
-    const id = postid.postId;
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(`/api/comments/${id}`);
-        setComments(response.data);
-        console.log("Fetched Comments:", response.data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-      }
-    };
     fetchComments();
-  }, [postid]);
+  }, []);
+
+  const refreshComments = async () => {
+    await fetchComments();
+  }
 
   const sortedComments = comments.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -61,6 +67,7 @@ const CommentBox = (postid: CommentBoxProps) => {
           <div className="mt-4 text-left">{comment.content}</div>
         </div>
       ))}
+      <CommentsInput postId={String(id)} refreshComments={refreshComments}/>
     </div>
   );
 };
