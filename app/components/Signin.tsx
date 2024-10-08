@@ -3,6 +3,7 @@
 import { FaEnvelope, FaRegUserCircle, FaLock } from "react-icons/fa";
 import React from "react";
 import { useState } from "react";
+import { CircularProgress } from "@mui/material"; 
 import { signIn } from "next-auth/react";
 
 const SignIn: React.FC = () => {
@@ -10,10 +11,13 @@ const SignIn: React.FC = () => {
   const [password, setPassword] = React.useState("");
   const [error, setError] = useState<string>(" ");
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [sending, setSending] = useState<boolean>(false);
+  
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+      setSending(true);
       console.log(email, password);
       const res = await signIn("credentials", {
         email: email,
@@ -30,11 +34,15 @@ const SignIn: React.FC = () => {
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);
+      
     } catch (error) {
       setError("Login Failed");
       throw error;
-    }
-  };
+    }finally{
+      if (error) {
+        setSending(false);
+      }
+  }};
 
   return (
     <div className="min-h-dvh flex items-center justify-center">
@@ -88,8 +96,8 @@ const SignIn: React.FC = () => {
             </div>
           </div>
 
-          <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
-            Sign In
+          <button disabled={sending} className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:ring focus:ring-sky-300 focus:outline-none">
+            {sending ? <CircularProgress size={24} color="inherit" /> : "Sign In"}
           </button>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
           {successMessage && (
