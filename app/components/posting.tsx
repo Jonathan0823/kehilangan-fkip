@@ -16,6 +16,10 @@ interface Post {
   description: string;
   image?: string;
   type?: string;
+  author: {
+    image: string | null;
+    name: string;
+  }
 }
 
 interface User {
@@ -222,12 +226,12 @@ export default function PostComponent({
                   <Image
                     width={32}
                     height={32}
-                    src={post.userImage || "/default-image.png"}
+                    src={post.author.image || "/default-image.png"}
                     alt="User Profile"
                     className="h-8 w-8 rounded-full"
                   />
                   <div className="ml-2">
-                    <h2 className="text-sm font-bold">{post.userName}</h2>
+                    <h2 className="text-sm font-bold">{post.author.name}</h2>
                     <p className="text-xs text-gray-500">{post.timeAgo}</p>
                   </div>
                 </div>

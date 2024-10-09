@@ -50,7 +50,7 @@ export default function ProfilePage() {
       }
     };
     fetchData();
-  }, [session]);
+  }, [session?.user.id]);
 
   const laporan = user?.posts?.length ?? 0;
 

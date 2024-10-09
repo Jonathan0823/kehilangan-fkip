@@ -10,7 +10,7 @@ export async function GET(request: Request, {params}: { params: { id: string } }
         const user = await prisma.user.findUnique({
             where: {
                 id: String(id),
-            },
+            }
         });
     
         return NextResponse.json(user);
