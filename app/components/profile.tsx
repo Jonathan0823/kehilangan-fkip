@@ -82,6 +82,7 @@ const Profile: React.FC<ProfileProps> = ({
               <button
                 className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
                 onClick={() => setIsModalOpen(false)}
+                title="Close Modal"
               >
                 <IoClose size={30} />
               </button>
@@ -96,6 +97,7 @@ const Profile: React.FC<ProfileProps> = ({
           <button
             className="mt-4  text-sky-500 hover:underline"
             onClick={() => setIsModalOpen(true)}
+            title="Upload Profile Image"
           >
             <IoCamera size={30} />
           </button>

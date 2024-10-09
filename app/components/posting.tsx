@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
+import { deleteButton } from "@/lib/action";
 
 interface Post {
   createdAt: string | number | Date;
@@ -101,8 +101,11 @@ export default function PostComponent({
   const handleDelete = async (postId: string) => {
     try {
       console.log("Deleting post...", postId);
-      await axios.post(`/api/delete`, { userId: user.id, postId });
-      fetch();
+    const result = await deleteButton(postId, user.id);
+    if (result === "post deleted") {
+        fetch(); 
+      }
+
     } catch (error) {
       console.error("Error deleting post:", error);
     }
