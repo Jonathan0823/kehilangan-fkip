@@ -1,4 +1,4 @@
-import React from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -63,6 +63,8 @@ const Profile: React.FC<ProfileProps> = ({
         }
     }
 
+
+
   return (
     <div className="flex justify-center items-center  md:h-screen bg-gray-100">
       <div className="bg-white md:shadow-md rounded-lg p-6 w-full max-w-md">
@@ -82,6 +84,7 @@ const Profile: React.FC<ProfileProps> = ({
               <button
                 className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
                 onClick={() => setIsModalOpen(false)}
+                title="Close Modal"
               >
                 <IoClose size={30} />
               </button>
@@ -96,6 +99,7 @@ const Profile: React.FC<ProfileProps> = ({
           <button
             className="mt-4  text-sky-500 hover:underline"
             onClick={() => setIsModalOpen(true)}
+            title="Upload Profile Image"
           >
             <IoCamera size={30} />
           </button>
@@ -132,17 +136,20 @@ const Profile: React.FC<ProfileProps> = ({
           </div>
 
           <div>
-            <label htmlFor="angkatan" className="block text-sm text-gray-600">
-              Angkatan
-            </label>
-            <input
-              type="number"
-              id="angkatan"
-              value={angk}
-              onChange={(e) => setAngk(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-          </div>
+  <label htmlFor="angkatan" className="block text-sm text-gray-600">
+    Angkatan
+  </label>
+  <input
+    type="number" 
+    id="angkatan"
+    value={angk}
+    onChange={(e) => setAngk(e.target.value)}
+    min={2017} 
+    max={new Date().getFullYear()} 
+    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+  />
+</div>
+
 
           <div>
             <label htmlFor="email" className="block text-sm text-gray-600">

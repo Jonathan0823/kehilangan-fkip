@@ -14,19 +14,21 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  image   String?
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts     Post[]
-  prodi     String?
-  angkatan  String?
-  coments   coment[]
+  id          String    @id @default(cuid())
+  email       String    @unique
+  image       String?
+  name        String?
+  password    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  posts       Post[]
+  prodi       String?
+  angkatan    String?
+  coments     coment[]
   veriftToken String?
-  kadaluarsa DateTime?
+  kadaluarsa  DateTime?
+  Status      String?
+  role        String?  @default("user")
 }
 
 model Post {

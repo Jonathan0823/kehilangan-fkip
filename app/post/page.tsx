@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
-export default function Home() {
+export default function Post() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
-
+  
   const fetchData = async () => {
     if (!session?.user?.id) return;
     setLoading(true);
@@ -33,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-  }, [session]);
+  }, [session?.user?.id]); 
 
   if (loading) {
     return <Loading />;
@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div>
       <Navbar user={user} />
-      <PostComponent posts={posts} /> 
+      {user && <PostComponent fetchPosts={fetchData} posts={posts} user={user} />} 
     </div>
   );
 }
