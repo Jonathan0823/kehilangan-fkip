@@ -11,7 +11,7 @@ export default function Post() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
-
+  
   const fetchData = async () => {
     if (!session?.user?.id) return;
     setLoading(true);
@@ -30,9 +30,10 @@ export default function Post() {
       }, 500);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, [session]);
+  }, [session?.user?.id]); 
 
   if (loading) {
     return <Loading />;
@@ -41,7 +42,7 @@ export default function Post() {
   return (
     <div>
       <Navbar user={user} />
-      {user && <PostComponent fetchPosts={fetchData} posts={posts} user={user}  />} 
+      {user && <PostComponent fetchPosts={fetchData} posts={posts} user={user} />} 
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { deleteButton } from "@/lib/action";
 import { useEdgeStore } from "../lib/edgeStore";
+
 interface Post {
   createdAt: string | number | Date;
   id: string;
@@ -119,11 +120,12 @@ export default function PostComponent({
 
   const handleDelete = async (postId: string, postImage: string) => {
     try {
-      await edgestore.publicFiles.delete({ url: postImage });
+
       const result = await deleteButton(postId, user.id);
       if (result === "post deleted") {
         fetchPosts();
       }
+      await edgestore.publicFiles.delete({ url: postImage });
     } catch (error) {
       console.error("Error deleting post:", error);
     }
@@ -173,7 +175,7 @@ export default function PostComponent({
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-4 mx-auto">
+      <div className="w-full max-w-3xl p-4 mx-auto">
         <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
@@ -213,7 +215,7 @@ export default function PostComponent({
           {filteredPosts.map((post) => (
             <div
               key={post.id}
-              className="bg-white p-4 items-center justify-center rounded-lg shadow md:max-w-2xl max-w-full w-full"
+              className="bg-white p-4 items-center justify-center rounded-lg shadow-lg md:max-w-2xl max-w-full w-full transition-transform transform duration-200 ease-in-out"
             >
               <div className="flex items-center mb-2 justify-between">
                 <div className="flex items-center">
