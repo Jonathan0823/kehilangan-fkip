@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
@@ -41,31 +41,48 @@ const ReactButton = () => {
 
 const Dropdown = ({ onDelete, onDownload }: { onDelete: () => void; onDownload: () => void }) => {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
         className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-200"
       >
         ⋮
       </button>
-      {open && (
-        <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg">
-          <button
-            onClick={onDelete}
-            className="block px-4 py-2 text-left text-red-600 hover:bg-red-100 w-full"
-          >
-            Hapus
-          </button>
-          <button
-            onClick={onDownload}
-            className="block px-4 py-2 text-left hover:bg-gray-100 w-full"
-          >
-            Download
-          </button>
-        </div>
-      )}
+      <div
+        className={`absolute right-0 mt-2 bg-white border rounded-lg shadow-lg transition-transform transform duration-300 ease-in-out ${
+          open ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+        }`}
+        style={{ transformOrigin: 'top right' }}
+      >
+        <button
+          onClick={onDelete}
+          className="block px-4 py-2 text-left text-red-600 hover:bg-red-100 w-full"
+        >
+          Hapus
+        </button>
+        <button
+          onClick={onDownload}
+          className="block px-4 py-2 text-left text-blue-600 hover:bg-blue-100 w-full"
+        >
+          Download
+        </button>
+      </div>
     </div>
   );
 };
@@ -113,7 +130,7 @@ export default function PostComponent({
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-4 mx-auto">
-        <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl mt-20 ">
+        <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
               filter === "All"
