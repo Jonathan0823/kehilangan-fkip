@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteButton } from "@/lib/action";
-
+import { useEdgeStore } from "../lib/edgeStore";
 interface Post {
   createdAt: string | number | Date;
   id: string;
@@ -39,20 +39,35 @@ const ReactButton = () => {
   );
 };
 
-const Dropdown = ({ onDelete, onDownload }: { onDelete: () => void; onDownload: () => void }) => {
+const Dropdown = ({
+  onDelete,
+  onShere,
+  userId,
+  postId,
+  userName,
+}: {
+  onDelete: () => void;
+  onShere: () => void;
+  userId: string;
+  postId: string;
+  userName: string;
+}) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setOpen(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -66,21 +81,24 @@ const Dropdown = ({ onDelete, onDownload }: { onDelete: () => void; onDownload: 
       </button>
       <div
         className={`absolute right-0 mt-2 bg-white border rounded-lg shadow-lg transition-transform transform duration-300 ease-in-out ${
-          open ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+          open ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
-        style={{ transformOrigin: 'top right' }}
+        style={{ transformOrigin: "top right" }}
       >
+        {(postId === userId || userName === "Admin") && (
+          <button
+            onClick={onDelete}
+            className="block px-4 py-2 text-left text-red-600 hover:bg-red-100 w-full"
+          >
+            Delete
+          </button>
+        )}
+
         <button
-          onClick={onDelete}
-          className="block px-4 py-2 text-left text-red-600 hover:bg-red-100 w-full"
-        >
-          Hapus
-        </button>
-        <button
-          onClick={onDownload}
+          onClick={onShere}
           className="block px-4 py-2 text-left text-blue-600 hover:bg-blue-100 w-full"
         >
-          Download
+          Shere
         </button>
       </div>
     </div>
@@ -90,30 +108,53 @@ const Dropdown = ({ onDelete, onDownload }: { onDelete: () => void; onDownload: 
 export default function PostComponent({
   posts,
   user,
-  fetch,
+  fetchPosts,
 }: {
   posts: Post[];
   user: User;
-  fetch: () => void;
+  fetchPosts: () => void;
 }) {
   const [filter, setFilter] = useState<string>("All");
+  const { edgestore } = useEdgeStore();
 
-  const handleDelete = async (postId: string) => {
+  const handleDelete = async (postId: string, postImage: string) => {
     try {
-      console.log("Deleting post...", postId);
-    const result = await deleteButton(postId, user.id);
-    if (result === "post deleted") {
-        fetch(); 
+      await edgestore.publicFiles.delete({ url: postImage });
+      const result = await deleteButton(postId, user.id);
+      if (result === "post deleted") {
+        fetchPosts();
       }
-
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
 
-  const handleDownload = (postId: string) => {
-    console.log("Downloading post content:", postId);
+  const handleShare = async (
+    postId: string,
+    title: string,
+    imageUrl: string
+  ) => {
+    const url = `https://kehilangan-fkip.vercel.app/post/${postId}`;
 
+    if (navigator.share) {
+      try {
+        const response = await fetch(imageUrl);
+
+        const blob = await response.blob();
+        const file = new File([blob], "image.jpg", { type: blob.type });
+
+        await navigator.share({
+          title: title,
+          url: url,
+          files: [file],
+        });
+        console.log("Post shared successfully");
+      } catch (error) {
+        console.log("Error sharing post:", error);
+      }
+    } else {
+      window.open(url, "_blank");
+    }
   };
 
   const sortedPosts = posts.sort(
@@ -188,12 +229,16 @@ export default function PostComponent({
                     <p className="text-xs text-gray-500">{post.timeAgo}</p>
                   </div>
                 </div>
-                {(user.name === post.userName || user.name === "Admin") && (
-                  <Dropdown
-                    onDelete={() => handleDelete(post.id)}
-                    onDownload={() => handleDownload(post.id)}
-                  />
-                )}
+
+                <Dropdown
+                  onDelete={() => handleDelete(post.id, post.image || "/s")}
+                  onShere={() =>
+                    handleShare(post.id, user.name, post.image || "/s")
+                  }
+                  userId={user.id}
+                  postId={post.userId}
+                  userName={user.name}
+                />
               </div>
               <h3 className="text-lg font-semibold">{post.title}</h3>
               <p className="text-sm text-gray-700">

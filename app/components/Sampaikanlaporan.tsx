@@ -176,6 +176,8 @@ export default function ReportForm() {
             <input
               type="file"
               accept="image/*"
+              title="Upload Lampiran"
+              placeholder="Upload Lampiran"
               onChange={(e) => {
                 setFile(e.target.files?.[0] || null);
                 handleInputChange();

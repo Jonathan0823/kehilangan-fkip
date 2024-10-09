@@ -41,7 +41,7 @@ export default function Post() {
   return (
     <div>
       <Navbar user={user} />
-      {user && <PostComponent fetch={fetchData} posts={posts} user={user} />} 
+      {user && <PostComponent fetchPosts={fetchData} posts={posts} user={user}  />} 
     </div>
   );
 }
