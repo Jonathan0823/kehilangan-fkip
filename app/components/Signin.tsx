@@ -67,7 +67,7 @@ const SignIn: React.FC = () => {
               <input
                 type="email"
                 id="email"
-                className="w-full focus:ring focus:ring-sky-200 focus:outline-none"
+                className="w-full focus:outline-none "
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -87,7 +87,7 @@ const SignIn: React.FC = () => {
               <input
                 type="password"
                 id="password"
-                className="w-full focus:ring focus:ring-sky-200 focus:outline-none"
+                className="w-full focus:outline-none"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -104,12 +104,12 @@ const SignIn: React.FC = () => {
           )}
         </form>
         <div className="text-center mt-4">
-          <a href="/reset" className="text-sm text-sky-500 hover:underline">
+          <a href="/reset" className="text-sm text-sky-500 underline hover:text-sky-700">
             Forgot Password?
           </a>
           <p className="mt-2 text-sm">
             Don&apos;t have an account?
-            <a href="/signup" className="text-sky-500 hover:underline">
+            <a href="/signup" className="text-sky-500 ml-1 hover:underline hover:text-sky-700">
               Sign up
             </a>
           </p>
