@@ -95,11 +95,11 @@ const Page = ({ params }: { params: { id: string } }) => {
           <div className="flex justify-center mt-4">
             {memoizedPost?.image && (
               <Image
-                width={350}
-                height={350}
+                width={300}
+                height={200}
                 src={memoizedPost.image}
                 alt="Post Image"
-                className="mt-2 justify-center flex rounded-lg"
+                className="mt-2 justify-center flex rounded-lg object-cover w-full max-h-full" 
               />
             )}
           </div>
