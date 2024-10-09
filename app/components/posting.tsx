@@ -93,7 +93,7 @@ const Dropdown = ({
         {(postId === userId || userName === "Admin") && (
           <button
             onClick={onDelete}
-            className="block px-4 py-2 text-left text-red-600 hover:bg-red-100 w-full"
+            className="block px-8 py-2 text-left text-red-600 hover:bg-red-100 rounded-lg w-full"
           >
             Delete
           </button>
@@ -101,9 +101,9 @@ const Dropdown = ({
 
         <button
           onClick={onShere}
-          className="block px-4 py-2 text-left text-blue-600 hover:bg-blue-100 w-full"
+          className="block px-8 py-2 text-left text-blue-600 hover:bg-blue-100 rounded-lg w-full"
         >
-          Shere
+          Share
         </button>
       </div>
     </div>
@@ -253,8 +253,8 @@ export default function PostComponent({
               <div className="flex justify-center mt-4">
                 {post.image && (
                   <Image
-                    width={300}
-                    height={200}
+                    width={800}
+                    height={500}
                     src={post.image}
                     alt="Post Image"
                     className="mt-2 rounded-lg object-cover w-full max-h-full"
