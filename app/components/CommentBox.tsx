@@ -6,14 +6,15 @@ import CommentsInput from "./CommentsInput";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { deleteComment } from "@/lib/action";
-
-
+import { FaSpinner } from 'react-icons/fa'; 
 
 interface CommentBoxProps {
   postId: string;
 }
 
 const CommentBox = ({ postId }: CommentBoxProps) => {
+  const [deleting, setDelete] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const userdata = useSession().data?.user;
   const [comments, setComments] = useState<Comment[]>([]);
   const [user, setUser] = useState<{ id: string; name: string; image: string } | null>(null);
@@ -51,11 +52,17 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
   }, [userdata]);
 
   const handleDeleteComment = async (commentId: string) => {
+    setDeletingId(commentId);
+    setDelete(true);
     try {
       await deleteComment(commentId);
       refreshComments();
+      
     } catch (error) {
       console.error("Error deleting comment:", error);
+    } finally {
+      setDeletingId(null);
+      setDelete(false);
     }
   }
 
@@ -88,8 +95,8 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
                 <div className="mt-1 text-left">{comment.content}</div>
               </div>
               {user?.id === comment.userId && (
-              <button className="ml-auto" onClick={() => handleDeleteComment(comment.id)}>
-                <MdDelete className="text-red-600 w-5 h-5 mb-5" />
+              <button className="ml-auto" onClick={() => handleDeleteComment(comment.id)} disabled={deleting}>
+                {deletingId === comment.id? <FaSpinner className="animate-spin text-red-600 w-5 h-5 mb-5" /> : <MdDelete className="text-red-600 w-5 h-5 mb-5" />}
               </button>
                 )}
             </div>
