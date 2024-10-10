@@ -11,6 +11,7 @@ export async function GET(request: Request, {params}: { params: { id: string } }
             where: {
                 postId: String(id),
             },
+            include:{author: true},
         });
         return NextResponse.json(comment);
     } catch (error) {
