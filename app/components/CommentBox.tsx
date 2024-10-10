@@ -30,8 +30,8 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  const refreshComments = () => {
-    fetchComments();
+  const refreshComments = async () => {
+    await fetchComments();
     forceUpdate();
   };
   
