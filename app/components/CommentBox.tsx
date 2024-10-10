@@ -20,8 +20,10 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
   const [user, setUser] = useState<{ id: string; name: string; image: string } | null>(null);
   interface Comment {
     id: string;
-    userimage: string;
-    userName: string;
+    author: {
+      image: string;
+      name: string;
+    };
     timeAgo: string;
     content: string;
     createdAt: string;
@@ -81,7 +83,7 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
           <div className="justify-between">
             <div className="flex items-center">
               <Image
-                src={comment.userimage}
+                src={comment.author.image}
                 width={32}
                 height={32}
                 alt="avatar"
@@ -89,7 +91,7 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
               />
               <div className="ml-4 flex-grow">
                 <div className="text-sm md:font-semibold font-bold text-left">
-                  {comment.userName}
+                  {comment.author.name}
                 </div>
                 <div className="text-xs text-gray-500 text-left">
                   {comment.timeAgo}
