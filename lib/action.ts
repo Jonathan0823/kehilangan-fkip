@@ -49,3 +49,16 @@ export const deleteButton = async (postId: string, userId: string) => {
     console.log(err);
   }
 };
+
+export const deleteComment = async (commentId: string) => {
+  try {
+      await prisma.coment.delete({
+          where: {
+              id: commentId,
+          },
+      });
+      return "comment deleted";
+  } catch (error) {
+      console.log(error);
+  }
+}
