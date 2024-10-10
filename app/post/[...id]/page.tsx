@@ -26,20 +26,17 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [post, setPost] = useState<Post | null>(null);
   const isMounted = useRef(true);
   const { data: session } = useSession();
-  const [comments, setComments] = useState([]);
 
   const fetchData = useCallback(async () => {
     if (!session?.user?.id || !params?.id) return;
     try {
-      const [userResult, postResult, commentResult] = await Promise.all([
+      const [userResult, postResult] = await Promise.all([
         axios.get(`/api/getUser/${session.user.id}`),
         axios.get(`/api/postDetail/${params.id}`),
-        axios.get(`/api/comments/${params.id}`)
       ]);
       if (isMounted.current) {
         setUser(userResult.data);
         setPost(postResult.data);
-        setComments(commentResult.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -95,16 +92,16 @@ const Page = ({ params }: { params: { id: string } }) => {
           <div className="flex justify-center mt-4">
             {memoizedPost?.image && (
               <Image
-                width={350}
-                height={350}
+                width={800}
+                height={500}
                 src={memoizedPost.image}
                 alt="Post Image"
-                className="mt-2 justify-center flex rounded-lg"
+                className="mt-2 justify-center flex rounded-lg object-cover w-full max-h-full" 
               />
             )}
           </div>
         </div>
-        <CommentBox comments={comments} postId={String(params.id)} />
+        <CommentBox  postId={String(params.id)} />
       </div>
     </div>
   );

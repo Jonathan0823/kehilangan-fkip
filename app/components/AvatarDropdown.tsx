@@ -105,7 +105,7 @@ import ProfileButton from "./dropdownbuttons/Profile"
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <LogOut className="mr-2 h-4 w-4" />
             <Logout />
           </DropdownMenuItem>
