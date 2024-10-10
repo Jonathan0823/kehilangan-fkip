@@ -61,8 +61,10 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
     } catch (error) {
       console.error("Error deleting comment:", error);
     } finally {
-      setDeletingId(null);
-      setDelete(false);
+      setTimeout(() => {
+        setDeletingId(null);
+        setDelete(false);
+      }, 2000);
     }
   }
 
