@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { deleteButton } from "@/lib/action";
 import { useEdgeStore } from "../lib/edgeStore";
+import axios from "axios";
 
 interface Post {
   createdAt: string | number | Date;
@@ -19,7 +20,7 @@ interface Post {
   author: {
     image: string | null;
     name: string;
-  }
+  };
 }
 
 interface User {
@@ -27,20 +28,61 @@ interface User {
   name: string;
 }
 
-const ReactButton = () => {
-  const [react, setReact] = useState<number>(0);
-
-  const handleReact = () => {
-    setReact(react + 1);
+const ReactButton = ({
+  userId,
+  postId,
+}: {
+  userId: string;
+  postId: string;
+}) => {
+  const checkLikes = async () => {
+    const response = await axios.get(`/api/likes`);
+    const likes = response.data;
+    setLikes(likes);
+    setLiked(
+      likes.some(
+        (like: { userId: string; postId: string }) =>
+          like.userId === userId && like.postId === postId
+      )
+    );
   };
 
+  useEffect(() => {
+    checkLikes();
+  }, []);
+
+  const [likes, setLikes] = useState<{ userId: string; postId: string }[]>([]);
+  const [liked, setLiked] = useState(false);
+
+  const handleReact = async () => {
+    if (!liked) {
+      await axios.post("/api/likes/like", { userId, postId });
+    } else {
+      await axios.post("/api/likes/unlike", { userId, postId });
+    }
+    checkLikes();
+  };
+
+  const filteredLikes = likes.filter((like) => like.postId === postId).length;
+
   return (
-    <button
-      onClick={handleReact}
-      className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200"
-    >
-      Beri Reaksi {react}
-    </button>
+    <div>
+      {liked ? (
+        <button
+          onClick={handleReact}
+          className="px-4 py-2 bg-[#3b82f6] text-white rounded-full hover:text-blue-700 hover:bg-blue-200 transition-all duration-200"
+        >
+          Beri Reaksi {filteredLikes}
+        </button>
+      ) : (
+        <button
+          onClick={handleReact}
+          className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200"
+        >
+          Beri Reaksi {filteredLikes}
+        </button>
+      )}
+    </div>
   );
 };
 
@@ -124,7 +166,6 @@ export default function PostComponent({
 
   const handleDelete = async (postId: string, postImage: string) => {
     try {
-
       const result = await deleteButton(postId, user.id);
       if (result === "post deleted") {
         fetchPosts();
@@ -263,7 +304,7 @@ export default function PostComponent({
               </div>
 
               <div className="flex justify-between mt-4">
-                <ReactButton />
+                <ReactButton userId={user.id} postId={post.id} />
 
                 <Link href={`/post/${post.id}`}>
                   <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
