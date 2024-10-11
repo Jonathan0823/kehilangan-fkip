@@ -1,7 +1,8 @@
 "use client";
-import { FaBell, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { AvatarDropdown } from "./AvatarDropdown";
 import React from "react";
+import NotificationDropdown from "./notif";
 
 
 interface User {
@@ -29,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
       </div>
       <div className="flex items-center space-x-4">
         <FaSearch className="h-6 w-6 text-gray-700" />
-        <FaBell className="h-6 w-6 text-gray-700" />
+        <NotificationDropdown/>
       </div>
     </div>
   );
