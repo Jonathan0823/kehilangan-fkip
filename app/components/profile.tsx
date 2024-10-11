@@ -161,7 +161,7 @@ const Profile: React.FC<ProfileProps> = ({
             
               <div className="w-28 h-12">
                 <button className=" flex justify-center items-center font-bold gap-2 mt-3 w-32 px-2 py-1.5 bg-[#69c3f0] text-white rounded-md shadow-lg hover:bg-[#4da4cf] transition duration-300" onClick={() => setDisabled(false)}>
-                  <span>Edit</span>
+                  <span>Edit Profil</span>
                 </button>
               </div>
       
