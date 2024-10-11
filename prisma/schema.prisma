@@ -29,6 +29,8 @@ model User {
   kadaluarsa  DateTime?
   Status      String?
   role        String?  @default("user")
+
+  like        like[]
 }
 
 model Post {
@@ -46,6 +48,7 @@ model Post {
   updatedAt   DateTime @updatedAt
   author      User     @relation(fields: [userId], references: [id])
   comments    coment[]
+  like        like[]
 }
 
 model coment {
@@ -60,4 +63,14 @@ model coment {
   updatedAt DateTime @updatedAt
   post      Post     @relation(fields: [postId], references: [id])
   author    User     @relation(fields: [userId], references: [id])
+}
+
+model like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
 }
