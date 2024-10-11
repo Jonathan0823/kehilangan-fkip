@@ -68,8 +68,9 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     <div className="flex justify-center items-center  md:h-screen bg-gray-100">
       <div className="bg-white md:shadow-md rounded-lg p-6 w-full max-w-md">
-        <div className="flex justify-start mb-6">
+        <div className="flex w-full mb-6">
           <BackButton type=""/>
+          <h1 className="flex mx-auto text-center font-bold text-xl">Profil Saya</h1>
         </div>
         <div className="flex justify-center">
           <Image
@@ -108,7 +109,7 @@ const Profile: React.FC<ProfileProps> = ({
         {successMessage && (
           <p className="text-green-500 text-center">{successMessage}</p>
         )}
-        <div className="space-y-4">
+        <div className="flex flex-col justify-center mx-auto md:gap-3 gap-1 w-5/6">
           <div>
             <label htmlFor="name" className="block text-sm text-gray-600">
               Nama
@@ -165,10 +166,10 @@ const Profile: React.FC<ProfileProps> = ({
             />
           </div>
         </div>
-        <div className="mt-6 flex justify-between">
+        <div className="mt-6 flex flex-col items-center">
           <Link href={"/"}>
-            <div className="w-28 h-12 mr-2">
-              <button className="w-full flex justify-center items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-md shadow-lg hover:from-blue-500 hover:to-blue-700 transition duration-300">
+            <div className="w-28 h-12">
+              <button className=" flex justify-center items-center gap-2 mt-3 w-32 px-2 py-1.5 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-md shadow-lg hover:from-blue-500 hover:to-blue-700 transition duration-300">
                 <IoPencilOutline className="text-lg" />
                 <span>Edit</span>
               </button>
@@ -178,7 +179,7 @@ const Profile: React.FC<ProfileProps> = ({
             <button
               onClick={updateProfile}
               disabled={loading}
-              className={`flex justify-center items-center space-x-2 px-3 py-1.5 rounded-md shadow-lg transition duration-300 ${
+              className={`flex justify-center items-center gap-2 px-2 w-32 py-1.5 rounded-md shadow-lg transition duration-300 ${
                 loading
                   ? "bg-gray-400"
                   : "bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white"
