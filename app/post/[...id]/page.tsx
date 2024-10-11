@@ -67,6 +67,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   if (loading) return <Loading />;
 
+
   return (
     <div>
       <Navbar user={user} />
@@ -76,7 +77,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           className="bg-white p-4 items-center justify-center mt-2 rounded-lg shadow md:max-w-2xl max-w-full w-full"
         >
           <div className="flex items-center mb-2 justify-between">
-            <div className="flex">
+            <div className="flex ml-8">
               <Image
                 width={32}
                 height={32}

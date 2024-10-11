@@ -1,12 +1,9 @@
 import {
-    CreditCard,
-    Keyboard,
     LogOut,
     Mail,
     MessageSquare,
     Plus,
     PlusCircle,
-    Settings,
     User,
     UserPlus,
     Users,
@@ -56,18 +53,6 @@ import ProfileButton from "./dropdownbuttons/Profile"
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
               <ProfileButton />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Billing</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Keyboard className="mr-2 h-4 w-4" />
-              <span>Keyboard shortcuts</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

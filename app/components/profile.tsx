@@ -75,7 +75,7 @@ const Profile: React.FC<ProfileProps> = ({
               src={imageUrl}
               alt="Profile Picture"
               onClick={() => setIsModalOpen(true)}
-              className="rounded-full mb-2"
+              className="rounded-full cursor-pointer mb-2"
             />
           </div>
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
