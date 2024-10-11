@@ -35,7 +35,7 @@ export default function Post() {
     fetchData();
   }, [session?.user?.id]); 
 
-  if (loading) {
+  if (loading) {  
     return <Loading />;
   }
 

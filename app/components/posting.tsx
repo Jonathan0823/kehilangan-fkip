@@ -5,6 +5,8 @@ import Link from "next/link";
 import { deleteButton } from "@/lib/action";
 import { useEdgeStore } from "../lib/edgeStore";
 import axios from "axios";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 
 interface Post {
   createdAt: string | number | Date;
@@ -70,16 +72,16 @@ const ReactButton = ({
       {liked ? (
         <button
           onClick={handleReact}
-          className="px-4 py-2 bg-[#3b82f6] text-white rounded-full hover:text-blue-700 hover:bg-blue-200 transition-all duration-200"
+          className="px-4 py-2 bg-[#3b82f6] pb-3 items-center justify-center text-white rounded-full hover:text-blue-700 hover:bg-blue-200 transition-all duration-200 flex gap-3"
         >
-          Beri Reaksi {filteredLikes}
+          <AiFillLike className="w-5 h-5"/> <p className="text-lg">{filteredLikes}</p> 
         </button>
       ) : (
         <button
           onClick={handleReact}
-          className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200"
+          className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200 flex gap-3"
         >
-          Beri Reaksi {filteredLikes}
+          <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{filteredLikes}</p>
         </button>
       )}
     </div>
@@ -307,7 +309,7 @@ export default function PostComponent({
                 <ReactButton userId={user.id} postId={post.id} />
 
                 <Link href={`/post/${post.id}`}>
-                  <button className="px-4 py-2 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
+                  <button className="px-4 py-3 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
                     Komentar
                   </button>
                 </Link>
