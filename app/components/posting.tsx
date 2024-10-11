@@ -55,14 +55,19 @@ const ReactButton = ({
 
   const [likes, setLikes] = useState<{ userId: string; postId: string }[]>([]);
   const [liked, setLiked] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const handleReact = async () => {
+    setDisabled(true);
     if (!liked) {
+      setLiked(true);
       await axios.post("/api/likes/like", { userId, postId });
     } else {
+      setLiked(false);
       await axios.post("/api/likes/unlike", { userId, postId });
     }
-    checkLikes();
+    await checkLikes();
+    setDisabled(false);
   };
 
   const filteredLikes = likes.filter((like) => like.postId === postId).length;
@@ -78,6 +83,7 @@ const ReactButton = ({
         </button>
       ) : (
         <button
+          disabled={disabled}
           onClick={handleReact}
           className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200 flex gap-3"
         >
