@@ -17,7 +17,7 @@ const BackButton = ({type}: BackButtonProps) => {
         }
     }
   return (
-    <button className="text-blue-500 hover:text-blue-700 absolute" onClick={handleBack}>
+    <button className="text-black absolute" onClick={handleBack}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

@@ -1,11 +1,6 @@
-
 import Image from "next/image";
-import Link from "next/link";
 import {
-  IoPencilOutline,
-  IoSaveOutline,
   IoClose,
-  IoCamera,
 } from "react-icons/io5";
 import { useState } from "react";
 import axios from "axios";
@@ -41,153 +36,147 @@ const Profile: React.FC<ProfileProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
-    const updateProfile = async () => {
-        setError(null);
-        setSuccessMessage(null);
-        setLoading(true);
-        try {
-            const result = await axios.post("/api/editeUser", {
-                id,
-                name: name,
-                prodi: program,
-                angkatan: angk,
-            });
-            console.log(result);
-            setSuccessMessage("Profile Updated");
-        } catch (err) {
-            console.log(err);
-            setError("Failed to update profile");
-        } finally {
-            setLoading(false);
-        }
+  const updateProfile = async () => {
+    setError(null);
+    setSuccessMessage(null);
+    setLoading(true);
+    try {
+      const result = await axios.post("/api/editeUser", {
+        id,
+        name: name,
+        prodi: program,
+        angkatan: angk,
+      });
+      console.log(result);
+      setSuccessMessage("Profile Updated");
+    } catch (err) {
+      console.log(err);
+      setError("Failed to update profile");
+    } finally {
+      setLoading(false);
     }
-
-
+  };
 
   return (
-    <div className="flex justify-center items-center  md:h-screen bg-gray-100">
-      <div className="bg-white md:shadow-md rounded-lg p-6 w-full max-w-md">
-        <div className="flex w-full mb-6">
-          <BackButton type=""/>
-          <h1 className="flex mx-auto text-center font-bold text-xl">Profil Saya</h1>
-        </div>
-        <div className="flex justify-center">
-          <Image
-            width={96}
-            height={96}
-            src={imageUrl}
-            alt="Profile Picture"
-            className="rounded-full w-24 h-24 object-cover mb-4"
-          />{" "}
+    <div className="flex justify-center items-center md:h-screen bg-gray-100">
+      <div className="bg-[#d0f0fb] md:shadow-md rounded-lg p-6 w-full max-w-md relative">
+        <div className="absolute bottom-0 left-0 w-full h-5/6 bg-white rounded-t-2xl z-0"></div>
+        <div className="relative z-10">
+          <div className="flex w-full mb-6">
+            <BackButton type="" />
+            <h1 className="flex mx-auto text-center font-bold text-xl">Profil Saya</h1>
+          </div>
+          <div className="flex justify-center">
+            <Image
+              width={96}
+              height={96}
+              src={imageUrl}
+              alt="Profile Picture"
+              onClick={() => setIsModalOpen(true)}
+              className="rounded-full mb-2"
+            />
+          </div>
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <div className="relative flex flex-col max-h-screen">
+            <div className="relative flex z-10 flex-col max-h-screen">
               <button
-                className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                className="absolute top-2 right-2 z-10 text-gray-600 hover:text-gray-900"
                 onClick={() => setIsModalOpen(false)}
                 title="Close Modal"
               >
                 <IoClose size={30} />
               </button>
-              <UploadProfileImage onUpload={()=>{setIsModalOpen(false)}} onClick={(url:string) => setImage(url)} />
+              <UploadProfileImage onUpload={() => { setIsModalOpen(false) }} onClick={(url: string) => setImage(url)} />
             </div>
           </Modal>
-        </div>
-        <div className="text-center text-gray-600 text-sm ">
-          <p>{laporan} Laporan Terkirim</p>
-        </div>
-        <div className="flex items-center justify-center">
-          <button
-            className="mt-4  text-sky-500 hover:underline"
-            onClick={() => setIsModalOpen(true)}
-            title="Upload Profile Image"
-          >
-            <IoCamera size={30} />
-          </button>
-        </div>
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        {successMessage && (
-          <p className="text-green-500 text-center">{successMessage}</p>
-        )}
-        <div className="flex flex-col justify-center mx-auto md:gap-3 gap-1 w-5/6">
-          <div>
-            <label htmlFor="name" className="block text-sm text-gray-600">
-              Nama
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
+          <div className="text-center text-gray-600 z-10 text-sm ">
+            <p className="font-bold text-xl">{laporan}</p>
+            <p> Laporan Terkirim</p>
           </div>
+          {error && <p className="text-red-500 z-10 text-center">{error}</p>}
+          {successMessage && (
+            <p className="text-green-500 z-10 text-center">{successMessage}</p>
+          )}
+          <div className="flex flex-col z-10 justify-center mx-auto md:gap-3 mt-5 gap-1 w-5/6">
+            <div>
+              <label htmlFor="name" className="block z-10 text-sm text-gray-600">
+                Nama
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={disabled}
+                className="w-full px-4 py-1 z-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="program" className="block text-sm text-gray-600">
-              Program Studi
-            </label>
-            <input
-              type="text"
-              id="program"
-              value={program}
-              onChange={(e) => setProgram(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
+            <div>
+              <label htmlFor="program" className="block text-sm text-gray-600">
+                Program Studi
+              </label>
+              <input
+                type="text"
+                id="program"
+                value={program}
+                disabled={disabled}
+                onChange={(e) => setProgram(e.target.value)}
+                className="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="angkatan" className="block text-sm text-gray-600">
+                Angkatan
+              </label>
+              <input
+                type="number"
+                id="angkatan"
+                value={angk}
+                disabled={disabled}
+                onChange={(e) => setAngk(e.target.value)}
+                min={2017}
+                max={new Date().getFullYear()}
+                className="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm text-gray-600">
+                Email
+              </label>
+              <input
+                disabled
+                type="email"
+                id="email"
+                value={mail}
+                onChange={(e) => setMail(e.target.value)}
+                className="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              />
+            </div>
           </div>
-
-          <div>
-  <label htmlFor="angkatan" className="block text-sm text-gray-600">
-    Angkatan
-  </label>
-  <input
-    type="number" 
-    id="angkatan"
-    value={angk}
-    onChange={(e) => setAngk(e.target.value)}
-    min={2017} 
-    max={new Date().getFullYear()} 
-    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-  />
-</div>
-
-
-          <div>
-            <label htmlFor="email" className="block text-sm text-gray-600">
-              Email
-            </label>
-            <input
-              disabled
-              type="email"
-              id="email"
-              value={mail}
-              onChange={(e) => setMail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-            />
-          </div>
-        </div>
-        <div className="mt-6 flex flex-col items-center">
-          <Link href={"/"}>
-            <div className="w-28 h-12">
-              <button className=" flex justify-center items-center gap-2 mt-3 w-32 px-2 py-1.5 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-md shadow-lg hover:from-blue-500 hover:to-blue-700 transition duration-300">
-                <IoPencilOutline className="text-lg" />
-                <span>Edit</span>
+          <div className="mt-16 flex flex-col items-center">
+            
+              <div className="w-28 h-12">
+                <button className=" flex justify-center items-center font-bold gap-2 mt-3 w-32 px-2 py-1.5 bg-[#69c3f0] text-white rounded-md shadow-lg hover:bg-[#4da4cf] transition duration-300" onClick={() => setDisabled(false)}>
+                  <span>Edit</span>
+                </button>
+              </div>
+      
+            <div className="w-28 mt-3 h-12 ">
+              <button
+                onClick={updateProfile}
+                disabled={loading}
+                className={`flex justify-center items-center font-bold gap-2 px-2 w-32 py-1.5 rounded-md shadow-lg transition duration-300 ${loading
+                  ? "bg-gray-400"
+                  : "bg-[#69c3f0] text-white hover:hover:bg-[#4da4cf] transition duration-300"
+                  }`}
+              >
+                <span>{loading ? "Menyimpan..." : "Simpan"}</span>
               </button>
             </div>
-          </Link>
-          <div className="w-28 h-12 ">
-            <button
-              onClick={updateProfile}
-              disabled={loading}
-              className={`flex justify-center items-center gap-2 px-2 w-32 py-1.5 rounded-md shadow-lg transition duration-300 ${
-                loading
-                  ? "bg-gray-400"
-                  : "bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white"
-              }`}
-            >
-              <IoSaveOutline className="text-lg" />
-              <span>{loading ? "Menyimpan..." : "Simpan"}</span>
-            </button>
           </div>
         </div>
       </div>
