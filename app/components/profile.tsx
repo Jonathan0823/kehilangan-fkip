@@ -60,9 +60,9 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center md:h-screen bg-gray-100">
+    <div className="flex justify-center items-center md:h-screen bg-white">
       <div className="bg-[#d0f0fb] md:shadow-md rounded-lg p-6 w-full max-w-md relative">
-        <div className="absolute bottom-0 left-0 w-full h-5/6 bg-white rounded-t-2xl z-0"></div>
+        <div className="absolute bottom-0 left-0 w-full h-5/6 bg-[#f4f6f8] rounded-t-[30px] z-0"></div>
         <div className="relative z-10">
           <div className="flex w-full mb-6">
             <BackButton type="" />
@@ -109,7 +109,7 @@ const Profile: React.FC<ProfileProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={disabled}
-                className="w-full px-4 py-1 z-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full px-4 py-1 z-10 bg-white border border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
 
@@ -123,7 +123,7 @@ const Profile: React.FC<ProfileProps> = ({
                 value={program}
                 disabled={disabled}
                 onChange={(e) => setProgram(e.target.value)}
-                className="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full px-4 py-1  border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
 
@@ -139,7 +139,7 @@ const Profile: React.FC<ProfileProps> = ({
                 onChange={(e) => setAngk(e.target.value)}
                 min={2017}
                 max={new Date().getFullYear()}
-                className="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full px-4 py-1 border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
 
@@ -153,7 +153,7 @@ const Profile: React.FC<ProfileProps> = ({
                 id="email"
                 value={mail}
                 onChange={(e) => setMail(e.target.value)}
-                className="w-full px-4 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full px-4 py-1 border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
           </div>
