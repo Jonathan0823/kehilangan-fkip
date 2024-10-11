@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import Image from "next/image";
+import { FaArrowLeft } from "react-icons/fa";
 import { timeAgo } from "@/lib/utils";
 
 export default function NotificationModal() {
@@ -23,7 +24,7 @@ export default function NotificationModal() {
     const result = await axios("/api/postList");
 
     const sortedNotifications = result.data.sort(
-      (a: Notification, b: Notification) => 
+      (a: Notification, b: Notification) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
@@ -49,8 +50,9 @@ export default function NotificationModal() {
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-2 left-2 text-gray-500 hover:text-gray-700"
+              title="Close notifications"
             >
-              ✕
+              <FaArrowLeft size={25} />
             </button>
             <h2 className="text-lg font-semibold mb-4 text-center">
               Notifikasi

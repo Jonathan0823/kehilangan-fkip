@@ -6,8 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-export 
-const timeAgo = (dateString: string) => {
+export  const timeAgo = (dateString: string) => {
   const now = new Date();
   const notificationDate = new Date(dateString);
   const diffInMs = now.getTime() - notificationDate.getTime(); // Selisih dalam milidetik
@@ -17,6 +16,7 @@ const timeAgo = (dateString: string) => {
   const diffInHours = Math.floor(diffInMinutes / 60);
   const diffInDays = Math.floor(diffInHours / 24);
 
+  //stetment bebrapa jam afau menit yang lalu
   if (diffInSeconds < 60) {
     return `${diffInSeconds} detik yang lalu`;
   } else if (diffInMinutes < 60) {
