@@ -5,24 +5,27 @@ import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import { timeAgo } from "@/lib/utils";
 
+interface Notification {
+  author: {
+    name: string;
+    image: string;
+  };
+  title: string;
+  createdAt: string;
+  image?: string;
+}
+
+
 export default function NotificationModal() {
   const [isOpen, setIsOpen] = useState(false);
 
-  interface Notification {
-    author: {
-      name: string;
-      image: string;
-    };
-    title: string;
-    createdAt: string;
-    image?: string;
-  }
-
   const [notifications, setNotifications] = useState<Notification[]>([]);
-
+  const [comments, setComments] = useState<[]>([]);
   const notif = async () => {
     const result = await axios("/api/postList");
 
+    const data = await axios.get(`/api/comments/gerAll`);
+    setComments(data.data);
     const sortedNotifications = result.data.sort(
       (a: Notification, b: Notification) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -30,7 +33,6 @@ export default function NotificationModal() {
 
     setNotifications(sortedNotifications);
   };
-
   useEffect(() => {
     notif();
   }, []);
@@ -50,7 +52,6 @@ export default function NotificationModal() {
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-2 left-2 text-gray-500 hover:text-gray-700"
-              title="Close notifications"
             >
               <FaArrowLeft size={25} />
             </button>
