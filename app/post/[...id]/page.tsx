@@ -28,7 +28,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
 
   const fetchData = useCallback(async () => {
-    if (!session?.user?.id || !params?.id) return;
+    if (!session?.user?.id || !params?.id) return window.location.replace("/signin");
     try {
       const [userResult, postResult] = await Promise.all([
         axios.get(`/api/getUser/${session.user.id}`),
