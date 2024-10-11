@@ -21,7 +21,13 @@ export default function NotificationModal() {
 
   const notif = async () => {
     const result = await axios("/api/postList");
-    setNotifications(result.data);
+
+    const sortedNotifications = result.data.sort(
+      (a: Notification, b: Notification) => 
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    setNotifications(sortedNotifications);
   };
 
   useEffect(() => {
@@ -33,16 +39,13 @@ export default function NotificationModal() {
       <button
         onClick={() => setIsOpen(true)}
         className="p-2 rounded-full focus:outline-none"
-        title="Open Notifications"
+        title="Open notifications"
       >
         <FaBell size={25} />
       </button>
-
-
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg w-full min-h-dvh max-w-md p-4 relative shadow-lg">
-    
+          <div className="bg-sky-300 rounded-lg w-full min-h-dvh md:min-h-screen max-w-md p-4 relative shadow-lg">
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-2 left-2 text-gray-500 hover:text-gray-700"
@@ -67,7 +70,6 @@ export default function NotificationModal() {
                       className="h-10 w-10 rounded-full object-cover"
                       alt={notification.author.name}
                     />
-
                     <div>
                       <p className="text-sm font-medium">
                         <span className="font-bold">
