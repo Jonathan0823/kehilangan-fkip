@@ -1,7 +1,5 @@
 import Image from "next/image";
-import {
-  IoClose,
-} from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import axios from "axios";
 import BackButton from "./profilebuttons/back";
@@ -66,7 +64,9 @@ const Profile: React.FC<ProfileProps> = ({
         <div className="relative z-10">
           <div className="flex w-full mb-6">
             <BackButton type="" />
-            <h1 className="flex mx-auto text-center font-bold text-xl">Profil Saya</h1>
+            <h1 className="flex mx-auto text-center font-bold text-xl">
+              Profil Saya
+            </h1>
           </div>
           <div className="flex justify-center">
             <Image
@@ -87,7 +87,12 @@ const Profile: React.FC<ProfileProps> = ({
               >
                 <IoClose size={30} />
               </button>
-              <UploadProfileImage onUpload={() => { setIsModalOpen(false) }} onClick={(url: string) => setImage(url)} />
+              <UploadProfileImage
+                onUpload={() => {
+                  setIsModalOpen(false);
+                }}
+                onClick={(url: string) => setImage(url)}
+              />
             </div>
           </Modal>
           <div className="text-center text-gray-600 z-10 text-sm ">
@@ -100,7 +105,10 @@ const Profile: React.FC<ProfileProps> = ({
           )}
           <div className="flex flex-col z-10 justify-center mx-auto md:gap-3 mt-5 gap-1 w-5/6">
             <div>
-              <label htmlFor="name" className="block z-10 text-sm text-gray-600">
+              <label
+                htmlFor="name"
+                className="block z-10 text-sm text-gray-600"
+              >
                 Nama
               </label>
               <input
@@ -157,26 +165,25 @@ const Profile: React.FC<ProfileProps> = ({
               />
             </div>
           </div>
-          <div className="mt-16 flex flex-col items-center">
-            
-              <div className="w-28 h-12">
-                <button className=" flex justify-center items-center font-bold gap-2 mt-3 w-32 px-2 py-1.5 bg-[#69c3f0] text-white rounded-md shadow-lg hover:bg-[#4da4cf] transition duration-300" onClick={() => setDisabled(false)}>
-                  <span>Edit Profil</span>
-                </button>
-              </div>
-      
-            <div className="w-28 mt-3 h-12 ">
-              <button
-                onClick={updateProfile}
-                disabled={loading}
-                className={`flex justify-center items-center font-bold gap-2 px-2 w-32 py-1.5 rounded-md shadow-lg transition duration-300 ${loading
+          <div className="mt-16 flex flex-col gap-3 items-center">
+            <button
+              className=" flex justify-center items-center font-bold gap-2 mt-3 w-32 px-2 py-1.5 bg-[#69c3f0] text-white rounded-md shadow-lg hover:bg-[#4da4cf] transition duration-300"
+              onClick={() => setDisabled(false)}
+            >
+              <span>Edit Profil</span>
+            </button>
+
+            <button
+              onClick={updateProfile}
+              disabled={loading}
+              className={`flex justify-center items-center font-bold gap-2 px-2 w-32 py-1.5 rounded-md shadow-lg transition duration-300 ${
+                loading
                   ? "bg-gray-400"
                   : "bg-[#69c3f0] text-white hover:hover:bg-[#4da4cf] transition duration-300"
-                  }`}
-              >
-                <span>{loading ? "Menyimpan..." : "Simpan"}</span>
-              </button>
-            </div>
+              }`}
+            >
+              <span>{loading ? "Menyimpan..." : "Simpan"}</span>
+            </button>
           </div>
         </div>
       </div>
