@@ -51,6 +51,8 @@ const ReactButton = ({
 
   useEffect(() => {
     checkLikes();
+
+    return () => {};
   }, []);
 
   const [likes, setLikes] = useState<{ userId: string; postId: string }[]>([]);
@@ -61,6 +63,7 @@ const ReactButton = ({
     setDisabled(true);
     if (!liked) {
       setLiked(true);
+      
       await axios.post("/api/likes/like", { userId, postId });
     } else {
       setLiked(false);
