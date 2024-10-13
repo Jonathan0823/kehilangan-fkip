@@ -1,9 +1,5 @@
 import {
     LogOut,
-    Mail,
-    MessageSquare,
-    Plus,
-    PlusCircle,
     User,
     UserPlus,
     Users,
@@ -15,24 +11,15 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Logout from "./dropdownbuttons/Logout"
 import ProfileButton from "./dropdownbuttons/Profile"
+import Link from "next/link"
    
   export function AvatarDropdown({ image, name }: { image:string, name:string }) {
-
-  
- 
-
-    
-    
 
     return (
       <div className="ml-5">
@@ -49,44 +36,17 @@ import ProfileButton from "./dropdownbuttons/Profile"
         <DropdownMenuContent className="w-56 md:ml-5 md:mt-0 md:scale-100 ml-10 mt-14 scale-125">
           <DropdownMenuLabel>Hello, {name} 👋</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
+          {name === "Guest" ? (
+             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+             <UserPlus className="mr-2 h-4 w-4" />
+              <Link href="/signin">Login</Link>
+           </DropdownMenuItem>
+          ) : (
+            <div>
+            <DropdownMenuGroup>
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
               <ProfileButton />
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Users className="mr-2 h-4 w-4" />
-              <span>Team</span>
-            </DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <UserPlus className="mr-2 h-4 w-4" />
-                <span>Invite users</span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
-                    <Mail className="mr-2 h-4 w-4" />
-                    <span>Email</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    <span>Message</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    <span>More...</span>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuItem>
-              <Plus className="mr-2 h-4 w-4" />
-              <span>New Team</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
@@ -94,6 +54,8 @@ import ProfileButton from "./dropdownbuttons/Profile"
             <LogOut className="mr-2 h-4 w-4" />
             <Logout />
           </DropdownMenuItem>
+            </div>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
       </div>
