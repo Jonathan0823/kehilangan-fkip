@@ -39,55 +39,75 @@ const ReactButton = ({
   postId: string;
   userName: string;
 }) => {
-  
   const [likes, setLikes] = useState<{ [key: string]: number }>({});
   const [liked, setLiked] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
   const checkLikes = async () => {
-    if (userName === "Guest") {
-      setDisabled(true);
-    }
-    const response = await axios.get(`/api/likes`);
-    const likes = response.data;
-    const likesCount = likes.reduce((acc: { [key: string]: number }, like: { postId: string }) => {
-      acc[like.postId] = (acc[like.postId] || 0) + 1;
-      return acc;
-    }, {});
-    setLikes(likesCount);
-    setLiked(
-      likes.some(
-        (like: { userId: string; postId: string }) =>
-          like.userId === userId && like.postId === postId
-      )
-    );
+    setTimeout(async () => {
+      try {
+        const response = await axios.get(`/api/likes`);
+        const likes = response.data;
+        const likesCount = likes.reduce((acc: { [key: string]: number }, like: { postId: string }) => {
+          acc[like.postId] = (acc[like.postId] || 0) + 1;
+          return acc;
+        }, {});
+        setLikes(likesCount);
+        setLiked(
+          likes.some(
+            (like: { userId: string; postId: string }) =>
+              like.userId === userId && like.postId === postId
+          )
+        );
+      } catch (error) {
+        console.error('Failed to fetch likes:', error);
+      } finally {
+      }
+    }, 200); // 1 second delay
   };
 
   useEffect(() => {
     checkLikes();
+  }, [userId, postId]);
 
-    return () => {};
-  }, []);
-
+  useEffect(() => {
+    if (userName === 'Guest') {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [userName]);
 
   const handleReact = async () => {
-    const newLikes = { ...likes };
     if (disabled) return;
     setDisabled(true);
-    if (!liked) {
-      setLiked(true);
-      newLikes[postId] = (newLikes[postId] || 0) + 1;
-      await axios.post("/api/likes/like", { userId, postId });
-    } else {
+    const newLikes = { ...likes };
+
+    if (liked) {
       setLiked(false);
       newLikes[postId] = (newLikes[postId] || 0) - 1;
-      await axios.post("/api/likes/unlike", { userId, postId });
+      try {
+        await axios.post("/api/likes/unlike", { userId, postId });
+      } catch (error) {
+        console.error('Failed to unlike:', error);
+        setLiked(true);
+        newLikes[postId] = (newLikes[postId] || 0) + 1;
+      }
+    } else {
+      setLiked(true);
+      newLikes[postId] = (newLikes[postId] || 0) + 1;
+      try {
+        await axios.post("/api/likes/like", { userId, postId });
+      } catch (error) {
+        console.error('Failed to like:', error);
+        setLiked(false);
+        newLikes[postId] = (newLikes[postId] || 0) - 1;
+      }
     }
+
     setLikes(newLikes);
-    await checkLikes();
     setDisabled(false);
   };
-
 
   return (
     <div>
