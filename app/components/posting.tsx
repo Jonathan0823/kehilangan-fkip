@@ -40,7 +40,7 @@ const ReactButton = ({
   userName: string;
 }) => {
   
-  const [likes, setLikes] = useState<{ userId: string; postId: string }[]>([]);
+  const [likes, setLikes] = useState<{ [key: string]: number }>({});
   const [liked, setLiked] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
@@ -50,7 +50,11 @@ const ReactButton = ({
     }
     const response = await axios.get(`/api/likes`);
     const likes = response.data;
-    setLikes(likes);
+    const likesCount = likes.reduce((acc: { [key: string]: number }, like: { postId: string }) => {
+      acc[like.postId] = (acc[like.postId] || 0) + 1;
+      return acc;
+    }, {});
+    setLikes(likesCount);
     setLiked(
       likes.some(
         (like: { userId: string; postId: string }) =>
@@ -67,21 +71,23 @@ const ReactButton = ({
 
 
   const handleReact = async () => {
+    const newLikes = { ...likes };
     if (disabled) return;
     setDisabled(true);
     if (!liked) {
       setLiked(true);
-      
+      newLikes[postId] = (newLikes[postId] || 0) + 1;
       await axios.post("/api/likes/like", { userId, postId });
     } else {
       setLiked(false);
+      newLikes[postId] = (newLikes[postId] || 0) - 1;
       await axios.post("/api/likes/unlike", { userId, postId });
     }
+    setLikes(newLikes);
     await checkLikes();
     setDisabled(false);
   };
 
-  const filteredLikes = likes.filter((like) => like.postId === postId).length;
 
   return (
     <div>
@@ -91,7 +97,7 @@ const ReactButton = ({
         onClick={handleReact}
         className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full flex gap-3"
       >
-        <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{filteredLikes}</p>
+        <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{likes[postId] || 0}</p>
       </button>
       ):(
         <div>
@@ -101,7 +107,7 @@ const ReactButton = ({
             onClick={handleReact}
             className="px-4 py-2 bg-[#3b82f6] pb-3 items-center justify-center text-white rounded-full hover:text-blue-700 hover:bg-blue-200 transition-all duration-200 flex gap-3"
           >
-            <AiFillLike className="w-5 h-5"/> <p className="text-lg">{filteredLikes}</p> 
+            <AiFillLike className="w-5 h-5"/> <p className="text-lg">{likes[postId] || 0}</p> 
           </button>
         ) : (
           <button
@@ -109,7 +115,7 @@ const ReactButton = ({
             onClick={handleReact}
             className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200 flex gap-3"
           >
-            <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{filteredLikes}</p>
+            <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{likes[postId] || 0}</p>
           </button>
         )}
         </div>
