@@ -86,6 +86,7 @@ const ReactButton = ({
     if (liked) {
       setLiked(false);
       newLikes[postId] = (newLikes[postId] || 0) - 1;
+      setLikes(newLikes);
       try {
         await axios.post("/api/likes/unlike", { userId, postId });
       } catch (error) {
@@ -96,6 +97,7 @@ const ReactButton = ({
     } else {
       setLiked(true);
       newLikes[postId] = (newLikes[postId] || 0) + 1;
+      setLikes(newLikes);
       try {
         await axios.post("/api/likes/like", { userId, postId });
       } catch (error) {
@@ -104,7 +106,6 @@ const ReactButton = ({
         newLikes[postId] = (newLikes[postId] || 0) - 1;
       }
     }
-
     setLikes(newLikes);
     setDisabled(false);
   };
