@@ -51,7 +51,7 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md max-w-2xl mx-auto">
+      <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md md:max-w-2xl max-w-full mx-auto">
         {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
         {successMessage && <p className="text-green-500 text-sm ml-2">{successMessage}</p>}
         <div className="flex items-center">
