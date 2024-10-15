@@ -117,7 +117,7 @@ const Profile: React.FC<ProfileProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={disabled}
-                className="w-full px-4 py-1 z-10 bg-white border border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className={`w-full px-4 py-1 z-10 bg-white border border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 ${disabled ? 'text-gray-500' : 'text-black'}`}
               />
             </div>
 
@@ -131,7 +131,7 @@ const Profile: React.FC<ProfileProps> = ({
                 value={program}
                 disabled={disabled}
                 onChange={(e) => setProgram(e.target.value)}
-                className="w-full px-4 py-1  border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className={`w-full px-4 py-1  border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 ${disabled ? 'text-gray-500' : 'text-black'}`}
               />
             </div>
 
@@ -147,7 +147,7 @@ const Profile: React.FC<ProfileProps> = ({
                 onChange={(e) => setAngk(e.target.value)}
                 min={2017}
                 max={new Date().getFullYear()}
-                className="w-full px-4 py-1 border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className={`w-full px-4 py-1 border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 ${disabled ? 'text-gray-500' : 'text-black'}`}
               />
             </div>
 
@@ -161,7 +161,7 @@ const Profile: React.FC<ProfileProps> = ({
                 id="email"
                 value={mail}
                 onChange={(e) => setMail(e.target.value)}
-                className="w-full px-4 py-1 border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className={`w-full px-4 py-1 border bg-white border-[#69c3f0] rounded-md focus:outline-none focus:ring-2 text-gray-500 focus:ring-blue-300`}
               />
             </div>
           </div>
