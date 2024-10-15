@@ -71,7 +71,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
       <Navbar user={user} />
-      <div className="mt-6 space-y-4 flex flex-col items-center bg-gray-100">
+      <div className="space-y-4 flex flex-col items-center bg-gray-100">
         <div
           key={memoizedPost?.id}
           className="bg-white p-4 items-center justify-center mt-2 rounded-lg shadow md:max-w-2xl max-w-full w-full"

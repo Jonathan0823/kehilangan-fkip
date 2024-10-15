@@ -58,7 +58,7 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
         <input
           type="text"
           placeholder="Write a comment..."
-          className="flex-grow p-2 border rounded-lg mr-2"
+          className="flex-grow p-2 border w-10 rounded-lg mr-2"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           disabled={sending}

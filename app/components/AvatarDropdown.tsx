@@ -32,7 +32,7 @@ import Link from "next/link"
           className="w-10 h-10 rounded-full object-cover"
         />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 md:ml-5 md:mt-0 md:scale-100 ml-10 mt-14 scale-125">
+        <DropdownMenuContent className="w-56 md:ml-5 md:mt-0 md:scale-100 ml-10 mt-5 scale-125">
           <DropdownMenuLabel>Hello, {name} 👋</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {name === "Guest" ? (
