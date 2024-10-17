@@ -34,56 +34,113 @@ interface User {
 const ReactButton = ({
   userId,
   postId,
+  userName,
 }: {
   userId: string;
   postId: string;
+  userName: string;
 }) => {
+  const [likes, setLikes] = useState<{ [key: string]: number }>({});
+  const [liked, setLiked] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
   const checkLikes = async () => {
-    const response = await axios.get(`/api/likes`);
-    const likes = response.data;
-    setLikes(likes);
-    setLiked(
-      likes.some(
-        (like: { userId: string; postId: string }) =>
-          like.userId === userId && like.postId === postId
-      )
-    );
+    setTimeout(async () => {
+      try {
+        const response = await axios.get(`/api/likes`);
+        const likes = response.data;
+        const likesCount = likes.reduce((acc: { [key: string]: number }, like: { postId: string }) => {
+          acc[like.postId] = (acc[like.postId] || 0) + 1;
+          return acc;
+        }, {});
+        setLikes(likesCount);
+        setLiked(
+          likes.some(
+            (like: { userId: string; postId: string }) =>
+              like.userId === userId && like.postId === postId
+          )
+        );
+      } catch (error) {
+        console.error('Failed to fetch likes:', error);
+      } finally {
+      }
+    }, 200); // 1 second delay
   };
 
   useEffect(() => {
     checkLikes();
-  }, []);
+  }, [userId, postId]);
 
-  const [likes, setLikes] = useState<{ userId: string; postId: string }[]>([]);
-  const [liked, setLiked] = useState(false);
+  useEffect(() => {
+    if (userName === 'Guest') {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [userName]);
 
   const handleReact = async () => {
-    if (!liked) {
-      await axios.post("/api/likes/like", { userId, postId });
-    } else {
-      await axios.post("/api/likes/unlike", { userId, postId });
-    }
-    checkLikes();
-  };
+    if (disabled) return;
+    setDisabled(true);
+    const newLikes = { ...likes };
 
-  const filteredLikes = likes.filter((like) => like.postId === postId).length;
+    if (liked) {
+      setLiked(false);
+      newLikes[postId] = (newLikes[postId] || 0) - 1;
+      setLikes(newLikes);
+      try {
+        await axios.post("/api/likes/unlike", { userId, postId });
+      } catch (error) {
+        console.error('Failed to unlike:', error);
+        setLiked(true);
+        newLikes[postId] = (newLikes[postId] || 0) + 1;
+      }
+    } else {
+      setLiked(true);
+      newLikes[postId] = (newLikes[postId] || 0) + 1;
+      setLikes(newLikes);
+      try {
+        await axios.post("/api/likes/like", { userId, postId });
+      } catch (error) {
+        console.error('Failed to like:', error);
+        setLiked(false);
+        newLikes[postId] = (newLikes[postId] || 0) - 1;
+      }
+    }
+    setLikes(newLikes);
+    setDisabled(false);
+  };
 
   return (
     <div>
-      {liked ? (
+      {disabled ? (
         <button
-          onClick={handleReact}
-          className="px-4 py-2 bg-[#3b82f6] pb-3 items-center justify-center text-white rounded-full hover:text-blue-700 hover:bg-blue-200 transition-all duration-200 flex gap-3"
-        >
-          <AiFillLike className="w-5 h-5"/> <p className="text-lg">{filteredLikes}</p> 
-        </button>
-      ) : (
-        <button
-          onClick={handleReact}
-          className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200 flex gap-3"
-        >
-          <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{filteredLikes}</p>
-        </button>
+        disabled={disabled}
+        onClick={handleReact}
+        className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full flex gap-3"
+      >
+        <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{likes[postId] || 0}</p>
+      </button>
+      ):(
+        <div>
+        
+        {liked ? (
+          <button
+            onClick={handleReact}
+            className="px-4 py-2 bg-[#3b82f6] pb-3 items-center justify-center text-white rounded-full hover:text-blue-700 hover:bg-blue-200 transition-all duration-200 flex gap-3"
+          >
+            <AiFillLike className="w-5 h-5"/> <p className="text-lg">{likes[postId] || 0}</p> 
+          </button>
+        ) : (
+          <button
+            disabled={disabled}
+            onClick={handleReact}
+            className="px-4 py-2 bg-blue-200 pb-3 items-center justify-center text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200 flex gap-3"
+          >
+            <AiOutlineLike className=" w-5 h-5" /> <p className="text-lg">{likes[postId] || 0}</p>
+          </button>
+        )}
+        </div>
       )}
     </div>
   );
@@ -307,7 +364,7 @@ export default function PostComponent({
               </div>
 
               <div className="flex justify-between mt-4">
-                <ReactButton userId={user.id} postId={post.id} />
+                <ReactButton userId={user.id} postId={post.id} userName={user.name}/>
 
                 <Link href={`/post/${post.id}`}>
                   <button className="px-4 py-3 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">

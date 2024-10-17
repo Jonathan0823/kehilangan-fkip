@@ -51,24 +51,24 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md max-w-2xl mx-auto">
-        {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
-        {successMessage && <p className="text-green-500 text-sm ml-2">{successMessage}</p>}
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="Write a comment..."
-            className="flex-grow p-2 border rounded-lg mr-2"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            disabled={sending}
-          />
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg" disabled={sending}>
-            {sending ? "Sending..." : "Send"}
-          </button>
-        </div>
+    <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md max-w-2xl mx-auto">
+      {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
+      {successMessage && <p className="text-green-500 text-sm ml-2">{successMessage}</p>}
+      <div className="flex items-center">
+        <input
+          type="text"
+          placeholder="Write a comment..."
+          className="flex-grow p-2 border w-10 rounded-lg mr-2"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          disabled={sending}
+        />
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg" disabled={sending}>
+          {sending ? "Sending..." : "Send"}
+        </button>
       </div>
-    </form>
+    </div>
+  </form>
   );
 };
 

@@ -1,16 +1,13 @@
-"use client"
-import { useRouter } from 'next/navigation';
-import React from 'react'
+"use client";
+import Link from "next/link";
+import React from "react";
 
 const ProfileButton = () => {
-    const router = useRouter();
-
-    const handleProfile = () => {
-        router.push('/profile');
-    }
   return (
-    <span onClick={handleProfile}>My Account</span>
-  )
-}
+    <Link href="/profile">
+      <span>My Account</span>
+    </Link>
+  );
+};
 
-export default ProfileButton
+export default ProfileButton;

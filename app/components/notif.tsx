@@ -26,6 +26,7 @@ export default function NotificationModal() {
 
     const data = await axios.get(`/api/comments/gerAll`);
     setComments(data.data);
+    console.log(comments);
     const sortedNotifications = result.data.sort(
       (a: Notification, b: Notification) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

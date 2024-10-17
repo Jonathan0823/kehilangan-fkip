@@ -18,6 +18,10 @@ interface Post {
   title?: string;
   description?: string;
   image?: string;
+  author?: {
+    name: string;
+    image: string;
+  };
 }
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -63,25 +67,26 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   if (loading) return <Loading />;
 
+
   return (
     <div>
       <Navbar user={user} />
-      <div className="mt-6 space-y-4 flex flex-col items-center bg-gray-100">
+      <div className="space-y-4 flex flex-col items-center bg-gray-100">
         <div
           key={memoizedPost?.id}
           className="bg-white p-4 items-center justify-center mt-2 rounded-lg shadow md:max-w-2xl max-w-full w-full"
         >
           <div className="flex items-center mb-2 justify-between">
-            <div className="flex">
+            <div className="flex ml-8">
               <Image
                 width={32}
                 height={32}
-                src={memoizedPost?.userImage || "/default-image.png"}
+                src={memoizedPost?.author?.image || "/default-image.png"}
                 alt="User Profile"
                 className="h-8 w-8 rounded-full"
               />
               <div className="ml-2">
-                <h2 className="text-sm font-bold">{memoizedPost?.userName}</h2>
+                <h2 className="text-sm font-bold">{memoizedPost?.author?.name}</h2>
                 <p className="text-xs text-gray-500">{memoizedPost?.timeAgo}</p>
               </div>
             </div>
