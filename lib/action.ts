@@ -33,8 +33,14 @@ export const deleteButton = async (postId: string, userId: string) => {
       await prisma.coment.deleteMany({
         where: {
           postId,
-        },
+        },   
       });
+      
+      await prisma.like.deleteMany({
+        where: {
+          postId,
+        },
+      })
 
 
       await prisma.post.delete({

@@ -7,6 +7,7 @@ import { useEdgeStore } from "../lib/edgeStore";
 import axios from "axios";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
+import Footer from "./Footer";
 
 interface Post {
   createdAt: string | number | Date;
@@ -318,6 +319,7 @@ export default function PostComponent({
           ))}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
