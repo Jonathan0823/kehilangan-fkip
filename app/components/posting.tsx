@@ -280,7 +280,7 @@ export default function PostComponent({
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full max-w-3xl p-4 mx-auto">
+      <div className="w-full max-w-3xl p-4 mb-10 mx-auto">
         <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl">
           <button
             className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
@@ -376,7 +376,7 @@ export default function PostComponent({
           ))}
         </div>
       </div>
-      <Footer/>
+      <Footer className="fixed mt-4"/>
     </div>
   );
 }

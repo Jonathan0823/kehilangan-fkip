@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="min-h-dvh"> 
     <Landing/>
-    <Footer/>
+    <Footer className={"fixed"}/>
     </div>
   );
 }
