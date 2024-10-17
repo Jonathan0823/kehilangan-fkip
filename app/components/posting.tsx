@@ -314,6 +314,17 @@ export default function PostComponent({
           >
             Penemuan Barang
           </button>
+
+          <button
+            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
+              filter === "Kerusakan Fasilitas"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
+            }`}
+            onClick={() => setFilter("Kerusakan Fasilitas")}
+          >
+            Kerusakan Fasilitas
+          </button>
         </div>
 
         <div className="mt-6 space-y-4 flex flex-col items-center">
