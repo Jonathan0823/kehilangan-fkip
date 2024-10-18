@@ -20,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
   console.log(user); 
 
   return (
-    <div className= "sticky top-0 z-50 p-4 w-full md:h-20 h-14 bg-white shadow-sm py-6 px-4 flex items-center justify-between">
+    <div className= "sticky top-0 -z-50 p-4 md:min-w-full w-full md:h-20 h-14 bg-white shadow-sm py-6 px-4 flex items-center justify-between">
       <div className="flex items-center">
         <AvatarDropdown image={profilepic} name={user?.name || ""} />
       </div>

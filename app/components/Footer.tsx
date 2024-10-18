@@ -1,6 +1,9 @@
+"use client"
 import { FaHome, FaHistory, FaSearch, FaBell, FaUser } from "react-icons/fa";
 import React from "react";
+import Modal from "./modal";
 import Link from "next/link";
+import NotificationDropdown from "./notif";
 
 interface FooterProps {
   className: string;
@@ -18,9 +21,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
       <Link href="/search">
         <FaSearch className="text-black text-2xl" />
       </Link>
-      <Link href="/notif">
-      <FaBell className="text-black text-2xl" />
-      </Link>
+      <NotificationDropdown/>
       <Link href="/profile">
       <FaUser className="text-black text-2xl" />
       </Link>
