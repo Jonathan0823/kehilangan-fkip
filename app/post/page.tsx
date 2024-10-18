@@ -1,6 +1,6 @@
 "use client";
 import Navbar from '@/app/components/navbar';
-import PostComponent from '@/app/components/posting'; 
+import PostComponent from '@/app/components/PostComponent'; 
 import Loading from '../components/Loading';
 import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";

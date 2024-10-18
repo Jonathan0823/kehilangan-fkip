@@ -28,6 +28,13 @@ export const deleteButton = async (postId: string, userId: string) => {
         postId,
       },
     });
+    const postExist = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    })
+    console.log(postExist);
+    console.log(exist);
 
     if (exist) {
       await prisma.coment.deleteMany({
@@ -41,16 +48,13 @@ export const deleteButton = async (postId: string, userId: string) => {
           postId,
         },
       })
-
-
-      await prisma.post.delete({
-        where: {
-          id: postId,
-        },
-      });
-
-      return "post deleted";
     }
+    await prisma.post.delete({
+      where: {
+        id: postId,
+      },
+    });
+    return "post deleted";
   } catch (err) {
     console.log(err);
   }
