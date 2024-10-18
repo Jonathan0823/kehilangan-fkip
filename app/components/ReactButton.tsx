@@ -78,14 +78,16 @@ const ReactButton = ({
   };
 
   return (
-    <div>
+    <div className="flex items-center">
       <button
         disabled={disabled}
         onClick={handleReact}
         className={`px-4 py-2 ${liked ? "bg-[#3b82f6] text-white" : "bg-blue-200 text-blue-700"} rounded-full flex gap-3 transition-all duration-200`}
       >
+        <div className="flex items-center gap-3">
         {liked ? <AiFillLike className="w-5 h-5" /> : <AiOutlineLike className="w-5 h-5" />}
         <p className="text-lg">{likes[postId] || 0}</p>
+        </div>
       </button>
     </div>
   );
