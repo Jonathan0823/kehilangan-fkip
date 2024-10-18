@@ -37,8 +37,7 @@ const HistoryPage = () => {
         <div className="bg-white rounded-lg p-6 text-center">
           <h2 className="text-xl font-bold mb-4">Tidak Ada Postingan</h2>
           <p className="text-gray-600 mb-4">
-            Saat ini, kamu belum memiliki postingan. Silakan buat postingan baru
-            untuk mulai berbagi!
+            Saat ini, kamu belum memiliki postingan. Silakan laporkan jika menemukan barang hilang, Kerusakan fasilitas, atau hal lainnya.
           </p>{" "}
           <Link href="/Laporan">
             <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
