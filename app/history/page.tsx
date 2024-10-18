@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import HistoryCard from "./historyCard";
+import HistoryCard from "../components/historyCard";
 
 
 const HistoryPage = () => {
@@ -16,7 +16,6 @@ const HistoryPage = () => {
             console.log(e)
         }
     }
-
     useEffect(() => {
         if (session?.user.id) {
             fecthData();
@@ -24,7 +23,7 @@ const HistoryPage = () => {
     }, [session?.user.id]);
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">History Postingan</h1>
+      <h1 className="text-2xl text-center font-bold mb-6">History Postingan</h1>
       {posts.map((post) => (
         <HistoryCard
           key={post.id}

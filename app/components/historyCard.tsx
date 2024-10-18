@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface HistoryCardProps {
   title: string;
@@ -14,7 +15,9 @@ const HistoryCard : React.FC  <HistoryCardProps>=  ({ title, content, date, imag
         <p className="text-gray-600 mb-2">{content}</p>
         <span className="text-gray-400 text-sm">{date}</span>
         {image && (
-          <img
+          <Image
+            height={300}
+            width={300}
             src={image}
             alt={title}
             className="w-full h-40 object-cover rounded-md mb-2"
