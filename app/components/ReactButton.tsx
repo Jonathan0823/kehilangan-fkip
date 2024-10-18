@@ -55,25 +55,28 @@ const ReactButton = ({
     if (liked) {
       setLiked(false);
       newLikes[postId] = (newLikes[postId] || 0) - 1;
+      setLikes(newLikes);
       try {
         await axios.post("/api/likes/unlike", { userId, postId });
       } catch (error) {
         console.error("Failed to unlike:", error);
         setLiked(true);
         newLikes[postId] = (newLikes[postId] || 0) + 1;
+        setLikes(newLikes);
       }
     } else {
       setLiked(true);
       newLikes[postId] = (newLikes[postId] || 0) + 1;
+      setLikes(newLikes);
       try {
         await axios.post("/api/likes/like", { userId, postId });
       } catch (error) {
         console.error("Failed to like:", error);
         setLiked(false);
         newLikes[postId] = (newLikes[postId] || 0) - 1;
+        setLikes(newLikes);
       }
     }
-    setLikes(newLikes);
     setDisabled(false);
   };
 
