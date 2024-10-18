@@ -1,7 +1,6 @@
 "use client"
-import { FaHome, FaHistory, FaSearch, FaBell, FaUser } from "react-icons/fa";
+import { FaHome, FaHistory, FaSearch, FaUser } from "react-icons/fa";
 import React from "react";
-import Modal from "./modal";
 import Link from "next/link";
 import NotificationDropdown from "./notif";
 
