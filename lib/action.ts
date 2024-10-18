@@ -1,4 +1,5 @@
 "use server"
+import axios from "axios";
 import { prisma } from "./prisma";
 
 export const getProfile = async (id: string) => {
