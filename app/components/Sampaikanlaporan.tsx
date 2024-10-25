@@ -135,10 +135,10 @@ export default function ReportForm() {
                   setReportType(type);
                   handleInputChange();
                 }}
-                className={`py-2 px-4 rounded ${
+                className={`py-2 px-4 rounded-xl ${
                   reportType === type
-                    ? "bg-blue-500 border-2 text-white font-bold"
-                    : "border-blue-300 border-2 font-bold text-gray-600"
+                    ? "bg-[#5fb1da] border-2 text-white font-bold"
+                    : "border-blue-300 bg-[#69c3f0] border-2 font-bold text-white"
                 }`}
               >
                 {type}
