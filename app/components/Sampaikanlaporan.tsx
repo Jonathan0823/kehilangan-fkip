@@ -115,7 +115,7 @@ export default function ReportForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-dvh md:min-h-screen bg-gradient-to-b from-sky-100 to-sky-200 relative overflow-hidden">
+    <div className="flex justify-center items-center min-h-dvh md:min-h-screen bg-white relative overflow-hidden">
       <form onSubmit={handleSubmit} className="p-6 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-10">Sampaikan laporan Anda</h2>
         <div className="mb-4">
@@ -135,10 +135,10 @@ export default function ReportForm() {
                   setReportType(type);
                   handleInputChange();
                 }}
-                className={`py-2 px-4 rounded-xl ${
+                className={`py-2 px-4 rounded ${
                   reportType === type
-                    ? "bg-[#5fb1da] border-2 text-white font-bold"
-                    : "border-blue-300 bg-[#69c3f0] border-2 font-bold text-white"
+                    ? "bg-blue-500 border-2 text-white font-bold"
+                    : "border-[#69c3f0] border-2 font-bold text-[#69c3f0]"
                 }`}
               >
                 {type}
@@ -154,7 +154,7 @@ export default function ReportForm() {
               setDescription(e.target.value);
               handleInputChange();
             }}
-            className="w-full p-2 border bg-sky-100 border-gray-300 rounded"
+            className="w-full p-2 border-2 bg-white border-gray-300 rounded"
             placeholder="Deskripsikan laporan Anda"
           />
         </div>
@@ -167,11 +167,11 @@ export default function ReportForm() {
               setDate(e.target.value);
               handleInputChange();
             }}
-            className="w-full p-2 border bg-sky-100 border-gray-300 rounded"
+            className="w-full p-2 border-2 bg-white border-gray-300 rounded"
           />
         </div>
         <div className="mb-10">
-          <label className="flex items-center border border-gray-300 p-2 cursor-pointer">
+          <label className="flex items-center border-2 border-gray-300 p-2 cursor-pointer">
             <FiPaperclip /> Upload Lampiran
             <input
               type="file"
@@ -207,10 +207,10 @@ export default function ReportForm() {
         <div className="flex justify-center">
           <button
             disabled={send || sending}
-            className={`w-full py-3 px-4 mt-6 rounded-lg text-lg font-semibold focus:ring focus:ring-sky-300 focus:outline-none transition-all duration-200 ${
+            className={`w-52 py-3 px-4 mt-2 rounded-lg text-lg font-semibold focus:ring focus:ring-sky-300 focus:outline-none transition-all duration-200 ${
               send || sending
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-sky-600 hover:bg-sky-700 text-white"
+                : "bg-[#69c3f0] hover:bg-sky-700 text-white"
             }`}
             type="submit"
           >
