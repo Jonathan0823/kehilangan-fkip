@@ -16,7 +16,6 @@ import {
 import Image from "next/image"
 import Logout from "./dropdownbuttons/Logout"
 import ProfileButton from "./dropdownbuttons/Profile"
-import Link from "next/link"
    
   export function AvatarDropdown({ image, name }: { image:string, name:string }) {
 
@@ -40,7 +39,7 @@ import Link from "next/link"
           {name === "Guest" ? (
              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
              <UserPlus className="mr-2 h-4 w-4" />
-              <Link href="/signin">Login</Link>
+              <a href="/signin">Login</a>
            </DropdownMenuItem>
           ) : (
             <div>
