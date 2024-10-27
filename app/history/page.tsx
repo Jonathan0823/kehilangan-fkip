@@ -52,7 +52,7 @@ const HistoryPage = () => {
 
   return (
     <div>
-      <div className="min-h-dvh bg-gray-100 p-6">
+      <div className="min-h-dvh bg-gray-100 p-6 z-50">
         <h1 className="text-2xl text-center font-bold mb-6">
           History Postingan
         </h1>
