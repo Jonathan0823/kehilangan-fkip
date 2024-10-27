@@ -115,9 +115,9 @@ export default function PostComponent({
     <div className="min-h-screen bg-[#d0f0fb]">
       <div className="w-full max-w-3xl p-4 mb-10 mx-auto">
         {/* Filter buttons */}
-        <div className="flex mx-auto lg:justify-center justify-between  md:gap-10 md:max-w-2xl">
+        <div className="flex mx-auto whitespace-nowrap lg:justify-center overflow-x-auto justify-between  md:gap-10 md:max-w-2xl">
           <button
-            className={`py-2 px-8 rounded-3xl transition-none ${
+            className={`lg:py-2 lg:px-8 px-5 py-1 rounded-3xl font-semibold transition-none ${
               filter === "All"
                 ? "bg-[#897f7f] text-white"
                 : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
@@ -127,7 +127,7 @@ export default function PostComponent({
             All
           </button>
           <button
-            className={`py-2 px-8 rounded-3xl transition-none ${
+            className={`lg:py-2 lg:px-8 px-3 py-1 rounded-3xl font-semibold transition-none ${
               filter === "Most Liked"
                 ? "bg-[#897f7f] text-white"
                 : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
@@ -137,7 +137,7 @@ export default function PostComponent({
             Most Liked
           </button>
           <button
-            className={`py-2 px-8 rounded-3xl font-semibold transition-none ${
+            className={`lg:py-2 lg:px-8 px-2 py-1 rounded-3xl font-semibold transition-none ${
               filter === "Lost & Found"
                 ? "bg-[#897f7f] text-white"
                 : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
@@ -148,7 +148,7 @@ export default function PostComponent({
           </button>
 
           <button
-            className={`py-2 px-5 rounded-3xl font-semibold transition-none ${
+            className={`lg:py-2 lg:px-8 rounded-3xl px-3 py-1 font-semibold transition-none ${
               filter === "Kerusakan Fasilitas"
                 ? "bg-[#897f7f] text-white"
                 : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
