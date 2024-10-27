@@ -64,7 +64,7 @@ const SignUp: React.FC = () => {
                 type="text"
                 name="name"
                 id="name"
-                className="w-full focus:outline-none py-1"
+                className="w-full focus:outline-none py-1 placeholder-black"
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -79,7 +79,7 @@ const SignUp: React.FC = () => {
                 type="email"
                 name="email"
                 id="email"
-                className="w-full focus:outline-none py-1"
+                className="w-full focus:outline-none py-1 placeholder-black"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -95,7 +95,7 @@ const SignUp: React.FC = () => {
                 type="password"
                 name="password"
                 id="password"
-                className="w-full focus:outline-none py-1"
+                className="w-full focus:outline-none py-1 placeholder-black"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

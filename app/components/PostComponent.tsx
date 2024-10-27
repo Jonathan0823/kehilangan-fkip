@@ -115,7 +115,7 @@ export default function PostComponent({
     <div className="min-h-screen bg-[#d0f0fb]">
       <div className="w-full max-w-3xl p-4 mb-10 mx-auto">
         {/* Filter buttons */}
-        <div className="flex mx-auto whitespace-nowrap lg:justify-center overflow-x-auto justify-between gap-2  md:gap-10 md:max-w-2xl">
+        <div className="flex mx-auto whitespace-nowrap lg:justify-center overflow-x-auto justify-between gap-2  md:gap-10 md:max-w-2xl hide-scrollbar">
           <button
             className={`lg:py-2 lg:px-8 px-5 py-1 rounded-3xl font-semibold transition-none ${
               filter === "All"
@@ -159,7 +159,7 @@ export default function PostComponent({
           </button>
         </div>
 
-        <div className="mt-6 space-y-4 flex flex-col items-center">
+        <div className="mt-4 space-y-4 flex flex-col items-center">
           {filteredPosts.map((post) => (
             <div
               key={post.id}

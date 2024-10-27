@@ -44,7 +44,7 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="min-h-dvh flex items-center justify-center">
-      <div className="bg-white p-8 lg:min-h-0 min-h-dvh  rounded-lg  max-w-sm w-full">
+      <div className="bg-white p-8 lg:min-h-0 min-h-dvh rounded-lg  max-w-sm w-full">
         <h2 className="text-5xl font-bold mb-6 justify-start text-black">
           Sign In
         </h2>
@@ -65,7 +65,7 @@ const SignIn: React.FC = () => {
               <input
                 type="email"
                 id="email"
-                className="w-full focus:outline-none py-1"
+                className="w-full focus:outline-none py-1 placeholder-black"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -79,7 +79,7 @@ const SignIn: React.FC = () => {
               <input
                 type="password"
                 id="password"
-                className="w-full focus:outline-none text-black"
+                className="w-full focus:outline-non placeholder-black"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
