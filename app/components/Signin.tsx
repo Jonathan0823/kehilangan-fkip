@@ -1,10 +1,11 @@
 "use client";
 
-import { FaEnvelope, FaRegUserCircle, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import React from "react";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = React.useState("");
@@ -49,11 +50,16 @@ const SignIn: React.FC = () => {
         </h2>
 
         <div className="flex justify-center mb-6">
-          <FaRegUserCircle className="text-gray-400 mr-3" size={100} />
+        <Image
+              width={500}
+              height={400}
+              src="/Signin.png"
+              alt="Server Illustration"
+            />
         </div>
 
         <form onSubmit={handleLogin}>
-          <div className="mb-4">
+          <div className="mb-4 mx-2">
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2 border-sky-300">
               <FaEnvelope className="text-sky-300 mr-3" />
               <input
@@ -67,7 +73,7 @@ const SignIn: React.FC = () => {
             </div>
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 mx-2">
             <div className="flex items-center border rounded-lg px-3 py-2 mt-2 border-sky-300">
               <FaLock className="text-sky-300 mr-3" />
               <input

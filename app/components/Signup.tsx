@@ -1,8 +1,9 @@
 "use client";
-import { FaEnvelope, FaLock, FaRegUser, FaRegUserCircle } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaRegUser } from "react-icons/fa";
 import React from "react";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
+import Image from "next/image";
 
 const SignUp: React.FC = () => {
   const [name, setName] = React.useState("");
@@ -51,8 +52,8 @@ const SignUp: React.FC = () => {
           </a>
         </p>
 
-        <div className="flex justify-center mb-6">
-          <FaRegUserCircle className="text-gray-400 mr-3" size={100} />
+        <div className="flex justify-center mt-10 mb-7">
+         <Image src="/Signup.png" alt="Signup" width={647} height={385}></Image>
         </div>
 
         <form onSubmit={handleSignUp}>
