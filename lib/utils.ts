@@ -15,6 +15,9 @@ export  const timeAgo = (dateString: string) => {
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   const diffInHours = Math.floor(diffInMinutes / 60);
   const diffInDays = Math.floor(diffInHours / 24);
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  const diffInMonths = Math.floor(diffInWeeks / 4);
+  const diffInYears = Math.floor(diffInMonths / 12);
 
   //stetment bebrapa jam afau menit yang lalu
   if (diffInSeconds < 60) {
@@ -23,7 +26,13 @@ export  const timeAgo = (dateString: string) => {
     return `${diffInMinutes} menit yang lalu`;
   } else if (diffInHours < 24) {
     return `${diffInHours} jam yang lalu`;
-  } else {
+  } else if (diffInDays < 7) {
     return `${diffInDays} hari yang lalu`;
+  } else if (diffInWeeks < 4) {
+    return `${diffInWeeks} minggu yang lalu`;
+  } else if (diffInMonths < 12) {
+    return `${diffInMonths} bulan yang lalu`;
+  } else {
+    return `${diffInYears} tahun yang lalu`;
   }
 };

@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BackButton from '@/app/components/profilebuttons/back';
 import CommentBox from '@/app/components/CommentBox';
+import { timeAgo } from '@/lib/utils';
 
 const Navbar = dynamic(() => import('@/app/components/navbar'), { ssr: false });
 const Loading = dynamic(() => import('@/app/components/Loading'), { ssr: false });
@@ -15,6 +16,7 @@ interface Post {
   userName?: string;
   userImage?: string;
   timeAgo?: string;
+  createdAt?: string;
   title?: string;
   description?: string;
   image?: string;
@@ -87,7 +89,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               />
               <div className="ml-2">
                 <h2 className="text-sm font-bold">{memoizedPost?.author?.name}</h2>
-                <p className="text-xs text-gray-500">{memoizedPost?.timeAgo}</p>
+                <p className="text-xs text-gray-500">{timeAgo(memoizedPost?.createdAt ?? '')}</p>
               </div>
             </div>
             <BackButton type="post" />

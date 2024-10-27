@@ -7,6 +7,7 @@ import { useEdgeStore } from "../lib/edgeStore";
 import ReactButton from "./ReactButton";
 import Dropdown from "./Dropdown";
 import Footer from "./Footer";
+import { timeAgo } from "@/lib/utils";
 
 interface Post {
   createdAt: string | number | Date;
@@ -54,7 +55,11 @@ export default function PostComponent({
     }
   };
 
-  const handleShare = async (postId: string, title: string, imageUrl: string) => {
+  const handleShare = async (
+    postId: string,
+    title: string,
+    imageUrl: string
+  ) => {
     const url = `https://kehilangan-fkip.vercel.app/post/${postId}`;
     if (navigator.share) {
       try {
@@ -79,9 +84,14 @@ export default function PostComponent({
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
-  const filteredPosts = sortedPosts.filter(
-    (post) => filter === "All" || post.type === filter
-  );
+  const filteredPosts = sortedPosts.filter((post) => {
+    if (filter === "All") return true;
+    if (filter === "Lost & Found")
+      return (
+        post.type === "Kehilangan Barang" || post.type === "Penemuan Barang"
+      );
+    return post.type === filter;
+  });
 
   const truncateDescription = (description: string) => {
     return description.length > 100
@@ -90,15 +100,15 @@ export default function PostComponent({
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#d0f0fb]">
       <div className="w-full max-w-3xl p-4 mb-10 mx-auto">
         {/* Filter buttons */}
-        <div className="flex mx-auto justify-around md:gap-10 md:max-w-2xl">
+        <div className="flex mx-auto lg:justify-center justify-between  md:gap-10 md:max-w-2xl">
           <button
-            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
+            className={`py-2 px-8 rounded-3xl transition-none ${
               filter === "All"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
+                ? "bg-[#897f7f] text-white"
+                : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
             }`}
             onClick={() => setFilter("All")}
           >
@@ -106,45 +116,33 @@ export default function PostComponent({
           </button>
 
           <button
-            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
-              filter === "Kehilangan Barang"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
+            className={`py-2 px-8 rounded-3xl font-semibold transition-none ${
+              filter === "Lost & Found"
+                ? "bg-[#897f7f] text-white"
+                : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
             }`}
-            onClick={() => setFilter("Kehilangan Barang")}
+            onClick={() => setFilter("Lost & Found")}
           >
-            Kehilangan Barang
+            Lost & Found
           </button>
 
           <button
-            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
-              filter === "Penemuan Barang"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
-            }`}
-            onClick={() => setFilter("Penemuan Barang")}
-          >
-            Penemuan Barang
-          </button>
-
-          <button
-            className={`sm:px-4 sm:py-2 px-2 py-1 rounded-full transition-none ${
+            className={`py-2 px-5 rounded-3xl font-semibold transition-none ${
               filter === "Kerusakan Fasilitas"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-[#bfdbfe] hover:text-blue-700 transition-all duration-100"
+                ? "bg-[#897f7f] text-white"
+                : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
             }`}
             onClick={() => setFilter("Kerusakan Fasilitas")}
           >
-            Kerusakan Fasilitas
+            Facilites
           </button>
-
         </div>
 
         <div className="mt-6 space-y-4 flex flex-col items-center">
           {filteredPosts.map((post) => (
             <div
               key={post.id}
-              className="bg-white p-4 items-center justify-center rounded-lg shadow-lg md:max-w-2xl max-w-full w-full transition-transform transform duration-200 ease-in-out"
+              className="bg-white p-4 items-center justify-center rounded-3xl shadow-lg md:max-w-2xl max-w-full w-full transition-transform transform duration-200 ease-in-out"
             >
               <div className="flex items-center mb-2 justify-between">
                 <div className="flex items-center">
@@ -157,36 +155,48 @@ export default function PostComponent({
                   />
                   <div className="ml-2">
                     <h2 className="text-sm font-bold">{post.author.name}</h2>
-                    <p className="text-xs text-gray-500">{post.timeAgo}</p>
+                    <p className="text-xs text-gray-500">
+                      {timeAgo(new Date(post.createdAt).toISOString())}
+                    </p>
                   </div>
                 </div>
 
                 <Dropdown
                   onDelete={() => handleDelete(post.id, post.image || "/s")}
-                  onShere={() => handleShare(post.id, post.title, post.image || "/s")}
+                  onShere={() =>
+                    handleShare(post.id, post.title, post.image || "/s")
+                  }
                   userId={user.id}
                   postId={post.userId}
                   userName={user.name}
                 />
               </div>
-              <h3 className="text-lg font-semibold">{post.title}</h3>
+              <Link href={`/post/${post.id}`}>
+                <h3 className="text-lg font-semibold">{post.title}</h3>
+              </Link>
               <p className="text-sm text-gray-700">
                 {truncateDescription(post.description)}
               </p>
               {post.image && (
-                <Image
-                  width={800}
-                  height={500}
-                  src={post.image}
-                  alt="Post Image"
-                  className="mt-2 rounded-lg object-cover w-full max-h-full"
-                />
+                <Link href={`/post/${post.id}`}>
+                  <Image
+                    width={800}
+                    height={500}
+                    src={post.image}
+                    alt="Post Image"
+                    className="mt-2 rounded-lg object-cover w-full max-h-full"
+                  />
+                </Link>
               )}
 
               <div className="flex justify-between mt-4">
-                <ReactButton userId={user.id} postId={post.id} userName={user.name} />
+                <ReactButton
+                  userId={user.id}
+                  postId={post.id}
+                  userName={user.name}
+                />
                 <Link href={`/post/${post.id}`}>
-                  <button className="px-4 py-3 bg-blue-200 text-blue-700 rounded-full hover:text-white hover:bg-[#3b82f6] transition-all duration-200">
+                  <button className="px-4 py-3 bg-[#69c3f0] text-white rounded-full hover:text-white hover:bg-[#3b82f6] transition-all font-semibold duration-200">
                     Komentar
                   </button>
                 </Link>
