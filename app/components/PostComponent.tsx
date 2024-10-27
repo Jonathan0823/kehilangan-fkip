@@ -115,7 +115,7 @@ export default function PostComponent({
     <div className="min-h-screen bg-[#d0f0fb]">
       <div className="w-full max-w-3xl p-4 mb-10 mx-auto">
         {/* Filter buttons */}
-        <div className="flex mx-auto whitespace-nowrap lg:justify-center overflow-x-auto justify-between  md:gap-10 md:max-w-2xl">
+        <div className="flex mx-auto whitespace-nowrap lg:justify-center overflow-x-auto justify-between gap-2  md:gap-10 md:max-w-2xl">
           <button
             className={`lg:py-2 lg:px-8 px-5 py-1 rounded-3xl font-semibold transition-none ${
               filter === "All"
