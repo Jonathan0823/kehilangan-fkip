@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
-    const posts = await prisma.post.findMany({ include: { author: true } });
+    const posts = await prisma.post.findMany({ include: { author: true, like: true } });
 
     return NextResponse.json(posts);
   } catch (error) {

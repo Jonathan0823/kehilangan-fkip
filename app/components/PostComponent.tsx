@@ -10,6 +10,7 @@ import Footer from "./Footer";
 import { timeAgo } from "@/lib/utils";
 
 interface Post {
+  like: [];
   createdAt: string | number | Date;
   id: string;
   userId: string;
@@ -80,9 +81,18 @@ export default function PostComponent({
     }
   };
 
-  const sortedPosts = posts.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  const filterbyLike = (a: Post, b: Post) => {
+    return b.like.length - a.like.length;
+  }
+
+  const sortedPosts = posts.sort((a, b) => {
+    if (filter === "Most Liked") {
+      return filterbyLike(a, b);
+    }
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
+
 
   const filteredPosts = sortedPosts.filter((post) => {
     if (filter === "All") return true;
@@ -90,8 +100,10 @@ export default function PostComponent({
       return (
         post.type === "Kehilangan Barang" || post.type === "Penemuan Barang"
       );
+    if (filter === "Most Liked") return filterbyLike;
     return post.type === filter;
   });
+
 
   const truncateDescription = (description: string) => {
     return description.length > 100
@@ -114,7 +126,16 @@ export default function PostComponent({
           >
             All
           </button>
-
+          <button
+            className={`py-2 px-8 rounded-3xl transition-none ${
+              filter === "Most Liked"
+                ? "bg-[#897f7f] text-white"
+                : "bg-[#69c3f0] text-white hover:bg-[#5aa7ce] transition-all duration-100"
+            }`}
+            onClick={() => setFilter("Most Liked")}
+          >
+            Most Liked
+          </button>
           <button
             className={`py-2 px-8 rounded-3xl font-semibold transition-none ${
               filter === "Lost & Found"

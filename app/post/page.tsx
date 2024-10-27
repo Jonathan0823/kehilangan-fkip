@@ -23,6 +23,7 @@ export default function Post() {
       ]);
       setUser(userResult.data);
       setPosts(postResult.data);
+      console.log("Post data:", postResult.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
