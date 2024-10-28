@@ -219,7 +219,7 @@ export default function PostComponent({
                   />
                   <Link href={`/post/${post.id}`}>
                     <button className="min-w-[130px] flex-1 lg:min-h-11 min-h-9 bg-[#69c3f0] text-white rounded-2xl hover:text-white hover:bg-[#3b82f6] transition-all font-semibold duration-200">
-                      Komentar
+                      Comments
                     </button>
                   </Link>
                 </div>
