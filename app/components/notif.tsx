@@ -42,7 +42,7 @@ export default function NotificationModal() {
     <div>
       <button
         onClick={() => setIsOpen(true)}
-        className="p-2 rounded-full focus:outline-none"
+        className="mt-2 rounded-full focus:outline-none"
         title="Open notifications"
       >
         <FaBell size={25} />

@@ -205,7 +205,7 @@ export default function PostComponent({
                     height={500}
                     src={post.image}
                     alt="Post Image"
-                    className="mt-2 rounded-lg object-cover w-full max-h-full"
+                    className="mt-2 rounded-lg object-cover w-full lg:max-h-[650px] max-h-[400px]"
                   />
                 </Link>
               )}

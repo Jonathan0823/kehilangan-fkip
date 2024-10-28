@@ -73,12 +73,12 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
       <Navbar user={user} />
-      <div className="space-y-4 flex flex-col items-center bg-gray-100">
+      <div className="space-y-4 flex flex-col items-center bg-[#d0f0fb]">
         <div
           key={memoizedPost?.id}
-          className="bg-white p-4 items-center justify-center mt-2 rounded-lg shadow md:max-w-2xl max-w-full w-full"
+          className="bg-white p-4 items-center justify-center mt-2 rounded-3xl shadow md:max-w-2xl max-w-full mx-2 pb-8"
         >
-          <div className="flex items-center mb-2 justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex ml-8">
               <Image
                 width={32}
