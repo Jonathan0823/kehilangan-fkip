@@ -87,7 +87,7 @@ const ReactButton = ({
         className={`min-w-[130px] flex-1 justify-center lg:min-h-11 min-h-9 items-center ${liked ? "bg-[#3b82f6] text-white" : "bg-[#69c3f0] text-white"} rounded-2xl flex gap-3 transition-all duration-200`}
       >
         <div className="flex font-semibold gap-3">
-        {liked ? <p>Reaksi</p> : <p>Reaksi</p>}
+        {liked ? <p>Liked</p> : <p>Like</p>}
         {likes[postId] || 0}
         </div>
       </button>
