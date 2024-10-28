@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import axios from "axios";
 
 const ReactButton = ({
@@ -81,15 +80,15 @@ const ReactButton = ({
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex-1 items-center">
       <button
         disabled={disabled}
         onClick={handleReact}
-        className={`lg:px-10 px-7 py-2 ${liked ? "bg-[#3b82f6] text-white" : "bg-[#69c3f0] text-white"} rounded-2xl flex gap-3 transition-all duration-200`}
+        className={`min-w-[130px] flex-1 justify-center lg:min-h-11 min-h-9 items-center ${liked ? "bg-[#3b82f6] text-white" : "bg-[#69c3f0] text-white"} rounded-2xl flex gap-3 transition-all duration-200`}
       >
-        <div className="flex font-semibold items-center gap-3">
+        <div className="flex font-semibold gap-3">
         {liked ? <p>Reaksi</p> : <p>Reaksi</p>}
-        <p className="text-lg">{likes[postId] || 0}</p>
+        {likes[postId] || 0}
         </div>
       </button>
     </div>

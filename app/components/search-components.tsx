@@ -48,7 +48,7 @@ export default function SearchPage() {
   }, [searchTerm]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#d0f0fb] flex justify-center p-4">
       <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
         <h1 className="text-xl font-semibold mb-4 text-center">Search Page</h1>
         <form

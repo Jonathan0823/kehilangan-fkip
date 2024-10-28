@@ -109,7 +109,7 @@ export default function PostComponent({
   };
 
   return (
-    <div className="min-h-screen bg-[#d0f0fb]">
+    <div className="min-h-screen bg-[#d0f0fb] pb-10">
       <div className="w-full max-w-3xl p-4 mb-10 mx-auto">
         {/* Filter buttons */}
         <div className="flex mx-auto whitespace-nowrap lg:justify-center overflow-x-auto justify-between gap-2  md:gap-10 md:max-w-2xl hide-scrollbar">
@@ -209,15 +209,16 @@ export default function PostComponent({
 
               {/* button */}
 
-              <div className="absolute w-full bottom-[-20px]">
-                <div className="flex lg:gap-14 gap-5 mr-3 justify-center mt-4">
+              <div className="absolute w-full bottom-[-20px] flex justify-center">
+                <div className="flex lg:mr-5 mr-6 lg:max-w-sm max-w-6 gap-5 lg:gap-5 w-full justify-center mt-4">
                   <ReactButton
                     userId={user.id}
                     postId={post.id}
                     userName={user.name}
+        
                   />
                   <Link href={`/post/${post.id}`}>
-                    <button className="px-8 py-2 bg-[#69c3f0] text-white rounded-2xl hover:text-white hover:bg-[#3b82f6] transition-all font-semibold duration-200">
+                    <button className="min-w-[130px] flex-1 lg:min-h-11 min-h-9 bg-[#69c3f0] text-white rounded-2xl hover:text-white hover:bg-[#3b82f6] transition-all font-semibold duration-200">
                       Komentar
                     </button>
                   </Link>
