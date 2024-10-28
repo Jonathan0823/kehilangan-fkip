@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     <div
       className={`bg-sky-400  bottom-0 w-full h-14 flex z-50 items-center py-2 ${className}`}
     >
-      <div className="flex w-full justify-between items-center mx-6">
+      <div className="flex w-full lg:justify-center lg:gap-36 gap-0 justify-between items-center mx-6">
         <Link href="/">
           <FaHome className="text-black text-2xl" />
         </Link>

@@ -85,10 +85,10 @@ const ReactButton = ({
       <button
         disabled={disabled}
         onClick={handleReact}
-        className={`px-6 py-3 ${liked ? "bg-[#3b82f6] text-white" : "bg-[#69c3f0] text-white"} rounded-full flex gap-3 transition-all duration-200`}
+        className={`lg:px-10 px-7 py-2 ${liked ? "bg-[#3b82f6] text-white" : "bg-[#69c3f0] text-white"} rounded-2xl flex gap-3 transition-all duration-200`}
       >
-        <div className="flex items-center gap-3">
-        {liked ? <AiFillLike className="w-5 h-5" /> : <AiOutlineLike className="w-5 h-5" />}
+        <div className="flex font-semibold items-center gap-3">
+        {liked ? <p>Reaksi</p> : <p>Reaksi</p>}
         <p className="text-lg">{likes[postId] || 0}</p>
         </div>
       </button>

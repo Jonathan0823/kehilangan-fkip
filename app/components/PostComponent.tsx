@@ -83,7 +83,7 @@ export default function PostComponent({
 
   const filterbyLike = (a: Post, b: Post) => {
     return b.like.length - a.like.length;
-  }
+  };
 
   const sortedPosts = posts.sort((a, b) => {
     if (filter === "Most Liked") {
@@ -91,8 +91,6 @@ export default function PostComponent({
     }
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
-
-
 
   const filteredPosts = sortedPosts.filter((post) => {
     if (filter === "All") return true;
@@ -103,7 +101,6 @@ export default function PostComponent({
     if (filter === "Most Liked") return filterbyLike;
     return post.type === filter;
   });
-
 
   const truncateDescription = (description: string) => {
     return description.length > 100
@@ -159,11 +156,11 @@ export default function PostComponent({
           </button>
         </div>
 
-        <div className="mt-4 space-y-4 flex flex-col items-center">
+        <div className="mt-4 space-y-8 flex flex-col items-center">
           {filteredPosts.map((post) => (
             <div
               key={post.id}
-              className="bg-white p-4 items-center justify-center rounded-3xl shadow-lg md:max-w-2xl max-w-full w-full transition-transform transform duration-200 ease-in-out"
+              className="bg-white relative p-4 pb-11 items-center justify-center rounded-3xl shadow-lg md:max-w-2xl max-w-full w-full transition-transform transform duration-200 ease-in-out"
             >
               <div className="flex items-center mb-2 justify-between">
                 <div className="flex items-center">
@@ -210,17 +207,21 @@ export default function PostComponent({
                 </Link>
               )}
 
-              <div className="flex justify-between mt-4">
-                <ReactButton
-                  userId={user.id}
-                  postId={post.id}
-                  userName={user.name}
-                />
-                <Link href={`/post/${post.id}`}>
-                  <button className="px-4 py-3 bg-[#69c3f0] text-white rounded-full hover:text-white hover:bg-[#3b82f6] transition-all font-semibold duration-200">
-                    Komentar
-                  </button>
-                </Link>
+              {/* button */}
+
+              <div className="absolute w-full bottom-[-20px]">
+                <div className="flex lg:gap-14 gap-5 mr-3 justify-center mt-4">
+                  <ReactButton
+                    userId={user.id}
+                    postId={post.id}
+                    userName={user.name}
+                  />
+                  <Link href={`/post/${post.id}`}>
+                    <button className="px-8 py-2 bg-[#69c3f0] text-white rounded-2xl hover:text-white hover:bg-[#3b82f6] transition-all font-semibold duration-200">
+                      Komentar
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
