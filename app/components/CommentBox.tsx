@@ -35,15 +35,18 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
   }
 
 
-  const refreshComments = async (comment: Comment) => {
+  const refreshComments = (comment: Comment) => {
     setComments((prevComments) => [...prevComments, comment]);
-    await fetchComments();
   };
 
   const fetchComments = async () => {
     const response = await axios.get(`/api/comments/${postId}`);
     setComments(response.data);
   };
+
+  const refetchComments = async () => {
+    await fetchComments();
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -103,8 +106,12 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
                 </div>
                 {user?.id === comment.userId && (
                   <button
+                    type="button"
                     className="ml-auto"
-                    onClick={() => handleDeleteComment(comment.id)}
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default behavior
+                      handleDeleteComment(comment.id);
+                    }}
                     disabled={deleting}
                   >
                     {deletingId === comment.id ? (
@@ -122,6 +129,7 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
           postId={String(postId)}
           refreshComments={refreshComments}
           userData={user!}
+          refetchComments={refetchComments}
         />
       </div>
     </div>
