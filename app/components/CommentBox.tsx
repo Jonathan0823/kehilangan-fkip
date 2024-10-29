@@ -35,8 +35,9 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
   }
 
 
-  const refreshComments = (comment: Comment) => {
+  const refreshComments = async (comment: Comment) => {
     setComments((prevComments) => [...prevComments, comment]);
+    await fetchComments();
   };
 
   const fetchComments = async () => {
