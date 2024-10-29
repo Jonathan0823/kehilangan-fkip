@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import CommentsInput from "./CommentsInput";
 import { useSession } from "next-auth/react";
@@ -34,11 +34,9 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
     userId: string;
   }
 
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  const refreshComments = async () => {
-    await fetchComments();
-    forceUpdate();
+  const refreshComments = (comment: Comment) => {
+    setComments((prevComments) => [...prevComments, comment]);
   };
 
   const fetchComments = async () => {
@@ -61,8 +59,8 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
     setDeletingId(commentId);
     setDelete(true);
     try {
+      setComments((prevComments) => prevComments.filter((c) => c.id !== commentId));
       await deleteComment(commentId);
-      refreshComments();
     } catch (error) {
       console.error("Error deleting comment:", error);
     } finally {
