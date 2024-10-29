@@ -59,8 +59,8 @@ const CommentBox = ({ postId }: CommentBoxProps) => {
     setDeletingId(commentId);
     setDelete(true);
     try {
-      setComments((prevComments) => prevComments.filter((c) => c.id !== commentId));
       await deleteComment(commentId);
+      await fetchComments();
     } catch (error) {
       console.error("Error deleting comment:", error);
     } finally {
