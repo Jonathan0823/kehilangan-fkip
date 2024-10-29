@@ -1,4 +1,5 @@
 "use client"
+import { timeAgo } from "@/lib/utils";
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -9,7 +10,7 @@ interface CommentsInputProps {
     name: string;
     image: string;
   };
-  refreshComments: () => void;
+  refreshComments: (newComment: { id: string; author: { name: string; image: string }; timeAgo: string; content: string; createdAt: string; userId: string }) => void;
 }
 
 const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, userData }) => {
@@ -17,16 +18,34 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState<boolean>(false);
-
+  
+  
+  
+  
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent default form submission
-
+    
     if (!comment) return;
-
+    
     setSending(true);
     setError(null);
     setSuccessMessage(null);
+    
+    const newComment = {
+      id: Math.random().toString(),
+      author: {
+        name: userData?.name,
+        image: userData.image,
+      },
+      timeAgo: 'Just now',
+      content: comment,
+      createdAt: new Date().toISOString(),
+      userId: userData?.id,
+    }
 
+    refreshComments(newComment);
+    
     try {
       const formData = {
         userId: userData?.id,
@@ -38,7 +57,6 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
       };
       await axios.post(`/api/comments/create`, formData);
       setSuccessMessage('Comment posted successfully!');
-      refreshComments();
     } catch (error) {
       console.error('Error posting comment:', error);
       setError('Failed to post comment.');
