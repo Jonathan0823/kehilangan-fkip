@@ -3,6 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { AvatarDropdown } from "./AvatarDropdown";
 import React from "react";
 import NotificationDropdown from "./notif";
+import Link from "next/link";
 
 
 interface User {
@@ -29,7 +30,9 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
         <h1 className="text-lg font-semibold">Beranda</h1>
       </div>
       <div className="flex items-center space-x-4">
+        <Link href="/search">
         <FaSearch className="h-6 w-6 text-gray-700" />
+        </Link>
         <NotificationDropdown/>
       </div>
     </div>
