@@ -1,5 +1,4 @@
 "use client"
-import { timeAgo } from "@/lib/utils";
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -11,16 +10,14 @@ interface CommentsInputProps {
     image: string;
   };
   refreshComments: (newComment: { id: string; author: { name: string; image: string }; timeAgo: string; content: string; createdAt: string; userId: string }) => void;
+  refetchComments: () => void;
 }
 
-const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, userData }) => {
+const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, userData, refetchComments }) => {
   const [comment, setComment] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState<boolean>(false);
-  
-  
-  
   
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,6 +54,7 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
       };
       await axios.post(`/api/comments/create`, formData);
       setSuccessMessage('Comment posted successfully!');
+      refetchComments();
     } catch (error) {
       console.error('Error posting comment:', error);
       setError('Failed to post comment.');

@@ -64,7 +64,7 @@ export default function SearchPage() {
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+            className="w-full bg-[#69c3f0] text-white hover:bg-[#5aa7ce] duration-100 py-2 rounded-md transition"
           >
             Search
           </button>
