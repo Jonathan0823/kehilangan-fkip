@@ -9,7 +9,6 @@ export default function ResetPasswordPage() {
     
     return (
         <div className="min-h-dvh">
-            
             <Reset params={lastSegment} />
         </div>
     );

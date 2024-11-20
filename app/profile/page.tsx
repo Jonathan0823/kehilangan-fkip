@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Loading from "../components/Loading";
 import { getProfile } from "@/lib/action"; 
-
+import { redirect } from "next/navigation";
 interface User {
   id: string;
   name: string | null; 
@@ -34,6 +34,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null); 
 
   useEffect(() => {
+    if (!session) redirect("/signin");
     const fetchData = async () => {
       try {
         if (session?.user?.id) {

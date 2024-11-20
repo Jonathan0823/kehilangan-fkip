@@ -9,24 +9,40 @@ interface CommentsInputProps {
     name: string;
     image: string;
   };
-  refreshComments: () => void;
+  refreshComments: (newComment: { id: string; author: { name: string; image: string }; timeAgo: string; content: string; createdAt: string; userId: string }) => void;
+  refetchComments: () => void;
 }
 
-const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, userData }) => {
+const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, userData, refetchComments }) => {
   const [comment, setComment] = useState('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState<boolean>(false);
-
+  
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent default form submission
-
+    
     if (!comment) return;
-
+    
     setSending(true);
     setError(null);
     setSuccessMessage(null);
+    
+    const newComment = {
+      id: Math.random().toString(),
+      author: {
+        name: userData?.name,
+        image: userData.image,
+      },
+      timeAgo: 'Just now',
+      content: comment,
+      createdAt: new Date().toISOString(),
+      userId: userData?.id,
+    }
 
+    refreshComments(newComment);
+    
     try {
       const formData = {
         userId: userData?.id,
@@ -38,7 +54,7 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
       };
       await axios.post(`/api/comments/create`, formData);
       setSuccessMessage('Comment posted successfully!');
-      refreshComments();
+      refetchComments();
     } catch (error) {
       console.error('Error posting comment:', error);
       setError('Failed to post comment.');
@@ -51,24 +67,24 @@ const CommentsInput: React.FC<CommentsInputProps> = ({ postId, refreshComments, 
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md max-w-2xl mx-auto">
-        {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
-        {successMessage && <p className="text-green-500 text-sm ml-2">{successMessage}</p>}
-        <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="Write a comment..."
-            className="flex-grow p-2 border rounded-lg mr-2"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            disabled={sending}
-          />
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg" disabled={sending}>
-            {sending ? "Sending..." : "Send"}
-          </button>
-        </div>
+    <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md max-w-2xl mx-auto">
+      {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
+      {successMessage && <p className="text-green-500 text-sm ml-2">{successMessage}</p>}
+      <div className="flex items-center">
+        <input
+          type="text"
+          placeholder="Write a comment..."
+          className="flex-grow p-2 border w-10 rounded-lg mr-2"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          disabled={sending}
+        />
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-lg" disabled={sending}>
+          {sending ? "Sending..." : "Send"}
+        </button>
       </div>
-    </form>
+    </div>
+  </form>
   );
 };
 

@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BackButton from '@/app/components/profilebuttons/back';
 import CommentBox from '@/app/components/CommentBox';
+import { timeAgo } from '@/lib/utils';
 
 const Navbar = dynamic(() => import('@/app/components/navbar'), { ssr: false });
 const Loading = dynamic(() => import('@/app/components/Loading'), { ssr: false });
@@ -15,9 +16,14 @@ interface Post {
   userName?: string;
   userImage?: string;
   timeAgo?: string;
+  createdAt?: string;
   title?: string;
   description?: string;
   image?: string;
+  author?: {
+    name: string;
+    image: string;
+  };
 }
 
 const Page = ({ params }: { params: { id: string } }) => {
@@ -61,28 +67,35 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const memoizedPost = useMemo(() => post, [post]);
 
+  if (!session) {
+    
+      window.location.href = '/signin';
+
+  }
   if (loading) return <Loading />;
+
+
 
   return (
     <div>
       <Navbar user={user} />
-      <div className="mt-6 space-y-4 flex flex-col items-center bg-gray-100">
+      <div className="space-y-4 flex flex-col items-center bg-[#d0f0fb]">
         <div
           key={memoizedPost?.id}
-          className="bg-white p-4 items-center justify-center mt-2 rounded-lg shadow md:max-w-2xl max-w-full w-full"
+          className="bg-white p-4 items-center justify-center mt-2 rounded-3xl shadow md:max-w-2xl max-w-full mx-2 pb-8"
         >
-          <div className="flex items-center mb-2 justify-between">
-            <div className="flex">
+          <div className="flex items-center justify-between">
+            <div className="flex ml-8">
               <Image
                 width={32}
                 height={32}
-                src={memoizedPost?.userImage || "/default-image.png"}
+                src={memoizedPost?.author?.image || "/default-image.png"}
                 alt="User Profile"
                 className="h-8 w-8 rounded-full"
               />
               <div className="ml-2">
-                <h2 className="text-sm font-bold">{memoizedPost?.userName}</h2>
-                <p className="text-xs text-gray-500">{memoizedPost?.timeAgo}</p>
+                <h2 className="text-sm font-bold">{memoizedPost?.author?.name}</h2>
+                <p className="text-xs text-gray-500">{timeAgo(memoizedPost?.createdAt ?? '')}</p>
               </div>
             </div>
             <BackButton type="post" />

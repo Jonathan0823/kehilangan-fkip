@@ -1,7 +1,9 @@
 "use client";
-import { FaBell, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { AvatarDropdown } from "./AvatarDropdown";
 import React from "react";
+import NotificationDropdown from "./notif";
+import Link from "next/link";
 
 
 interface User {
@@ -19,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
   console.log(user); 
 
   return (
-    <div className= "sticky top-0 z-50 p-4 w-full h-20 bg-white shadow-sm py-6 px-4 flex items-center justify-between">
+    <div className= "sticky top-0 z-50 p-4 md:min-w-full w-full md:h-20 h-14 bg-white shadow-sm py-6 lg:mt-0 mt-2 px-4 flex items-center justify-between">
       <div className="flex items-center">
         <AvatarDropdown image={profilepic} name={user?.name || ""} />
       </div>
@@ -28,8 +30,10 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
         <h1 className="text-lg font-semibold">Beranda</h1>
       </div>
       <div className="flex items-center space-x-4">
+        <Link href="/search">
         <FaSearch className="h-6 w-6 text-gray-700" />
-        <FaBell className="h-6 w-6 text-gray-700" />
+        </Link>
+        <NotificationDropdown/>
       </div>
     </div>
   );
